@@ -88,7 +88,7 @@
     <p class="body">The goal was not to prove the model can answer trivia. It was to measure the practical cost of conversational memory: how much prior context can be injected before latency becomes unacceptable, and whether buried facts remain retrievable.</p>
     <div class="benchmark-wrap">
       <table class="benchmark-table">
-        <thead><tr><th>Context Ingestion Test</th><th>Actual Context</th><th>p50 TTFT</th><th>Equivalent</th><th>Finding</th></tr></thead>
+        <thead><tr><th>Context</th><th># Tokens</th><th>p50 TTFT</th><th>Equivalent</th><th>Finding</th></tr></thead>
         <tbody>
           <tr><td>No memory</td><td>0 tokens</td><td>0.52s</td><td>0 words</td><td>Baseline request with no retained conversation history.</td></tr>
           <tr><td>Short memory</td><td>~390 tokens</td><td>1.32s</td><td>~271 words / ~1.2 min</td><td>Small memory windows are cheap enough for realtime voice.</td></tr>
