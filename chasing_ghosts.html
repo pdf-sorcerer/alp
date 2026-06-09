@@ -478,6 +478,14 @@ At time of writing (<code>June 2026</code>): <code>383 Libsyn episodes</code> ·
   </div>
 
   <p class="body">
+    A separate line of investigation projected the speaker embeddings onto a manifold to visualize how the ghost segments were being geometrically interpreted. Friedberg's ghost regions did not cluster with Friedberg's confirmed speech. They fell inside Chamath's cluster. The audio was not only short enough to destabilize the embedding — it was acoustically close enough to the wrong speaker that the speaker identity layer independently misread it. The ASR decoder and the speaker embedding space failed on the same audio for different reasons.
+  </p>
+
+  <p class="body">
+    Ghost Audio is not purely an ASR problem. At the segment level, the speech was too short and acoustically ambiguous to anchor reliably in embedding space. At the decoder level, a competing hypothesis outscored the ground truth by a narrow margin. Both failures converged on the same timestamps.
+  </p>
+
+  <p class="body">
     That narrowed the problem to one place: the beam search decision.
   </p>
 
