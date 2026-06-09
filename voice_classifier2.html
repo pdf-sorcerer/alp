@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ALL-LLM Pod | Voice Classifier</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap');
+
+:root{
+--green:#0A84FF;
+--green-dim:rgba(10,132,255,0.12);
+--bg:#f9f9f9;
+--surface:#ffffff;
+--border:#e4e4e4;
+--code-bg:#0d1117;
+--text:#1a1a1a;
+--muted:#6b6b6b;
+--faint:#8c8c8c;
+--nav-width:220px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+
+body{
+font-family:'Inter',sans-serif;
+background:var(--bg);
+color:var(--text);
+display:flex;
+min-height:100vh;
+}
+
+nav{
+position:sticky;
+top:0;
+height:100vh;
+width:var(--nav-width);
+background:var(--surface);
+border-right:1px solid var(--border);
+padding:32px 0;
+display:flex;
+flex-direction:column;
+overflow-y:auto;
+}
+
+.nav-logo{
+font-family:'IBM Plex Mono',monospace;
+font-size:11px;
+font-weight:600;
+letter-spacing:.08em;
+text-transform:uppercase;
+color:var(--green);
+padding:0 24px 24px;
+border-bottom:1px solid var(--border);
+}
+
+.nav-section-label{
+font-family:'IBM Plex Mono',monospace;
+font-size:9px;
+font-weight:600;
+letter-spacing:.12em;
+text-transform:uppercase;
+color:var(--faint);
+padding:20px 24px 8px;
+}
+
+.nav-item{
+display:block;
+font-family:'IBM Plex Mono',monospace;
+font-size:11px;
+color:var(--muted);
+text-decoration:none;
+padding:7px 24px;
+border-left:2px solid transparent;
+transition:color .15s,border-color .15s,background .15s;
+white-space:nowrap;
+overflow:hidden;
+text-overflow:ellipsis;
+}
+
+.nav-item:hover{
+color:var(--text);
+background:var(--bg);
+border-left-color:var(--border);
+}
+
+.nav-item.active{
+color:var(--green);
+border-left-color:var(--green);
+background:var(--green-dim);
+}
+
+.nav-footer{
+margin-top:auto;
+padding:20px 24px 0;
+border-top:1px solid var(--border);
+font-family:'IBM Plex Mono',monospace;
+font-size:10px;
+color:var(--faint);
+line-height:1.6;
+}
+
+main{
+flex:1;
+padding:56px 64px 120px;
+max-width:900px;
+}
+
+.page-eyebrow{
+font-family:'IBM Plex Mono',monospace;
+font-size:10px;
+letter-spacing:.12em;
+text-transform:uppercase;
+color:var(--green);
+margin-bottom:12px;
+}
+
+h1{
+font-size:28px;
+font-weight:700;
+letter-spacing:-.02em;
+margin-bottom:20px;
+}
+
+h2{
+font-family:'IBM Plex Mono',monospace;
+font-size:13px;
+text-transform:uppercase;
+letter-spacing:.08em;
+margin-top:64px;
+margin-bottom:12px;
+}
+
+.lead{
+font-size:14px;
+line-height:1.75;
+color:#3a3a3a;
+max-width:720px;
+margin-bottom:22px;
+}
+
+.block{
+border:1px solid var(--border);
+border-radius:4px;
+overflow:hidden;
+margin-bottom:16px;
+background:var(--surface);
+}
+
+.block-header{
+padding:14px 18px;
+cursor:pointer;
+font-family:'IBM Plex Mono',monospace;
+font-size:12px;
+background:#fafafa;
+}
+
+.block-body{
+display:none;
+padding:22px 24px;
+font-family:'IBM Plex Mono',monospace;
+font-size:12px;
+line-height:1.9;
+white-space:pre-line;
+}
+
+.block.open .block-body{display:block}
+
+.image-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:24px;
+margin-top:28px;
+margin-bottom:28px;
+}
+
+.image-grid img{
+width:100%;
+border:1px solid var(--border);
+cursor:pointer;
+transition:transform .15s ease;
+display:block;
+}
+
+.image-grid img:hover{transform:scale(1.02);}
+
+.two-col{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:24px;
+margin-top:40px;
+margin-bottom:30px;
+}
+
+.two-col > div{min-width:0;}
+
+.panel-label{
+font-family:'IBM Plex Mono',monospace;
+font-size:10px;
+letter-spacing:.1em;
+text-transform:uppercase;
+color:var(--muted);
+margin-bottom:10px;
+}
+
+.code{
+background:var(--code-bg);
+border-radius:4px;
+padding:18px 20px;
+overflow:hidden;
+min-width:0;
+}
+
+.code pre{
+font-family:'IBM Plex Mono',monospace;
+font-size:11px;
+line-height:1.7;
+color:#c9d1d9;
+white-space:pre-wrap;
+word-break:break-all;
+overflow-wrap:break-word;
+}
+
+.asset-card{
+background:var(--surface);
+border:1px solid var(--border);
+border-radius:4px;
+padding:14px;
+min-width:0;
+}
+
+.asset-card a{display:block;text-decoration:none;}
+
+.inline-list{
+margin:20px 0 30px 24px;
+line-height:2;
+font-size:14px;
+color:#3a3a3a;
+max-width:720px;
+}
+
+.modal{
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.9);
+justify-content:center;
+align-items:center;
+z-index:9999;
+}
+
+.modal img{
+max-width:90%;
+max-height:90%;
+}
+
+@media(max-width:1100px){
+.image-grid.three-up{grid-template-columns:1fr 1fr;}
+}
+
+@media(max-width:900px){
+nav{display:none;}
+main{padding:32px 24px;}
+.image-grid,.image-grid.three-up{grid-template-columns:1fr;}
+.two-col{grid-template-columns:1fr;}
+}
+</style>
+</head>
+
+<body>
+
+<nav id="shared-nav"></nav>
+
+<main>
+
+<p class="page-eyebrow">(Cursed) Multi-Speaker Classifiers</p>
+<h1>Speaker Classification Policy Evolution</h1>
+
+<p class="lead">
+At the beginning of this project I had a mindset of 'move fast and mvp'. Being able to automate the labeling of speakers across episodes was critical to creating training data, and Chat Jippity told me to make speech classifiers. Looking back, I wish I approached the subject with 
+  a little more intentionality on its onset. By its end, I learned not to trust voice classifiers - and found what survived reinforced my personal bias of HITL ocused tooling.
+</p>
+
+<h2 id="v1">V1— Host-Only Classification</h2>
+
+<p class="lead">
+V1 was four binary classifiers, one trained per host. It worked reasonably well - audio was reviewed in Streamlit, which was my introduction to that system which was important. The outcome of v1 was a multi-speaker classifier trained on host0only audio. I learned later that I needed a negative class (guests( who I intentionally avoided) I made a movie about lessons learned, took a couple days off, and read some papers on the subjecct to cool off.  avoided
+</p>
+
+
+<h2 id="v2">V2 — Clownfish</h2>
+
+<p class="lead">
+The second version introduced Clownfish, a human-in-the-loop review tool that mapped speaker identities onto embedding clusters using transcript, audio, and video review. I named it to celebrate getting Nvidia NeMo working on my PC; efforts months earlier has failed, so I was quite excited to get it workeing. 
+</p>
+
+<p class="lead">
+Clownfish and NeMo transformed dataset creation from a manual process into a semi-automataed process that was redicilously scalable. Instead of hunting through hundreds of podcast episodes for clean audio, I could identify a speaker once and backfill that identity across an entire episode - and extract all audio for each speaker. 
+</p>
+
+<div class="image-grid three-up" style="grid-template-columns:1.3fr 1fr 1fr;">
+
+  <div class="asset-card">
+    <div class="panel-label">Clownfish Demo</div>
+    <a href="https://www.youtube.com/watch?v=UPnnOCWqiAw" target="_blank">
+      <img src="https://img.youtube.com/vi/UPnnOCWqiAw/maxresdefault.jpg"
+           alt="Clownfish Demo">
+    </a>
+  </div>
+
+  <div class="asset-card">
+    <div class="panel-label">Pyannote Embeddings</div>
+    <img src="images/pyannote.png"
+         onclick="openModal(this)"
+         alt="Pyannote Embeddings">
+  </div>
+
+  <div class="asset-card">
+    <div class="panel-label">NeMo / TitaNet Embeddings</div>
+    <img src="images/nemo.png"
+         onclick="openModal(this)"
+         alt="NeMo Embeddings">
+  </div>
+
+</div>
+
+
+<h2 id="v3">V3 — Looks Great On Paper</h2>
+
+<p class="lead">
+V3 was the culmination of several months of iteration: Nvidia NeMo embeddings, Clownfish-generated datasets, and an XGBoost classifier trained on 143,467 labeled speaker segments. 
+</p>
+
+<div class="block open">
+  <div class="block-header">Performance</div>
+  <div class="block-body">Training Samples:    143,467
+
+Validation Accuracy: 99.42%
+Test Accuracy:       99.38%
+
+Chamath:             99.59%
+Friedberg:           99.33%
+JCal:                99.35%
+Sacks:               99.00%</div>
+</div>
+
+<p class="lead">
+Fantastic results. Error rates continued to fall as clip duration increased, and longer-form speech was classified with near-perfect accuracy.
+</p>
+
+<p class="lead">
+Even so, some of the papers I was reading suggested results this good shouldn't be possible, so I never fully trusted it.
+</p>
+
+<img src="images/duration_analysis.png"
+  onclick="openModal(this)"
+  alt="Duration Analysis"
+  style="width:100%;margin:32px 0;border:1px solid var(--border);cursor:pointer;">
+
+<h1 id="case-study" style="margin-top:80px;">Case Study: Episode 136</h1>
+
+<p class="lead">
+V3 was deliberately trained on longer speech segments, segments >5s. The idea was simple: let the classifier operate only within its strongest regime, then propagate confident predictions back onto shorter segments through shared NeMo speaker IDs.
+</p>
+
+<p class="lead">
+At least, that was the theory.
+</p>
+
+<p class="lead">
+While reviewing Episode 136, I discovered guest Brad Gerstner being confidently classified as David Friedberg on a long-form speech segment.
+</p>
+
+<p class="lead">
+That was the part that bothered me.
+</p>
+
+<p class="lead">
+The failure wasn't occurring in short, noisy clips where mistakes are expected. It was occurring in the exact region where the classifier appeared strongest.
+</p>
+
+<div class="two-col">
+
+  <div>
+    <div class="panel-label">Long Segment · Misclassified</div>
+    <div class="code">
+<pre>{
+  "speaker_id": "SPEAKER_03",
+  "custom_speaker": "friedberg",
+  "confidence": 0.9999877,
+  "duration": 10.4119,
+  "speaker_id_propagated": true
+}</pre>
+    </div>
+  </div>
+
+  <div>
+    <div class="panel-label">Short Segment · Also Misclassified</div>
+    <div class="code">
+<pre>{
+  "speaker_id": "SPEAKER_04",
+  "custom_speaker": "friedberg",
+  "confidence": 0.0,
+  "duration": 0.3200,
+  "speaker_id_propagated": true
+}</pre>
+    </div>
+  </div>
+
+</div>
+
+<p class="lead">
+Digging deeper, some of Gerstner's embeddings sat closer to JCal than JCal's own intra-speaker baseline — despite JCal not appearing in the episode at all.
+</p>
+
+<p class="lead">
+I never fully root-caused the issue, and it still bothers me.
+</p>
+
+<p class="lead">
+Part of it may have been embedding geometry. Part may have been label propagation. Part may have been user error. I still don't know.
+</p>
+
+<p class="lead">
+What I do know is that manually reviewing transcripts uncovered a problem the accuracy metrics did not.
+</p>
+
+<h1 id="what-survived" style="margin-top:80px;">What Survived</h1>
+
+<p class="lead">
+The classifier was the original goal.
+</p>
+
+<p class="lead">
+The tooling ended up being more valuable:
+</p>
+
+<ul class="inline-list">
+  <li>Nvidia NeMo / TitaNet speaker embeddings</li>
+  <li>Clownfish human-in-the-loop review workflows</li>
+  <li>Large-scale speaker audio extraction</li>
+  <li>Dataset inspection and transcript debugging tools</li>
+</ul>
+
+<p class="lead">
+The classifier eventually disappeared.
+</p>
+
+<p class="lead">
+The tooling is still useful.
+</p>
+
+</main>
+
+<div id="modal" class="modal" onclick="closeModal()">
+  <img id="modalImg" alt="Expanded visualization">
+</div>
+
+<script>
+document.querySelectorAll('.block-header').forEach(h=>{
+  h.addEventListener('click',()=>{
+    h.parentElement.classList.toggle('open');
+  });
+});
+
+function openModal(img){
+  document.getElementById("modalImg").src = img.src;
+  document.getElementById("modal").style.display = "flex";
+}
+
+function closeModal(){
+  document.getElementById("modal").style.display = "none";
+}
+</script>
+
+<script>
+window.NAV_ANCHORS = [
+  { href: '#v1', label: 'V1' },
+  { href: '#v2', label: 'Clownfish' },
+  { href: '#v3', label: 'V3' },
+  { href: '#case-study', label: 'Episode 136' },
+  { href: '#what-survived', label: 'What Survived' }
+];
+</script>
+<script src="https://pdf-sorcerer.github.io/alp/nav-loader.js" data-page="voice_classifier"></script>
+
+</body>
+</html>

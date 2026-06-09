@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ALL-LLM Pod | About</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap');
+
+  :root {
+    --green: #76b900;
+    --green-dim: rgba(118, 185, 0, 0.12);
+    --bg: #f9f9f9;
+    --surface: #ffffff;
+    --border: #e4e4e4;
+    --code-bg: #0d1117;
+    --text: #1a1a1a;
+    --muted: #6b6b6b;
+    --faint: #aaaaaa;
+    --nav-width: 220px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    display: flex;
+    min-height: 100vh;
+  }
+
+  nav {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    width: var(--nav-width);
+    flex-shrink: 0;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    padding: 32px 0;
+    overflow-y: auto;
+  }
+
+  .nav-logo {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--green);
+    padding: 0 24px 28px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-section-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--faint);
+    padding: 20px 24px 8px;
+  }
+
+  .nav-item {
+    display: block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 7px 24px;
+    border-left: 2px solid transparent;
+    transition: color 0.15s, border-color 0.15s, background 0.15s;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .nav-item:hover {
+    color: var(--text);
+    background: var(--bg);
+    border-left-color: var(--border);
+  }
+
+  .nav-item.active {
+    color: var(--green);
+    border-left-color: var(--green);
+    background: var(--green-dim);
+  }
+
+  .nav-footer {
+    margin-top: auto;
+    padding: 20px 24px 0;
+    border-top: 1px solid var(--border);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--faint);
+    line-height: 1.6;
+  }
+
+  main {
+    flex: 1;
+    padding: 56px 64px 120px;
+    max-width: 860px;
+  }
+
+  .page-eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 12px;
+  }
+
+  h1 {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    color: var(--text);
+    margin-bottom: 20px;
+  }
+
+  .lead {
+    font-size: 14px;
+    line-height: 1.75;
+    color: #3a3a3a;
+    margin-bottom: 28px;
+    max-width: 680px;
+  }
+
+  .lead strong { color: var(--text); font-weight: 600; }
+
+  .lead a {
+    color: var(--green);
+    text-decoration: none;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+  }
+
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 40px 0;
+    max-width: 680px;
+  }
+
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin-top: 52px;
+    margin-bottom: 2px;
+    max-width: 680px;
+  }
+
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 20px 18px;
+  }
+
+  .stat-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--green);
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .stat-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--faint);
+  }
+
+  .footer {
+    margin-top: 80px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    color: var(--faint);
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 768px) {
+    nav { display: none; }
+    main { padding: 32px 24px 80px; }
+    .stats-row { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav id="shared-nav"></nav>
+
+<main>
+
+  <p class="page-eyebrow">Project Background</p>
+  <h1>How This Got Built</h1>
+
+  <p class="lead">
+    The goal was a persona-driven chatbot that could reproduce how people speak, not just what they say. The All-In Podcast was the obvious corpus — widely followed in tech circles, hundreds of episodes. The first challenge wasn't modeling language at all. YouTube transcripts lacked speaker attribution, so a custom pipeline was built to convert raw audio into speaker-labeled transcripts — and I got hooked doing it.
+  </p>
+
+  <p class="lead">
+    Building the pipeline meant needing training data. Getting training data meant building a labeling tool. Having a labeling tool meant actually using it — which meant sitting with thousands of transcript segments, listening, correcting, noticing things. Patterns that a classifier would have scored and moved on from became visible: crosstalk, mic bleed, diarization artifacts, speakers who sounded close enough to each other that no embedding could cleanly separate them. Each layer exposed the one underneath it.
+  </p>
+
+  <p class="lead">
+    That process produced <strong>Clownfish</strong> — a Streamlit HITL tool for reviewing and mapping NeMo speaker IDs to named labels at scale. Clownfish evolved into <strong>Brody</strong>, with integrated heuristics and deeper transcript inspection. From there it became a process of tinkering with audio files and hyperparameters to surface ghost audio — segments where words are heard but never transcribed. The pipeline wasn't a detour. It turned out to be the project, and it's still going.
+  </p>
+
+  <hr class="divider">
+
+  <p class="lead">
+    The chatbot is built. Personas load, inference runs, the voices are recognizable. What remains unsolved is the training — LoRA fine-tuning is on hold while the right data composition gets worked out. The transcripts need to be clean enough, labeled well enough, and representative enough that the fine-tune actually transfers. Which is exactly what all of this has been about.
+  </p>
+
+  <p class="lead">
+    The pipeline detail is in <a href="voice_classifier.html">Voice Classification ↗</a>. The edge cases are in <a href="heuristics.html">HITL Heuristics ↗</a>. What fell out of all of it is in <a href="chasing_ghosts.html">Chasing Ghosts ↗</a>.
+  </p>
+
+  <div class="stats-row">
+    <div class="stat-card">
+      <span class="stat-num">530+</span>
+      <span class="stat-label">Episodes labeled</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-num">100k+</span>
+      <span class="stat-label">Training audio clips</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-num">100+</span>
+      <span class="stat-label">Guests classified</span>
+    </div>
+  </div>
+
+  <div class="footer">Mason Thompson · Berkeley, California</div>
+
+</main>
+
+<script>
+window.NAV_ANCHORS = [];
+</script>
+<script src="https://pdf-sorcerer.github.io/alp/nav-loader.js" data-page="about"></script>
+</body>
+</html>

@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ALL-LLM Pod | Voice Classifier</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap');
+
+:root{
+--green:#0A84FF;
+--green-dim:rgba(10,132,255,0.12);
+--bg:#f9f9f9;
+--surface:#ffffff;
+--border:#e4e4e4;
+--code-bg:#0d1117;
+--text:#1a1a1a;
+--muted:#6b6b6b;
+--faint:#8c8c8c;
+--nav-width:220px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+
+body{
+font-family:'Inter',sans-serif;
+background:var(--bg);
+color:var(--text);
+display:flex;
+min-height:100vh;
+}
+
+nav{
+position:sticky;
+top:0;
+height:100vh;
+width:var(--nav-width);
+background:var(--surface);
+border-right:1px solid var(--border);
+padding:32px 0;
+display:flex;
+flex-direction:column;
+overflow-y:auto;
+}
+
+.nav-logo{
+font-family:'IBM Plex Mono',monospace;
+font-size:11px;
+font-weight:600;
+letter-spacing:.08em;
+text-transform:uppercase;
+color:var(--green);
+padding:0 24px 24px;
+border-bottom:1px solid var(--border);
+}
+
+.nav-section-label{
+font-family:'IBM Plex Mono',monospace;
+font-size:9px;
+font-weight:600;
+letter-spacing:.12em;
+text-transform:uppercase;
+color:var(--faint);
+padding:20px 24px 8px;
+}
+
+.nav-item{
+display:block;
+font-family:'IBM Plex Mono',monospace;
+font-size:11px;
+color:var(--muted);
+text-decoration:none;
+padding:7px 24px;
+border-left:2px solid transparent;
+transition:color .15s,border-color .15s,background .15s;
+white-space:nowrap;
+overflow:hidden;
+text-overflow:ellipsis;
+}
+
+.nav-item:hover{
+color:var(--text);
+background:var(--bg);
+border-left-color:var(--border);
+}
+
+.nav-item.active{
+color:var(--green);
+border-left-color:var(--green);
+background:var(--green-dim);
+}
+
+.nav-footer{
+margin-top:auto;
+padding:20px 24px 0;
+border-top:1px solid var(--border);
+font-family:'IBM Plex Mono',monospace;
+font-size:10px;
+color:var(--faint);
+line-height:1.6;
+}
+
+main{
+flex:1;
+padding:56px 64px 120px;
+max-width:900px;
+}
+
+.page-eyebrow{
+font-family:'IBM Plex Mono',monospace;
+font-size:10px;
+letter-spacing:.12em;
+text-transform:uppercase;
+color:var(--green);
+margin-bottom:12px;
+}
+
+h1{
+font-size:28px;
+font-weight:700;
+letter-spacing:-.02em;
+margin-bottom:20px;
+}
+
+h2{
+font-family:'IBM Plex Mono',monospace;
+font-size:13px;
+text-transform:uppercase;
+letter-spacing:.08em;
+margin-top:64px;
+margin-bottom:12px;
+}
+
+.lead{
+font-size:14px;
+line-height:1.75;
+color:#3a3a3a;
+max-width:720px;
+margin-bottom:22px;
+}
+
+.block{
+border:1px solid var(--border);
+border-radius:4px;
+overflow:hidden;
+margin-bottom:16px;
+background:var(--surface);
+}
+
+.block-header{
+padding:14px 18px;
+cursor:pointer;
+font-family:'IBM Plex Mono',monospace;
+font-size:12px;
+background:#fafafa;
+}
+
+.block-body{
+display:none;
+padding:22px 24px;
+font-family:'IBM Plex Mono',monospace;
+font-size:12px;
+line-height:1.9;
+white-space:pre-line;
+}
+
+.block.open .block-body{display:block}
+
+.image-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:24px;
+margin-top:28px;
+margin-bottom:28px;
+}
+
+.image-grid img{
+width:100%;
+border:1px solid var(--border);
+cursor:pointer;
+transition:transform .15s ease;
+}
+
+.image-grid img:hover{transform:scale(1.02);}
+
+.two-col{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:24px;
+margin-top:40px;
+}
+
+.two-col > div{
+min-width:0;
+}
+
+.panel-label{
+font-family:'IBM Plex Mono',monospace;
+font-size:10px;
+letter-spacing:.1em;
+text-transform:uppercase;
+color:var(--muted);
+margin-bottom:10px;
+}
+
+.code{
+background:var(--code-bg);
+border-radius:4px;
+padding:18px 20px;
+overflow:hidden;
+min-width:0;
+}
+
+.code pre{
+font-family:'IBM Plex Mono',monospace;
+font-size:11px;
+line-height:1.7;
+color:#c9d1d9;
+white-space:pre-wrap;
+word-break:break-all;
+overflow-wrap:break-word;
+}
+
+.modal{
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.9);
+justify-content:center;
+align-items:center;
+z-index:9999;
+}
+
+.modal img{
+max-width:90%;
+max-height:90%;
+}
+
+@media(max-width:900px){
+nav{display:none;}
+main{padding:32px 24px;}
+.image-grid{grid-template-columns:1fr;}
+.two-col{grid-template-columns:1fr;}
+}
+</style>
+</head>
+
+<body>
+
+<nav id="shared-nav"></nav>
+
+<main>
+
+<p class="page-eyebrow">Speaker Identification Architecture</p>
+<h1>Speaker Classification Policy Evolution</h1>
+
+<h2 id="v1">V1 — Host-Only Classification</h2>
+
+<p class="lead">
+The first system used four binary classifiers trained on ~9,000 clips pulled from 98 episodes using WhisperX and Pyannote. It reached 97.9% validation accuracy, though Chamath and JCal consistently overlapped due to similar cadence and speaking patterns.
+<br><br>
+The unexpected problem was guests. I had excluded guest audio entirely because guests were irrelevant to my goals, not realizing I needed hard negative examples. Without them, the classifier would happily force unknown speakers into the closest-matching host class even when the probability of a true match was effectively zero. Pretty embarrassing. I took a couple days and made a movie to document it, which was cathartic.
+</p>
+
+<a href="https://www.youtube.com/watch?v=RpVeED6ExNQ" target="_blank" style="display:block;margin:22px 0 36px;max-width:520px;">
+  <img src="https://img.youtube.com/vi/RpVeED6ExNQ/maxresdefault.jpg" alt="V1 classifier failure short film on YouTube" style="width:100%;border:1px solid var(--border);border-radius:4px;display:block;transition:transform .15s ease;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+</a>
+
+<h2 id="v2">V2 — Human-in-the-Loop Scaling &amp; Embedding Stability</h2>
+
+<p class="lead">
+The next iteration introduced <strong>Clownfish</strong>, a Streamlit-based review system for manually remapping Pyannote speaker IDs into verified speaker labels using synchronized transcript, audio, and video review. Each correction automatically propagated through the transcript and sorted audio into clean per-speaker datasets.
+<br><br>
+This workflow was enormously effective and allowed me to build the first reliable guest-inclusive corpus. Here is how quickly an episode could be processed:
+</p>
+
+<a href="https://www.youtube.com/watch?v=UPnnOCWqiAw" target="_blank" style="display:block;margin:22px 0 36px;max-width:520px;">
+  <img src="https://img.youtube.com/vi/UPnnOCWqiAw/maxresdefault.jpg" alt="Clownfish demo on YouTube" style="width:100%;border:1px solid var(--border);border-radius:4px;display:block;transition:transform .15s ease;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+</a>
+
+<p class="lead">
+At the same time, I replaced Pyannote embeddings with Nvidia NeMo / TitaNet, which produced tighter clustering and more stable cosine separation across hundreds of episodes. Episode E136 eventually became the failure case that exposed the system's underlying geometric instability.
+</p>
+
+<div class="image-grid">
+  <img src="images/pyannote.png" onclick="openModal(this)" alt="Pyannote embedding visualization">
+  <img src="images/nemo.png" onclick="openModal(this)" alt="NeMo embedding visualization">
+</div>
+
+<p class="lead">
+Clownfish eventually extracted 85,619 labeled samples across five classes with 97.98% held-out accuracy. More importantly, the embedding space finally behaved consistently enough to trust operationally: the Chamath↔JCal overlap largely disappeared, and boundary failures became interpretable instead of stochastic.
+</p>
+
+  <div class="image-grid">
+  <img src="images/v4_error_1" onclick="openModal(this)" alt="Pyannote embedding visualization">
+  <img src="images/v4_error_2" onclick="openModal(this)" alt="NeMo embedding visualization">
+</div>
+
+<h2 id="v3">V3 — Structural Failure</h2>
+
+<p class="lead">
+The final classifier failed for a more fundamental reason: the label space itself was not cleanly separable.
+<br><br>
+The system trained only on longer-form audio (&gt;5 seconds). Those segments were classified directly by speaker, and the labels were then propagated back onto shorter clips through shared NeMo cluster IDs.
+<br><br>
+In episode E136, Brad Gerstner's embeddings overlapped directly with multiple hosts — including JCal, who was not even present in the episode. Some Brad segments sat closer to JCal's voice than JCal's own clips sat to each other, likely because of JCal's unusually dynamic cadence.
+<br><br>
+Even more concerning, Gerstner was frequently misattributed as Friedberg, who actually was present in the episode. I caught the issue while manually reviewing longer clips that should have been classified directly instead of inheriting propagated labels.
+</p>
+
+<div class="block open">
+  <div class="block-header">Silent Failure</div>
+  <div class="block-body">The system had been failing silently while reporting near-perfect confidence.</div>
+</div>
+
+<p class="lead">
+Dogfooding the transcripts saved me, and the classifier was removed entirely. I ultimately settled on NeMo clustering plus human-in-the-loop mapping and review, which proved reliable enough that I later expanded the same workflow to catch entirely different classes of transcript corruption discussed elsewhere in the project.
+</p>
+
+<div class="two-col">
+
+  <div>
+    <div class="panel-label">Long Segment · Misclassified</div>
+    <div class="code">
+<pre>{
+  "speaker_id": "SPEAKER_03", // Brad's ID
+  "is_lizard": false,
+  <span style="color:#ff6b6b;">"custom_speaker": "friedberg",</span> // actually Brad
+  "confidence": 0.9999877,
+  "duration": 10.4119,
+  "text": "Number one, if we flashback to what went on in China with Toutiao and Douyan...",
+  <span style="color:#ff6b6b;">"speaker_id_propagated": true</span>
+}</pre>
+    </div>
+  </div>
+
+  <div>
+    <div class="panel-label">Short Segment · Also Misclassified</div>
+    <div class="code">
+<pre>{
+  "speaker_id": "SPEAKER_04", // Friedberg's ID
+  "is_lizard": true,
+  <span style="color:#ff6b6b;">"custom_speaker": "friedberg",</span> // actually Brad
+  "confidence": 0.0,
+  "duration": 0.3200,
+  "text": "Where is JCal?", // Brad is talking
+  "speaker_id_propagated": true
+}</pre>
+    </div>
+  </div>
+
+</div>
+
+<div class="block">
+  <div class="block-header">Brad — Embedding Geometry</div>
+  <div class="block-body">Inter-host baseline:        0.8740
+JCal intra-class baseline:  0.4842
+
+Brad → Chamath:   0.9181  (above inter-host baseline)
+Brad → Sacks:     0.7774  (below inter-host baseline)
+Brad → Friedberg: 0.8007  (below inter-host baseline)
+Brad → JCal min:  0.2507  (below JCal's own intra-class baseline)
+
+Some of Brad's segments were geometrically closer to JCal than JCal's own clips were to each other. A label space built on these embeddings wasn't ground truth — it was confident slop.</div>
+</div>
+
+</main>
+
+<div id="modal" class="modal" onclick="closeModal()">
+  <img id="modalImg" alt="Expanded visualization">
+</div>
+
+<script>
+document.querySelectorAll('.block-header').forEach(h=>{
+  h.addEventListener('click',()=>{
+    h.parentElement.classList.toggle('open');
+  });
+});
+
+function openModal(img){
+  document.getElementById("modalImg").src = img.src;
+  document.getElementById("modal").style.display = "flex";
+}
+
+function closeModal(){
+  document.getElementById("modal").style.display = "none";
+}
+</script>
+
+<script>
+window.NAV_ANCHORS = [
+  { href: '#v1', label: 'V1' },
+  { href: '#v2', label: 'V2' },
+  { href: '#v3', label: 'V3' }
+];
+</script>
+<script src="https://pdf-sorcerer.github.io/alp/nav-loader.js" data-page="voice_classifier"></script>
+
+</body>
+</html>
