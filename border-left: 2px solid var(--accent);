@@ -8,8 +8,8 @@
   @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap');
 
   :root {
-    --green: #76b900;
-    --green-dim: rgba(118, 185, 0, 0.12);
+    --accent: #2563eb;
+    --accent-dim: rgba(37, 99, 235, 0.10);
     --bg: #f9f9f9;
     --surface: #ffffff;
     --border: #e4e4e4;
@@ -50,7 +50,7 @@
     font-weight: 600;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--green);
+     var(--accent)
     padding: 0 24px 28px;
     border-bottom: 1px solid var(--border);
   }
@@ -86,9 +86,9 @@
   }
 
   .nav-item.active {
-    color: var(--green);
-    border-left-color: var(--green);
-    background: var(--green-dim);
+    color: var(--accent);
+    border-left-color: var(--accent);
+    background: var(--accent-dim);
   }
 
   .nav-footer {
@@ -113,7 +113,7 @@
     font-weight: 600;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--green);
+    color: var(--accent);
     margin-bottom: 12px;
   }
 
@@ -137,10 +137,38 @@
   .lead strong { color: var(--text); font-weight: 600; }
 
   .lead a {
-    color: var(--green);
+    color: var(--accent);
     text-decoration: none;
     font-family: 'IBM Plex Mono', monospace;
     font-size: 13px;
+  }
+
+  .tool-list {
+    display: grid;
+    gap: 14px;
+    max-width: 680px;
+    margin: 4px 0 32px;
+  }
+
+  .tool-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 3px;
+    padding: 16px 18px;
+    font-size: 14px;
+    line-height: 1.7;
+    color: #3a3a3a;
+  }
+
+  .tool-item strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .tool-item em {
+    color: var(--muted);
+    font-style: italic;
   }
 
   .divider {
@@ -170,7 +198,7 @@
     font-family: 'IBM Plex Mono', monospace;
     font-size: 22px;
     font-weight: 600;
-    color: var(--green);
+    color: var(--accent);
     display: block;
     margin-bottom: 4px;
   }
@@ -206,25 +234,43 @@
 <main>
 
   <p class="page-eyebrow">Project Background</p>
-  <h1>How This Got Built</h1>
+  <h1>Motivation</h1>
 
   <p class="lead">
-    The goal was a persona-driven chatbot that could reproduce how people speak, not just what they say. The All-In Podcast was the obvious corpus — widely followed in tech circles, hundreds of episodes. The first challenge wasn't modeling language at all. YouTube transcripts lacked speaker attribution, so a custom pipeline was built to convert raw audio into speaker-labeled transcripts — and I got hooked doing it.
+    The original goal in 2025 was simple: create a helper iOS app that could rewrite my ideas in the voices of the All-In hosts. I think style transfer is fascinating and, because frankly, I think the idea is hilarious.
   </p>
 
   <p class="lead">
-    Building the pipeline meant needing training data. Getting training data meant building a labeling tool. Having a labeling tool meant actually using it — which meant sitting with thousands of transcript segments, listening, correcting, noticing things. Patterns that a classifier would have scored and moved on from became visible: crosstalk, mic bleed, diarization artifacts, speakers who sounded close enough to each other that no embedding could cleanly separate them. Each layer exposed the one underneath it.
+    Having the voices of the All-In hosts implied having transcripts from their podcast, which had to be created from the ground up. Transcripts required accurate speaker labeling. Accurate speaker labeling required HITL forensic review and repair. So on, so forth.
   </p>
 
   <p class="lead">
-    That process produced <strong>Clownfish</strong> — a Streamlit HITL tool for reviewing and mapping NeMo speaker IDs to named labels at scale. Clownfish evolved into <strong>Brody</strong>, with integrated heuristics and deeper transcript inspection. From there it became a process of tinkering with audio files and hyperparameters to surface ghost audio — segments where words are heard but never transcribed. The pipeline wasn't a detour. It turned out to be the project, and it's still going.
+    Every milestone revealed another layer. The princess was always in another castle.
+  </p>
+
+  <p class="lead">
+    So what began as a "move fast and MVP chatbot" project gradually turned into a serious observability project for AI pipelines. Transcripts have been, by far, the most challenging and rewarding part of the project. The pursuit of quality and ground-truth accuracy led to a series of increasingly specialized tools:
+  </p>
+
+  <div class="tool-list">
+    <div class="tool-item">
+      <strong>Clownfish</strong> — maps speaker IDs to names and extracts labeled training audio and video.
+    </div>
+
+    <div class="tool-item">
+      <strong>Brody</strong> — applies lexical heuristics and transcript inspection workflows to identify, review, and repair transcription and classification errors.
+    </div>
+
+    <div class="tool-item">
+      <strong>BERD-1</strong> (<em>Bio-Ectoplasmic Resonance Detector</em>) — investigates ghost audio: faint but audible speech missing from the transcript. BERD-1 explores decoder beam paths and induces localized Whisper hallucinations to trace where speech disappears during generation.
+    </div>
+  </div>
+
+  <p class="lead">
+    At some point the pipeline stopped being a prerequisite for the project and became the project itself. The chatbot was the destination. The transcripts were the journey.
   </p>
 
   <hr class="divider">
-
-  <p class="lead">
-    The chatbot is built. Personas load, inference runs, the voices are recognizable. What remains unsolved is the training — LoRA fine-tuning is on hold while the right data composition gets worked out. The transcripts need to be clean enough, labeled well enough, and representative enough that the fine-tune actually transfers. Which is exactly what all of this has been about.
-  </p>
 
   <p class="lead">
     The pipeline detail is in <a href="voice_classifier.html">Voice Classification ↗</a>. The edge cases are in <a href="heuristics.html">HITL Heuristics ↗</a>. What fell out of all of it is in <a href="chasing_ghosts.html">Chasing Ghosts ↗</a>.
