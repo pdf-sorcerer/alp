@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ALL-LLLM POD | Mason Thompson</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --green: #0A84FF;
+      --green-dim: rgba(10, 132, 255, 0.12);
+      --bg: #f9f9f9;
+      --surface: #ffffff;
+      --border: #e4e4e4;
+      --code-bg: #0d1117;
+      --text: #1a1a1a;
+      --muted: #6b6b6b;
+      --faint: #8c8c8c;
+      --nav-width: 220px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── DESKTOP NAV ── */
+    #shared-nav {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      width: var(--nav-width);
+      flex-shrink: 0;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      padding: 32px 0;
+      overflow-y: auto;
+    }
+
+    .nav-logo {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--green);
+      padding: 0 24px 28px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-section-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--faint);
+      padding: 18px 24px 8px;
+    }
+
+    .nav-item {
+      display: block;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 7px 24px;
+      border-left: 2px solid transparent;
+      transition: color 0.15s, border-color 0.15s, background 0.15s;
+    }
+
+    .nav-item:hover { color: var(--text); background: var(--bg); border-left-color: var(--border); }
+    .nav-item.active { color: var(--green); border-left-color: var(--green); background: var(--green-dim); }
+
+    main {
+      flex: 1;
+      padding: 56px 64px 120px;
+      max-width: 860px;
+      min-width: 0;
+    }
+
+    .site-banner {
+      margin: 0 0 18px 0;
+      width: 100%;
+      display: block;
+      border: 0;
+      background: var(--code-bg);
+      padding: 0;
+      overflow: hidden;
+      border-radius: 3px;
+    }
+
+    .site-banner img {
+      display: block;
+      width: 100%;
+      height: 210px;
+      object-fit: cover;
+      object-position: center 22%;
+    }
+
+    .banner-caption {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      margin: 8px 0 36px 0;
+      text-transform: uppercase;
+    }
+
+    .page-eyebrow {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 12px;
+    }
+
+    h1 { font-size: 28px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 14px; }
+
+    .lead { font-size: 14px; line-height: 1.75; color: #3a3a3a; max-width: 720px; margin-bottom: 52px; }
+    .lead strong { font-weight: 600; color: var(--text); }
+
+    .inline-tag {
+      display: inline-block;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.9em;
+      color: var(--green);
+      background: var(--green-dim);
+      padding: 2px 5px;
+      border-radius: 3px;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .inline-tag:hover { background: rgba(10, 132, 255, 0.20); }
+
+    code {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.92em;
+      background: var(--green-dim);
+      border: 1px solid rgba(10, 132, 255, 0.18);
+      border-radius: 3px;
+      padding: 2px 6px;
+      color: var(--text);
+      white-space: nowrap;
+    }
+
+    .tabs-wrapper { margin-bottom: 52px; }
+
+    .tab-bar {
+      display: flex;
+      gap: 2px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 0;
+    }
+
+    .tab-btn {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid transparent;
+      padding: 10px 20px;
+      cursor: pointer;
+      margin-bottom: -1px;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .tab-btn:hover { color: var(--text); }
+    .tab-btn.active { color: var(--green); border-bottom-color: var(--green); }
+
+    .tab-panel { padding-top: 24px; }
+
+    .pipeline-table {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      line-height: 1.6;
+      background: var(--code-bg);
+      color: #c9d1d9;
+      padding: 28px 32px;
+      border-radius: 4px;
+      overflow-x: auto;
+      white-space: pre;
+      margin-bottom: 52px;
+      max-width: 100%;
+    }
+
+    .youtube-teaser {
+      display: grid;
+      grid-template-columns: 0.85fr 1.15fr;
+      gap: 24px;
+      align-items: stretch;
+      margin-bottom: 32px;
+      padding: 18px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      border-radius: 4px;
+    }
+
+    .youtube-copy h2 { font-size: 18px; line-height: 1.25; letter-spacing: -0.01em; margin-bottom: 10px; }
+    .youtube-copy p:not(.video-section-label) { font-size: 13px; line-height: 1.65; color: var(--muted); }
+
+    .youtube-frame {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: var(--code-bg);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .youtube-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
+    .demo-video-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 24px; }
+    .video-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    .video-section-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--faint);
+      margin-bottom: 10px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .video-cell {
+      background: var(--code-bg);
+      border: 1px solid #2a2a2a;
+      border-radius: 4px;
+      padding: 0;
+      cursor: pointer;
+      text-align: left;
+      overflow: hidden;
+      transition: border-color 0.15s;
+      width: 100%;
+    }
+    .video-cell:hover { border-color: var(--green); }
+
+    .video-thumb {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #111;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .video-name {
+      position: absolute; bottom: 6px; left: 8px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px; font-weight: 600;
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 0.06em; text-transform: uppercase;
+    }
+    .play-icon { font-size: 28px; color: rgba(255,255,255,0.3); transition: color 0.15s; }
+    .video-cell:hover .play-icon { color: var(--green); }
+    .video-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--muted); padding: 10px 14px;
+      border-top: 1px solid #1e1e1e;
+    }
+
+    .video-lightbox {
+      position: fixed; inset: 0;
+      background: rgba(13,17,23,0.96);
+      display: none; align-items: center; justify-content: center;
+      z-index: 2000; cursor: zoom-out; padding: 32px;
+      flex-direction: column; gap: 16px;
+    }
+    .video-lightbox.is-open { display: flex; }
+    .video-lightbox video { max-width: 100%; max-height: 80vh; border-radius: 4px; box-shadow: 0 8px 40px rgba(0,0,0,0.6); }
+    .video-lightbox-label { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.5); }
+    .video-lightbox-close {
+      position: absolute; top: 20px; right: 24px;
+      font-family: 'IBM Plex Mono', monospace; font-size: 11px;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: rgba(255,255,255,0.7); background: transparent;
+      border: 1px solid rgba(255,255,255,0.25); border-radius: 3px;
+      padding: 6px 14px; cursor: pointer;
+    }
+
+    .footer {
+      margin-top: 72px; padding-top: 24px; border-top: 1px solid var(--border);
+      font-family: 'IBM Plex Mono', monospace; font-size: 10px;
+      letter-spacing: 0.06em; text-transform: uppercase; color: var(--faint);
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 768px) {
+      /* Nav hidden off-screen — nav-loader.js handles the drawer */
+      #shared-nav {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        height: 100vh !important;
+        width: 260px !important;
+        z-index: 10001 !important;
+        transform: translateX(-100%) !important;
+        transition: transform 0.25s ease !important;
+        overflow-y: auto !important;
+        box-shadow: 2px 0 12px rgba(0,0,0,0.12) !important;
+        /* override the desktop sticky/flex behaviour */
+        flex-shrink: 0 !important;
+      }
+      #shared-nav.open {
+        transform: translateX(0) !important;
+      }
+
+      main {
+        padding: 64px 20px 80px;
+        width: 100%;
+        max-width: 100%;
+      }
+
+      .site-banner img { height: 110px; }
+
+      /* Fix tab content overflow */
+      .tabs-wrapper { overflow: hidden; }
+      .tab-panel { overflow-x: auto; }
+      .pipeline-table { font-size: 9px; padding: 16px; }
+
+      .youtube-teaser,
+      .demo-video-grid,
+      .video-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+  <nav id="shared-nav"></nav>
+
+  <main>
+    <div class="site-banner">
+      <img src="all-llm-pod-wide.png" alt="ALL-LLLM POD cast: satirical portraits of Chamath, JCal, Sacks, and Friedberg">
+    </div>
+
+    <p class="banner-caption">Satirical ALL-In personas</p>
+    <p class="page-eyebrow">Multi-Agent Local LLM System</p>
+    <h1>ALL-LLLM POD</h1>
+
+    <p class="lead">
+      Hey, everybody!
+      <br><br>
+      Welcome to the number one <strong>ALL-LLLM POD</strong>: a technically serious generative AI system built around an intentionally unserious premise: conversational chatbot parodies of the <i>All-In Podcast</i> hosts (aka: Besties).
+      <br><br>
+      The Besties are reconstructed from 560+ episodes using two parallel pipelines. The <strong>audio pipeline</strong> handles VAD, ASR, diarization, speaker classification, and human-in-the-loop transcript repair. The <strong>video pipeline</strong> extracts non-verbal patterns — posture, movement, gaze, and expression — through face and body recognition.
+      <br><br>
+      See the left navbar for the big picture. More detailed looks at helper apps and supporting workflows are in
+      <a href="important_sidequests.html" class="inline-tag">Important Sidequests ↗</a>.
+    </p>
+
+    <div class="tabs-wrapper">
+      <div class="tab-bar" role="tablist" aria-label="Overview media tabs">
+        <button id="btn-pipeline" class="tab-btn active" type="button" role="tab" aria-selected="true" aria-controls="tab-pipeline" onclick="switchTab('pipeline')">Pipeline</button>
+        <button id="btn-videos" class="tab-btn" type="button" role="tab" aria-selected="false" aria-controls="tab-videos" onclick="switchTab('videos')">Demo Videos</button>
+      </div>
+
+      <div class="tab-panel" id="tab-pipeline" role="tabpanel" aria-labelledby="btn-pipeline">
+        <pre class="pipeline-table">+-----------------------------+----------------------+----------------------------+
+| PIPELINE STAGE              | TOOL / LIBRARY       | FUNCTION                   |
++-----------------------------+----------------------+----------------------------+
+|            AUDIO PIPELINE                                                       |
++-----------------------------+----------------------+----------------------------+
+| VAD                         | Pyannote (library)   | Detects speech activity    |
+|                             |                      | boundaries; runs inside    |
+|                             |                      | WhisperX prior to ASR      |
++-----------------------------+----------------------+----------------------------+
+| ASR / Transcription         | WhisperX (library)   | Converts audio to          |
+|                             |                      | structured text with       |
+|                             |                      | word-level timestamps      |
++-----------------------------+----------------------+----------------------------+
+| UEM Generation              | WhisperX (library)   | Writes segment timestamps  |
+|                             |                      | to UEM; boundaries are     |
+|                             |                      | VAD-informed by Pyannote   |
++-----------------------------+----------------------+----------------------------+
+| Diarization (constrained)   | NeMo (toolkit)       | Answers "who spoke here"   |
+|                             |                      | within Pyannote VAD +      |
+|                             |                      | WhisperX timestamp windows |
++-----------------------------+----------------------+----------------------------+
+| Speaker Classification      | NeMo (toolkit)       | Assigns embedding IDs to   |
+|                             |                      | diarized segments          |
++-----------------------------+----------------------+----------------------------+
+| HITL Classification         | Streamlit (framework)| Human maps embedding IDs   |
+|                             |                      | to named speakers via      |
+|                             |                      | audio playback review      |
++-----------------------------+----------------------+----------------------------+
+| Transcript Forensics        | Streamlit (framework)| Heuristic pass catches     |
+|                             |                      | ASR errors and segment     |
+|                             |                      | boundary errors; blind to  |
+|                             |                      | errors of omission         |
++-----------------------------+----------------------+----------------------------+
+| Transcript Mining           | Python / terminal    | Extracts recurring         |
+|                             |                      | arguments, reasoning       |
+|                             |                      | patterns, long-term views  |
++-----------------------------+----------------------+----------------------------+
+|            VIDEO PIPELINE                                                       |
++-----------------------------+----------------------+----------------------------+
+| Face & Body Recognition     | InsightFace, OpenCV  | Identifies speakers        |
+|                             | (libraries)          | visually across video      |
++-----------------------------+----------------------+----------------------------+
+| Non-Verbal Extraction       | MediaPipe (library), | Captures posture,          |
+|                             | ONNX Runtime (GPU)   | movement, gaze, expression |
++-----------------------------+----------------------+----------------------------+
+| Voice / TTS                 | F5-TTS (library)     | Synthesizes speaker voice  |
+|                             |                      | for inference and playback |
++-----------------------------+----------------------+----------------------------+</pre>
+      </div>
+
+      <div class="tab-panel" id="tab-videos" role="tabpanel" aria-labelledby="btn-videos" style="display:none;">
+        <div class="youtube-teaser">
+          <div class="youtube-copy">
+            <p class="video-section-label"></p>
+            <h2>ALL-LLLM POD</h2>
+            <p>Premise? Satirical. Pipeline? Real.</p>
+          </div>
+          <div class="youtube-frame">
+            <iframe
+              src="https://www.youtube.com/embed/KyH0rGQVerg"
+              title="June 2026 Trailer"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen>
+            </iframe>
+          </div>
+        </div>
+
+        <div class="demo-video-grid">
+          <div>
+            <p class="video-section-label">App v1 on Mistral-7B</p>
+            <div class="video-grid">
+              <button class="video-cell" type="button" onclick="openVideoLightbox('sacksv1.mp4', 'Sacks v1')">
+                <div class="video-thumb"><div class="video-name">Sacks</div><div class="play-icon">▶</div></div>
+                <div class="video-label">Sacks v1</div>
+              </button>
+              <button class="video-cell" type="button" onclick="openVideoLightbox('chamathv1.mp4', 'Chamath v1')">
+                <div class="video-thumb"><div class="video-name">Chamath</div><div class="play-icon">▶</div></div>
+                <div class="video-label">Chamath v1</div>
+              </button>
+              <button class="video-cell" type="button" onclick="openVideoLightbox('jcalv1.mp4', 'JCal v1')">
+                <div class="video-thumb"><div class="video-name">JCal</div><div class="play-icon">▶</div></div>
+                <div class="video-label">JCal v1</div>
+              </button>
+              <button class="video-cell" type="button" onclick="openVideoLightbox('friedbergv1.mp4', 'Friedberg v1')">
+                <div class="video-thumb"><div class="video-name">Friedberg</div><div class="play-icon">▶</div></div>
+                <div class="video-label">Friedberg v1</div>
+              </button>
+            </div>
+          </div>
+          <div>
+            <p class="video-section-label">App v2 on Qwen3-30B MoE Abliterated</p>
+            <div class="video-grid">
+              <button class="video-cell" type="button" onclick="openVideoLightbox('sacksv2.mp4', 'Sacks v2')">
+                <div class="video-thumb"><div class="video-name">Sacks</div><div class="play-icon">▶</div></div>
+                <div class="video-label">Sacks v2</div>
+              </button>
+              <button class="video-cell" type="button" onclick="openVideoLightbox('chamathv2.mp4', 'Chamath v2')">
+                <div class="video-thumb"><div class="video-name">Chamath</div><div class="play-icon">▶</div></div>
+                <div class="video-label">Chamath v2</div>
+              </button>
+              <button class="video-cell" type="button" onclick="openVideoLightbox('jcalv2.mp4', 'JCal v2')">
+                <div class="video-thumb"><div class="video-name">JCal</div><div class="play-icon">▶</div></div>
+                <div class="video-label">JCal v2</div>
+              </button>
+              <button class="video-cell" type="button" onclick="openVideoLightbox('friedbergv2.mp4', 'Friedberg v2')">
+                <div class="video-thumb"><div class="video-name">Friedberg</div><div class="play-icon">▶</div></div>
+                <div class="video-label">Friedberg v2</div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">Mason Thompson · Berkeley, California</div>
+  </main>
+
+  <div class="video-lightbox" id="videoLightbox" onclick="closeVideoLightbox()">
+    <button type="button" class="video-lightbox-close" onclick="closeVideoLightbox()">Close ×</button>
+    <video id="lightboxVideo" controls></video>
+    <div class="video-lightbox-label" id="lightboxVideoLabel"></div>
+  </div>
+
+  <script>
+    function switchTab(name) {
+      const pipeline = document.getElementById('tab-pipeline');
+      const videos   = document.getElementById('tab-videos');
+      const btnP     = document.getElementById('btn-pipeline');
+      const btnV     = document.getElementById('btn-videos');
+      const showP    = name === 'pipeline';
+      pipeline.style.display = showP ? 'block' : 'none';
+      videos.style.display   = showP ? 'none'  : 'block';
+      btnP.classList.toggle('active', showP);
+      btnV.classList.toggle('active', !showP);
+      btnP.setAttribute('aria-selected', showP ? 'true' : 'false');
+      btnV.setAttribute('aria-selected', showP ? 'false' : 'true');
+    }
+
+    function openVideoLightbox(src, label) {
+      const lb  = document.getElementById('videoLightbox');
+      const vid = document.getElementById('lightboxVideo');
+      document.getElementById('lightboxVideoLabel').textContent = label;
+      vid.src = src;
+      lb.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+      vid.play();
+    }
+
+    function closeVideoLightbox() {
+      const vid = document.getElementById('lightboxVideo');
+      vid.pause(); vid.src = '';
+      document.getElementById('videoLightbox').classList.remove('is-open');
+      document.body.style.overflow = '';
+    }
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeVideoLightbox();
+    });
+  </script>
+
+  <script src="https://pdf-sorcerer.github.io/alp/nav-loader.js" data-page="welcome"></script>
+</body>
+</html>
