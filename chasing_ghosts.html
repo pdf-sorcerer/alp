@@ -385,6 +385,40 @@
     </div>
   </details>
 
+  <details class="accordion-block">
+  <summary><span>Why Omissions Matter: Featuring <em>The Dark Knight (2008)</em></span></summary>
+
+  <div class="video-block">
+    <video controls>
+      <source src="them.mp4" type="video/mp4">
+    </video>
+    <div class="video-caption">SOURCE VIDEO · THE DARK KNIGHT (2008)</div>
+  </div>
+
+  <div class="comparison-grid">
+    <div class="comparison-card">
+      <h3>Movie Screenplay</h3>
+      <div class="transcript-box">
+        <p><strong>Joker:</strong> "There's only minutes left, so you'll have to play my little game if you want to save one of them."</p>
+        <p class="ghost-line"><strong>Batman:</strong> "Them?"</p>
+        <p><strong>Joker:</strong> "You know, for a while there, I thought you really were Dent. The way you threw yourself after her."</p>
+      </div>
+    </div>
+    <div class="comparison-card">
+      <h3>Ghost Audio Transcript</h3>
+      <div class="transcript-box">
+        <p><strong>Joker:</strong> "There's only minutes left, so you'll have to play my little game if you want to save one of them."</p>
+        <p><strong>Joker:</strong> "You know, for a while there, I thought you really were Dent. The way you threw yourself after her."</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <p>YouTube ASR failed to transcribe a single-word response from Batman: <code>"Them?"</code>. That response communicates a sudden shift in Batman's understanding: Joker has two hostages, not one.</p>
+    <p>The transcript reads cleanly. Nothing appears broken. The moment of realization — and the causal link between Joker's statement and Batman's reaction — is gone.</p>
+  </div>
+</details>
+
 
   <div class="section-heading">
     <h2>Discovery</h2>
@@ -446,39 +480,7 @@
     Most transcript errors leave fingerprints: ellipses, broken segment boundaries, lowercase continuations, third-person self-references, suspicious speaker turns. Ghost Audio leaves nothing. Speaker turns are distorted, context is wrong, relationships between ideas collapse — and the transcript reads as if nothing is missing. At training time, downstream examples teach the wrong relationships between prompts and completions.
   </p>
 
-  <details class="accordion-block">
-    <summary><span>Why Omissions Matter: Featuring <em>The Dark Knight (2008)</em></span></summary>
 
-    <div class="video-block">
-      <video controls>
-        <source src="them.mp4" type="video/mp4">
-      </video>
-      <div class="video-caption">SOURCE VIDEO · THE DARK KNIGHT (2008)</div>
-    </div>
-
-    <div class="comparison-grid">
-      <div class="comparison-card">
-        <h3>Movie Screenplay</h3>
-        <div class="transcript-box">
-          <p><strong>Joker:</strong> "There's only minutes left, so you'll have to play my little game if you want to save one of them."</p>
-          <p class="ghost-line"><strong>Batman:</strong> "Them?"</p>
-          <p><strong>Joker:</strong> "You know, for a while there, I thought you really were Dent. The way you threw yourself after her."</p>
-        </div>
-      </div>
-      <div class="comparison-card">
-        <h3>Ghost Audio Transcript</h3>
-        <div class="transcript-box">
-          <p><strong>Joker:</strong> "There's only minutes left, so you'll have to play my little game if you want to save one of them."</p>
-          <p><strong>Joker:</strong> "You know, for a while there, I thought you really were Dent. The way you threw yourself after her."</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="callout">
-      <p>YouTube ASR failed to transcribe a single-word response from Batman: <code>"Them?"</code>. That response communicates a sudden shift in Batman's understanding: Joker has two hostages, not one.</p>
-      <p>The transcript reads cleanly. Nothing appears broken. The moment of realization — and the causal link between Joker's statement and Batman's reaction — is gone.</p>
-    </div>
-  </details>
 
   <div class="section-heading">
     <h2>Acoustic Confirmation</h2>
