@@ -479,119 +479,207 @@
     Ghost Audio is not an ASR problem. Independent systems failed on the same audio for different reasons. That shifted the investigation away from transcript accuracy and toward decoder behavior. The question was no longer "why was this word missed?" but "what does the decoder do when it encounters speech it cannot confidently transcribe?"
   </p>
 
-  <div class="section-heading">
-    <h2>Decoder Fork</h2>
-  </div>
+<div class="section-heading">
+  <h2>Decoder Fork</h2>
+</div>
 
-  <p class="body">
-    Rather than treating Whisper as a black box, I built PWW, a separate PyTorch Whisper pipeline for inspecting decoder behavior directly.
-  </p>
+<p class="body">
+  The cross-attention graph showed that the decoder was looking at the ghost regions. The next question was whether the missing words were impossible, or whether they existed in a losing decode path.
+</p>
 
-  <p class="body">
-    Under a specific scout configuration — WhisperX VAD, 30-second merged chunks, reference PyTorch Whisper, beam=1, <code>condition_on_previous_text=False</code>, <code>pad_or_trim()</code>, and wav2vec alignment — Friedberg's missing "Oh, my god." reappeared.
-  </p>
+<p class="body">
+  Rather than treating Whisper as a black box, I built PWW, an adjacent PyTorch Whisper pipeline that exposes decoder probabilities directly.
+</p>
 
-  <p class="body">
-    The same pipeline produced localized hallucinations over the surrounding audio. Phrases such as <code>"I'm bullying when you're bullying."</code> appeared repeatedly across VAD-confirmed speech regions containing both Friedberg's and Gerstner's ghost audio. The scout transcript was not more accurate than the production transcript. It failed differently.
-  </p>
+<p class="body">
+  PWW showed that Friedberg's missing line was not impossible. After the timestamp anchor <code>&lt;|18.98|&gt;</code>, two viable futures existed: one matched the audio, and one skipped ahead to Friedberg's next line.
+</p>
 
-  <p class="body">
-    Production WhisperX advanced directly to the next stable phrase. The scout emitted short interjections, repetitions, and low-confidence text inside the skipped region. Those failures became the signal.
-  </p>
+<div class="beam-fork" aria-label="Beam fork diagram">
+  <div class="beam-root"><code>&lt;|18.98|&gt;</code></div>
+  <div class="beam-probe"><code>PWW</code> PROBE</div>
 
-  <p class="body">
-    The discovery was not that an alternate decoder could sometimes recover the ghost. It was that unstable speech produced recognizable failure patterns. When the production transcript skipped a region, the scout emitted repetitions, short interjections, or otherwise unstable text over the same timestamps. The disagreement between the two decoding paths became the detection signal.
-  </p>
+  <div class="beam-branches">
 
-  <div class="beam-fork" aria-label="Beam fork diagram">
-    <div class="beam-root"><code>&lt;|18.98|&gt;</code></div>
-    <div class="beam-probe"><code>PWW</code> PROBE</div>
-    <div class="beam-branches">
-      <div class="beam-card ghost-path">
-        <div class="beam-label">Ghost Path</div>
-        <div class="beam-subtitle">Ground Truth</div>
-        <div class="beam-quote">"Oh, my god."</div>
-        <div class="beam-token"><span>Oh</span><strong>89.24%</strong></div>
-        <div class="beam-token"><span>,</span><strong>49.93%</strong></div>
-        <div class="beam-token"><span>my</span><strong>97.67%</strong></div>
-        <div class="beam-token"><span>god</span><strong>90.67%</strong></div>
-        <div class="beam-token"><span>.</span><strong>90.67%</strong></div>
-        <div class="beam-joint">Joint: 35.78%</div>
-      </div>
-      <div class="beam-card winner-path">
-        <div class="beam-label">Winner Path</div>
-        <div class="beam-subtitle">Production Output</div>
-        <div class="beam-quote">"He's not even here."</div>
-        <div class="beam-token"><span>He</span><strong>45.29%</strong></div>
-        <div class="beam-token"><span>'s</span><strong>99.94%</strong></div>
-        <div class="beam-token"><span>not</span><strong>99.96%</strong></div>
-        <div class="beam-token"><span>even</span><strong>99.98%</strong></div>
-        <div class="beam-token"><span>here</span><strong>99.78%</strong></div>
-        <div class="beam-token"><span>.</span><strong>92.01%</strong></div>
-        <div class="beam-joint">Joint: 41.53%</div>
-      </div>
-    </div>
-          <div class="beam-margin">
-            <code>beam=5</code> ·
-            <code>Whisper-large-v3</code> ·
-            <code>PyTorch</code> ·
-            <code>token=130</code>
-          </div>
+    <div class="beam-card ghost-path">
+      <div class="beam-label">Ghost Path</div>
+      <div class="beam-subtitle">Ground Truth</div>
+      <div class="beam-quote">"Oh, my god."</div>
 
-  </div>
+      <div class="beam-token"><span>Oh</span><strong>89.24%</strong></div>
+      <div class="beam-token"><span>,</span><strong>49.93%</strong></div>
+      <div class="beam-token"><span>my</span><strong>97.67%</strong></div>
+      <div class="beam-token"><span>god</span><strong>90.67%</strong></div>
+      <div class="beam-token"><span>.</span><strong>90.67%</strong></div>
 
-  <p class="body">
-    The ground-truth path "Oh, my god." lost by 5.75 percentage points. The winning path — "He's not even here." — is real: it is the line Friedberg speaks next. The decoder skipped his actual utterance, locked onto the following line, and scored it higher than the thing he said first. With beam=1, the ground-truth path wins.
-  </p>
-
-  <p class="body">
-    The PWW pipeline with beam=1 produced hallucinations in the same regions where Friedberg and Gerstner spoke. Whisper is most susceptible to hallucinations in regions of silence. These regions were not silent. The encoder signals that speech exists. The decoder cannot transcribe it confidently and fills the gap with hallucinated output. Repetitive hallucinations in close proximity, over VAD-positive regions, are the ghost signal.
-  </p>
-
-  <div class="section-heading">
-    <h2>BERD-1</h2>
-  </div>
-
-  <p class="body">
-    BERD-1 compares two transcript inputs: the production WhisperX path using beam=5 and CTranslate2, and a beam=1 path that exposes Friedberg's ghost. The comparison can use either production WhisperX or the heavier PWW pipeline, which costs roughly 10× compute but produces localized hallucinations over both Friedberg and Gerstner's ghost regions. BERD-1 does not recover missing content. It creates a timestamped review queue. In Episode 136, it surfaced roughly a dozen candidate regions for human video review.
-  </p>
-
-  <div class="video-block">
-    <video controls>
-      <source src="berd.mp4" type="video/mp4">
-    </video>
-    <div class="video-caption">SOURCE VIDEO · BOTH GHOST AUDIO EVENTS</div>
-  </div>
-
-  <div class="signal-list">
-    <div class="signal-card">
-      <div class="signal-card-header">
-        <span class="signal-num">01</span>
-        <span class="signal-title">Gap Topology</span>
-      </div>
-      <div class="signal-body">
-        Two runs of WhisperX on the same audio file. Where beam=1 emits a segment and beam=5 has nothing at that timestamp, the gap is the flag. In Friedberg's case, beam=1 has 20.85–21.50s "Oh, my god."; beam=5 has nothing. Its next segment starts at 25.32s: a 4.5-second hole where speech existed.
-      </div>
+      <div class="beam-joint">Joint: 35.78%</div>
     </div>
 
-    <div class="signal-card">
-      <div class="signal-card-header">
-        <span class="signal-num">02</span>
-        <span class="signal-title">Repeat Hallucination</span>
-      </div>
-      <div class="signal-body">
-        When the decoder has no confident path, beam=1 hallucinates a nearby phrase rather than emitting silence. <code>"I'm bullying when you're bullying."</code> does not appear anywhere else in the episode. It was emitted three times across consecutive VAD-confirmed speech regions containing both Friedberg and Gerstner's ghost audio.
-      </div>
+    <div class="beam-card winner-path">
+      <div class="beam-label">Winner Path</div>
+      <div class="beam-subtitle">Production Output</div>
+      <div class="beam-quote">"He's not even here."</div>
+
+      <div class="beam-token"><span>He</span><strong>45.29%</strong></div>
+      <div class="beam-token"><span>'s</span><strong>99.94%</strong></div>
+      <div class="beam-token"><span>not</span><strong>99.96%</strong></div>
+      <div class="beam-token"><span>even</span><strong>99.98%</strong></div>
+      <div class="beam-token"><span>here</span><strong>99.78%</strong></div>
+      <div class="beam-token"><span>.</span><strong>92.01%</strong></div>
+
+      <div class="beam-joint">Joint: 41.53%</div>
+    </div>
+
+  </div>
+
+  <div class="beam-margin">
+    Margin: <strong>5.75 percentage points</strong> ·
+    Ratio: <strong>1.16×</strong>
+  </div>
+</div>
+
+<p class="body">
+  The ground-truth path "Oh, my god." lost by only 5.75 percentage points. The winning path, "He's not even here.", is real: it is the line Friedberg speaks next. The decoder skipped his actual utterance, locked onto the following line, and scored it higher than the thing he said first.
+</p>
+
+<p class="body">
+  This reframed Ghost Audio as a beam-path survival problem. The speech exists acoustically. A valid decode path exists. That path simply does not always survive into the final transcript.
+</p>
+
+<p class="body">
+  The breakthrough came from the production WhisperX path itself.
+</p>
+
+<p class="body">
+  Using WhisperX large-v3 with Beam=5, I ran the same Libsyn audio twice: once with decoder timestamp tokens disabled and once with decoder timestamp tokens enabled. The model, audio, beam size, alignment step, and production runtime were otherwise held constant.
+</p>
+
+<p class="body">
+  With timestamp tokens disabled, the transcript jumped directly from:
+</p>
+
+<div class="comparison-card" style="max-width:760px;margin:24px 0;">
+  <div class="transcript-box">
+    <p><code>18.873–19.914</code> And the fattest, that's the dumbest.</p>
+    <p><code>25.317–26.097</code> He's not even here.</p>
+  </div>
+</div>
+
+<p class="body">
+  The entire ghost region disappeared.
+</p>
+
+<p class="body">
+  With timestamp tokens enabled, WhisperX recovered:
+</p>
+
+<div class="comparison-card" style="max-width:760px;margin:24px 0;">
+  <div class="transcript-box">
+    <p class="ghost-line"><code>20.834–21.495</code> Oh, my god.</p>
+  </div>
+</div>
+
+<p class="body">
+  Timestamp tokens are not merely output metadata. They participate in decoding.
+</p>
+
+<p class="body">
+  With WhisperX Beam=5 decoding, timestamp tokens appear to reduce the likelihood that faint speech events are skipped during beam-path selection.
+</p>
+
+<p class="body">
+  Working hypothesis: timestamp tokens add temporal structure to the decode path. In ambiguous regions, that structure helps faint speech remain represented in the winning beam path rather than being silently omitted.
+</p>
+
+<div class="section-heading">
+  <h2>BERD-1</h2>
+</div>
+
+<p class="body">
+  BERD-1 now uses decoder disagreement as the detection signal.
+</p>
+
+<p class="body">
+  Instead of comparing production WhisperX against a separate beam=1 scout transcript, BERD-1 compares two production-equivalent WhisperX Beam=5 decodes:
+</p>
+
+<div class="signal-list">
+
+  <div class="signal-card">
+    <div class="signal-card-header">
+      <span class="signal-num">01</span>
+      <span class="signal-title">Timestamp Tokens OFF</span>
+    </div>
+    <div class="signal-body">
+      WhisperX Beam=5 with <code>without_timestamps=True</code>.
     </div>
   </div>
 
-  <p class="body">
-    The signals converge on the same timestamps. VAD confirmed speech. beam=5 emitted nothing, emitted words that wav2vec could not anchor, or beam=1 filled the slot with a phrase it had already said. Any one signal is a candidate. Together, they form a review target.
-  </p>
+  <div class="signal-card">
+    <div class="signal-card-header">
+      <span class="signal-num">02</span>
+      <span class="signal-title">Timestamp Tokens ON</span>
+    </div>
+    <div class="signal-body">
+      WhisperX Beam=5 with <code>without_timestamps=False</code>.
+    </div>
+  </div>
 
-  <p class="body">
-    BERD-1 does not recover the missing content. It flags timestamps and puts them in a review queue.
-  </p>
+</div>
+
+<p class="body">
+  Where the timestamp-token ON transcript contains speech that the timestamp-token OFF transcript skips, BERD-1 creates a candidate transcript repair.
+</p>
+
+<div class="video-block">
+  <video controls>
+    <source src="berd.mp4" type="video/mp4">
+  </video>
+  <div class="video-caption">BERD-1 REVIEW QUEUE</div>
+</div>
+
+<p class="body">
+  BERD-1 does not automatically trust the timestamp-token ON transcript. It creates a review queue.
+</p>
+
+<p class="body">
+  Each candidate can be accepted, rejected, or edited. Accepted repairs become canonical transcript edits.
+</p>
+
+<div class="comparison-grid">
+
+  <div class="comparison-card">
+    <h3>Candidate</h3>
+    <div class="transcript-box">
+      <p><code>926.899–934.605</code></p>
+      <p>Because most of the posts, at least, you know, that our team engages in on Twitter are for mostly business purposes.</p>
+
+      <br>
+
+      <p><code>935.265–935.545</code></p>
+      <p>Right.</p>
+    </div>
+  </div>
+
+  <div class="comparison-card">
+    <h3>Canonical Repair</h3>
+    <div class="transcript-box">
+      <p><code>926.899–935.545</code></p>
+      <p>
+        Because most of the posts, at least, you know, that our team engages in on Twitter are for mostly business purposes. Right.
+      </p>
+    </div>
+  </div>
+
+</div>
+
+<p class="body">
+  Using two WhisperX Beam=5 decodes with a timestamp-token toggle, Episode 136 was processed in approximately 6m11s, compared to approximately 11m52s for the original Reference Whisper + Pyannote workflow — a 48% reduction in runtime — while still surfacing candidate transcript repairs through decoder disagreement.
+</p>
+
+<p class="body">
+  PWW remains useful as an explanatory probe, but BERD-1 no longer requires a full-episode PyTorch Whisper sweep to identify candidate omissions. The detector is now production decoder disagreement itself.
+</p>
 
   <div class="section-heading">
     <h2>Limitations</h2>
