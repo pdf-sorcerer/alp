@@ -469,45 +469,48 @@ At time of writing (<code>June 2026</code>): <code>383 Libsyn episodes</code> ·
   </div>
 
   <p class="body">
-    An adjacent transcription pipeline was built using reference <code>PyTorch Whisper</code> because the production runtime uses <code>CTranslate2</code>, which does not expose logits. Cross-attention weights, filtered to audio-aligned heads, showed non-zero attention in both ghost regions — substantially more for Friedberg. The encoder saw the audio. The decoder was attending to it.
-  </p>
+  An adjacent transcription pipeline was built using reference <code>PyTorch Whisper</code> because the production runtime uses <code>CTranslate2</code>, which does not expose logits. Cross-attention weights, filtered to audio-aligned heads, showed non-zero attention in both ghost regions — substantially more for Friedberg. The encoder saw the audio. The decoder was attending to it.
+</p>
 
-  <div class="img-block">
-    <img src="attention_both_ghosts.png" alt="Whisper cross-attention filtered to audio-aligned heads" />
-    <p class="img-caption">Whisper cross-attention filtered to audio-aligned heads. Attention spike at Friedberg's ghost region (<code>t≈21s</code>). Lower but present activity at Gerstner's (<code>t≈28s</code>). The decoder was looking at both timestamps. It chose not to emit tokens for either.</p>
-  </div>
+<div class="img-block">
+  <img src="attention_both_ghosts.png" alt="Whisper cross-attention filtered to audio-aligned heads" />
+  <p class="img-caption">Whisper cross-attention filtered to audio-aligned heads. Attention spike at Friedberg's ghost region (<code>t≈21s</code>). Lower but present activity at Gerstner's (<code>t≈28s</code>). The decoder was looking at both timestamps.</p>
+</div>
 
-  <p class="body">
-    A separate line of investigation projected the speaker embeddings onto a manifold to visualize how the ghost segments were being geometrically interpreted. Friedberg's ghost regions did not cluster with Friedberg's confirmed speech. They fell inside Chamath's cluster. The audio was not only short enough to destabilize the embedding — it was acoustically close enough to the wrong speaker that the speaker identity layer independently misread it. The ASR decoder and the speaker embedding space failed on the same audio for different reasons.
-  </p>
+<p class="body">
+  A separate line of investigation projected the speaker embeddings onto a manifold to visualize how the ghost segments were being geometrically interpreted. Friedberg's ghost regions did not cluster with Friedberg's confirmed speech. They fell inside Chamath's cluster. The audio was not only short enough to destabilize the embedding — it was acoustically close enough to the wrong speaker that the speaker identity layer independently misread it. The ASR decoder and the speaker embedding space failed on the same audio for different reasons.
+</p>
 
-  <p class="body">
-    Ghost Audio is not purely an ASR problem. At the segment level, the speech was too short and acoustically ambiguous to anchor reliably in embedding space. At the decoder level, a competing hypothesis outscored the ground truth by a narrow margin. Both failures converged on the same timestamps.
-  </p>
+<p class="body">
+Ghost Audio is not purely an ASR problem. At the segment level, the speech was too short and acoustically ambiguous to anchor reliably in embedding space. At the decoder level, different decoding configurations produced different failure modes over the same timestamps. Independent systems failed on the same audio for different reasons.</p>
 
-  <p class="body">
-    That narrowed the problem to one place: the beam search decision.
-  </p>
+<p class="body">
+  That shifted the investigation away from transcript accuracy and toward decoder behavior. The question was no longer "why was this word missed?" but "what does the decoder do when it encounters speech it cannot confidently transcribe?"
+</p>
 
-  <div class="section-heading">
-    <h2>Decoder Fork</h2>
-  </div>
+<div class="section-heading">
+  <h2>Decoder Fork</h2>
+</div>
 
-  <p class="body">
-    The cross-attention graph shows how poorly attended the ghost speech regions are relative to the surrounding audio. The next question: what probabilities was beam search actually considering?
-  </p>
+<p class="body">
+  The original goal was to determine whether the omission was reproducible. Rather than treating <code>Whisper</code> as a black box, I built <code>PWW</code>, a separate <code>PyTorch Whisper</code> pipeline for inspecting decoder behavior directly.
+</p>
 
-  <p class="body">
-    Beam search is a decoding strategy. <code>beam=1</code> — commonly called greedy decoding — takes the highest-probability token at each step and commits fully to that path. <code>beam=5</code> considers five hypotheses simultaneously and selects the path with the highest joint probability across the full sequence.
-  </p>
+<p class="body">
+  Under a specific scout configuration — WhisperX VAD, 30-second merged chunks, reference PyTorch Whisper, beam=1, <code>condition_on_previous_text=False</code>, <code>pad_or_trim()</code>, and wav2vec alignment — Friedberg's missing <code>"Oh, my god."</code> reappeared.
+</p>
 
-  <p class="body">
-    Small changes to the decoding strategy could bring the ghost back. Rather than treating <code>Whisper</code> as a black box, I built <code>PWW</code>, a separate <code>PyTorch Whisper</code> decoder pipeline for inspecting token probabilities directly.
-  </p>
+<p class="body">
+  The same pipeline also produced localized hallucinations over the surrounding audio. Phrases such as <code>"I'm bullying when you're bullying."</code> appeared repeatedly across VAD-confirmed speech regions containing both Friedberg's and Gerstner's ghost audio. The scout transcript was not more accurate than the production transcript. It failed differently.
+</p>
 
-  <p class="body">
-    The results showed the missing utterance was not impossible. At Friedberg's decision point, after the timestamp anchor <code>&lt;|18.98|&gt;</code>, the decoder had two viable futures. One path matched the audio. The other scored higher.
-  </p>
+<p class="body">
+  Production WhisperX advanced directly to the next stable phrase. The scout emitted short interjections, repetitions, and low-confidence text inside the skipped region. Those failures became the signal.
+</p>
+
+<p class="body">
+  The important discovery was not that an alternate decoder could sometimes recover the ghost. It was that unstable speech produced recognizable failure patterns. When the production transcript skipped a region entirely, the scout often emitted repetitions, short interjections, or otherwise unstable text over the same timestamps. The disagreement between the two decoding paths became a candidate detection signal.
+</p>
 
   <div class="beam-fork" aria-label="Beam fork diagram">
     <div class="beam-root"><code>&lt;|18.98|&gt;</code></div>
