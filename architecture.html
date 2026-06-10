@@ -30,7 +30,10 @@
       display: flex;
       min-height: 100vh;
     }
-
+      html {
+        overflow-y: scroll;
+        scrollbar-gutter: stable;
+      }
     nav {
       position: sticky;
       top: 0;
@@ -276,10 +279,17 @@
     }
 
     @media (max-width: 768px) {
-      nav { display: none; }
-      main { padding: 32px 24px 80px; }
-      .footer { flex-direction: column; align-items: flex-start; }
-    }
+  main {
+    padding: 64px 20px 80px;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
   </style>
 </head>
 
