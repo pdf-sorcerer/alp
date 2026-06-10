@@ -29,8 +29,7 @@
     .nav-item:hover { color: var(--text); background: var(--bg); border-left-color: var(--border); }
     .nav-item.active { color: var(--green); border-left-color: var(--green); background: var(--green-dim); }
     .nav-footer { margin-top: auto; padding: 20px 24px 0; border-top: 1px solid var(--border); font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--faint); line-height: 1.6; }
-    main { flex: 1; padding: 56px 64px 120px; max-width: 860px; min-width: 0; }
-    .page-eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--green); margin-bottom: 12px; }
+    main { flex: 1; width: 100%; padding: 56px 64px 120px; max-width: 860px; min-width: 0; }    .page-eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--green); margin-bottom: 12px; }
     h1 { font-size: 28px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 14px; }
     .lead { font-size: 14px; line-height: 1.75; color: #3a3a3a; max-width: 680px; margin-bottom: 52px; }
     .lead strong { font-weight: 600; color: var(--text); }
@@ -57,16 +56,32 @@
     .footer { margin-top: 80px; padding-top: 24px; border-top: 1px solid var(--border); font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
     .footer a { color: var(--muted); text-decoration: none; border-bottom: 1px solid transparent; transition: color 0.15s, border-color 0.15s; }
     .footer a:hover { color: var(--green); border-bottom-color: var(--green-dim); }
-    @media (max-width: 768px) {
-      main { padding: 64px 20px 80px; }
-      .footer { flex-direction: column; align-items: flex-start; }
-      .metrics-summary td:nth-child(1), .metrics-summary td:nth-child(2),
-      .benchmark-table td:nth-child(2), .benchmark-table td:nth-child(3),
-      .benchmark-table td:nth-child(4) { white-space: normal; }
-    }
+    html {
+        overflow-y: scroll;
+        scrollbar-gutter: stable;
+      }
+      
+      @media (max-width: 768px) {
+        main { padding: 64px 20px 80px; }
+      
+        .footer {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+      
+        .metrics-summary td:nth-child(1),
+        .metrics-summary td:nth-child(2),
+        .benchmark-table td:nth-child(2),
+        .benchmark-table td:nth-child(3),
+        .benchmark-table td:nth-child(4) {
+          white-space: normal;
+        }
+      }
   </style>
 </head>
 <body>
+
+
   <nav id="shared-nav"></nav>
   <main>
     <p class="page-eyebrow">Realtime Voice Inference</p>
