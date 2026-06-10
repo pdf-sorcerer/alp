@@ -349,44 +349,42 @@
   <p class="lead"> 
     <strong>Why</strong>: Ghost Audio quietly distorts dialogue flow, causal relationships, and conversational patterns that downstream models learn from.  Because the resulting transcripts often appear clean and complete, 
     these omissions can persist undetected while subtly altering the historical record.</p><br>
-<details class="accordion-block">
 
   <details class="accordion-block">
-  <summary><span>Why Omissions Matter: Featuring <em>The Empire Strikes Back (1980)</em></span></summary>
-
-
-  <div class="video-block"> <video controls> <source src="sw_ghost.mp4" type="video/mp4"> </video> <div class="video-caption">SOURCE VIDEO · THE EMPIRE STRIKES BACK (1980)</div> </div>
-
-  <div class="comparison-grid">
-    <div class="comparison-card">
-      <h3>Movie Screenplay</h3>
-      <div class="transcript-box">
-        <p><strong>Vader:</strong> "If only you knew the power of the dark side. Obi-Wan never told you what happened to your father."</p>
-        <p><strong>Luke:</strong> "He told me enough. He told me you killed him!"</p>
-        <p class="ghost-line"><strong>Vader:</strong> "No. I am your father."</p>
-        <p><strong>Luke:</strong> "No. No. That's not true! That's impossible!"</p>
+    <summary><span>Why Omissions Matter: Featuring <em>The Empire Strikes Back (1980)</em></span></summary>
+  
+  
+    <div class="video-block"> <video controls> <source src="sw_ghost.mp4" type="video/mp4"> </video> <div class="video-caption">SOURCE VIDEO · THE EMPIRE STRIKES BACK (1980)</div> </div>
+  
+    <div class="comparison-grid">
+      <div class="comparison-card">
+        <h3>Movie Screenplay</h3>
+        <div class="transcript-box">
+          <p><strong>Vader:</strong> "If only you knew the power of the dark side. Obi-Wan never told you what happened to your father."</p>
+          <p><strong>Luke:</strong> "He told me enough. He told me you killed him!"</p>
+          <p class="ghost-line"><strong>Vader:</strong> "No. I am your father."</p>
+          <p><strong>Luke:</strong> "No. No. That's not true! That's impossible!"</p>
+        </div>
+      </div>
+  
+      <div class="comparison-card">
+        <h3>Ghost Audio Transcript</h3>
+        <div class="transcript-box">
+          <p><strong>Vader:</strong> "If only you knew the power of the dark side. Obi-Wan never told you what happened to your father."</p>
+          <p><strong>Luke:</strong> "He told me enough. He told me you killed him!"</p>
+          <p><strong>Luke:</strong> "No. No. That's not true! That's impossible!"</p>
+        </div>
       </div>
     </div>
-
-    <div class="comparison-card">
-      <h3>Ghost Audio Transcript</h3>
-      <div class="transcript-box">
-        <p><strong>Vader:</strong> "If only you knew the power of the dark side. Obi-Wan never told you what happened to your father."</p>
-        <p><strong>Luke:</strong> "He told me enough. He told me you killed him!"</p>
-        <p><strong>Luke:</strong> "No. No. That's not true! That's impossible!"</p>
-      </div>
+  
+    <div class="callout">
+      <p>This is a staged example, but the impact is the same: ghost audio removes an entire segment of content from the transcript, quietly altering the intent and meaning of the speech around it.</p>
+      <p>Here, the transcript still reads cleanly. Nothing appears broken. Yet the central reveal disappears. A downstream model never learns that Vader says he is Luke's father, and may instead infer that Luke is reacting to his own accusation rather than to new information from Vader.</p>
     </div>
-  </div>
-
-  <div class="callout">
-    <p>This is a staged example, but the impact is the same: ghost audio removes an entire segment of content from the transcript, quietly altering the intent and meaning of the speech around it.</p>
-    <p>Here, the transcript still reads cleanly. Nothing appears broken. Yet the central reveal disappears. A downstream model never learns that Vader says he is Luke's father, and may instead infer that Luke is reacting to his own accusation rather than to new information from Vader.</p>
-  </div>
-</details>
-
+  </details>
 
   <p class="lead">
-    <em>This is a running log more than a final report. Different recordings of the same episode — YouTube vs Libsyn — have different acoustic properties that produce different transcripts. An adjacent PyTorch Whisper pipeline exposed decoder behavior that the production CTranslate2 runtime could not, revealing a detection signal for Ghost Audio across the corpus. The tradeoff was roughly 10× compute compared with a standard production pass.</em>
+    <em>This is a running log of work done than a final report.</em>em> 
   </p>
 
   <div class="section-heading">
@@ -723,25 +721,23 @@
     <h2>Limitations</h2>
   </div>
 
-  <p class="body">
-    BERD-1 is a forensic prototype, not a corpus-scale production component. It produces false positives, mostly lexical variants where both beams transcribed the same utterance differently — beam=1 emits "seven and eight" while beam=5 emits "7% and 8%". That looks like a gap. It is not Ghost Audio.
-  </p>
+<p class="body">
+  BERD-1 is a forensic prototype that compares transcript disagreement. It can operate using either two production WhisperX Beam=5 transcripts (timestamp tokens on/off) or a production WhisperX transcript paired with a Reference Whisper transcript.
+</p>
 
-  <p class="body">
-    The repeat hallucination signal is cleaner but narrower: it only catches cases where beam=1 had no confident decode and recycled context. Gerstner's ghost was too quiet for any decoder configuration to surface. It produces no repeat signal, no gap. It is invisible to BERD-1 entirely.
-  </p>
+<p class="body">
+  The production-only workflow reduced GPU runtime by approximately 48% while still surfacing candidate transcript repairs for review. In Episode 136, BERD-1 identified 5 high-confidence ghost candidates using the default overlap threshold, expanding to 11 candidate repairs when the overlap threshold was reduced to zero. These reviews take seconds, and at corpus scale the additional human workload is both sustainable and justified.
+</p>
 
-  <p class="body">
-    The wav2vec alignment signal is the most reliable of the three and the most dependent on downstream tooling behaving consistently. Alignment failures have causes unrelated to Ghost Audio.
-  </p>
+<p class="body">
+  Even so, some ghost regions, like Brad Gerstner's utterance, remain resistant to transcription. They were never transcribed across decoder configurations. BERD-1 can only review content that appears in at least one decode path. Speech that fails to survive any decoding configuration remains invisible to the system.
+</p>
 
-  <p class="body">
-    BERD-1 produces a review queue, not a corrected transcript. A human inspects every flagged timestamp. At roughly 10× compute compared with a standard production pass, it is a forensic tool rather than a default pipeline component.
-  </p>
+<p class="body">
+  That's why the Reference Whisper option matters. The production-only workflow is faster and cheaper, but Reference Whisper introduces additional decoder divergence. While that divergence can manifest as localized hallucinations, it can also expose weak speech regions that never survive into production transcripts. In a forensic workflow, additional disagreement is often more valuable than transcript cleanliness.
+</p>
 
-  <p class="body">
-    The signals are real. The system works. It needs more iteration before it runs reliably at corpus scale.
-  </p>
+  
 
   <div class="footer">
     <span>Mason Thompson · Berkeley, California</span>
