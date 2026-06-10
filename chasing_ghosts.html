@@ -215,7 +215,6 @@
       margin: 10px 0 12px;
     }
 
-    /* Beam fork */
     .beam-fork {
       max-width: 760px;
       margin: 28px 0 36px;
@@ -226,7 +225,6 @@
       font-family: 'IBM Plex Mono', monospace;
     }
     .beam-root { text-align: center; font-size: 12px; margin-bottom: 8px; color: var(--text); }
-    
     .beam-root code {
       font-family: 'IBM Plex Mono', monospace;
       font-size: 0.92em;
@@ -237,7 +235,6 @@
       color: var(--text);
       white-space: nowrap;
     }
-
     .beam-probe {
       text-align: center;
       font-size: 10px;
@@ -265,7 +262,6 @@
     .beam-margin { text-align: center; margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--border); font-size: 11px; color: var(--muted); }
     .beam-margin strong { color: var(--text); }
 
-    /* BERD-1 signal cards */
     .signal-list { max-width: 760px; margin: 28px 0 36px; display: flex; flex-direction: column; gap: 16px; }
     .signal-card { border: 1px solid var(--border); border-radius: 4px; background: var(--surface); overflow: hidden; }
     .signal-card-header {
@@ -297,7 +293,6 @@
       color: var(--text);
     }
     .signal-body { padding: 16px; font-size: 13px; line-height: 1.8; color: #3a3a3a; }
-    
     .signal-body code {
       font-family: 'IBM Plex Mono', monospace;
       font-size: 0.92em;
@@ -308,7 +303,6 @@
       color: var(--text);
       white-space: nowrap;
     }
-
 
     .footer {
       margin-top: 80px;
@@ -349,12 +343,12 @@
   <p class="page-eyebrow">Transcript Reconstruction</p>
   <h1>Ghost Audio</h1>
 
-<p class="lead">
-  This page is an investigation into why audible speech went untranscribed, and the effort to build tooling to find and recover AI-driven omissions at scale across the episode corpus. If uncorrected, these omissions distort model training data — resulting in the model learning patterns and relationships that are not ground-truth.
-</p>
+  <p class="lead">
+    This page is an investigation into why audible speech went untranscribed, and the effort to build tooling to find and recover AI-driven omissions at scale across the episode corpus. These omissions distort model training data — the model learns patterns and relationships that are not ground-truth.
+  </p>
 
   <p class="lead">
-    <em>This is a running log more than a final report. Different recordings of the same episode — <code>YouTube</code> vs <code>Libsyn</code> — have different acoustic properties that produce different transcripts. An adjacent <code>PyTorch Whisper</code> pipeline exposed decoder behavior that the production <code>CTranslate2</code> runtime could not, revealing a candidate detection signal for Ghost Audio across the corpus. The tradeoff was roughly <code>10× compute</code> compared with a standard production pass.</em>
+    <em>This is a running log more than a final report. Different recordings of the same episode — YouTube vs Libsyn — have different acoustic properties that produce different transcripts. An adjacent PyTorch Whisper pipeline exposed decoder behavior that the production CTranslate2 runtime could not, revealing a detection signal for Ghost Audio across the corpus. The tradeoff was roughly 10× compute compared with a standard production pass.</em>
   </p>
 
   <div class="section-heading">
@@ -362,21 +356,21 @@
   </div>
 
   <p class="body">
-    In early <code>2026</code>, I moved to <code>Libsyn</code> as the canonical source of truth for <i>All-In Podcast</i> episodes. <code>Libsyn</code> simplified the pipeline: full episodes without the short-form content commingled with <i>All-In Podcast</i> material across the two official <code>YouTube</code> channels.
+    In early 2026, I moved to Libsyn as the canonical source of truth for <i>All-In Podcast</i> episodes. Libsyn simplified the pipeline: full episodes without the short-form content commingled with <i>All-In Podcast</i> material across the two official YouTube channels.
   </p>
 
   <aside class="callout">
     <p class="callout-stat">
-At time of writing (<code>June 2026</code>): <code>383 Libsyn episodes</code> · <code>2,230 official YouTube uploads</code> · <code>564 processed</code>.
+      At time of writing (June 2026): 383 Libsyn episodes · 2,230 official YouTube uploads · 564 processed.
     </p>
   </aside>
 
   <p class="body">
-    <code>Libsyn</code> was intended as a going-forward source change, but I ran a handful of older episodes through the pipeline as a spot check. In <code>Episode 136</code>, I noticed a short utterance from Friedberg around <code>t≈20s</code>: "Oh, my God." It was missing from the new <code>Libsyn</code> transcript and absent from my corpus, but it existed in a late <code>2025</code> transcript generated from the <code>YouTube</code> file. The transcripts were not complete, and the failure mode could exist at scale.
+    Libsyn was intended as a going-forward source change. I ran a handful of older episodes through the pipeline as a spot check. In Episode 136, a short utterance from Friedberg around t≈20s — "Oh, my God." — was missing from the new Libsyn transcript and absent from my corpus. It existed in a late 2025 transcript generated from the YouTube file.
   </p>
 
   <p class="body">
-    Moments later, guest Brad Gerstner says the exact same phrase. His line is missing from every transcript. I only know he said it because I happened to be watching the video while investigating Friedberg's omission.
+    Moments later, guest Brad Gerstner says the exact same phrase. His line is missing from every transcript. I only know he said it because I was watching the video while investigating Friedberg's omission.
   </p>
 
   <div class="video-block">
@@ -414,7 +408,7 @@ At time of writing (<code>June 2026</code>): <code>383 Libsyn episodes</code> ·
   </p>
 
   <p class="body">
-    Up to this point, most transcript errors left fingerprints: ellipses, broken segment boundaries, lowercase continuations, third-person self-references, or suspicious speaker turns. Omissions like <code>Ghost Audio</code> distort speaker turns, context, and relationships between ideas while leaving no visible artifact. Remove enough speech and dialogue collapses. Downstream training examples begin teaching the wrong relationships between prompts and completions.
+    Most transcript errors leave fingerprints: ellipses, broken segment boundaries, lowercase continuations, third-person self-references, suspicious speaker turns. Ghost Audio leaves nothing. Speaker turns are distorted, context is wrong, relationships between ideas collapse — and the transcript reads as if nothing is missing. At training time, downstream examples teach the wrong relationships between prompts and completions.
   </p>
 
   <details class="accordion-block">
@@ -447,7 +441,7 @@ At time of writing (<code>June 2026</code>): <code>383 Libsyn episodes</code> ·
 
     <div class="callout">
       <p>YouTube ASR failed to transcribe a single-word response from Batman: <code>"Them?"</code>. That response communicates a sudden shift in Batman's understanding: Joker has two hostages, not one.</p>
-      <p>The transcript still reads cleanly. Nothing appears broken. Yet the moment of realization — and the causal link between Joker's statement and Batman's reaction — disappears.</p>
+      <p>The transcript reads cleanly. Nothing appears broken. The moment of realization — and the causal link between Joker's statement and Batman's reaction — is gone.</p>
     </div>
   </details>
 
@@ -456,61 +450,58 @@ At time of writing (<code>June 2026</code>): <code>383 Libsyn episodes</code> ·
   </div>
 
   <p class="body">
-    The audio was there. Before opening the decoder, the investigation went through the acoustic stack first.
+    The audio was there. The investigation went through the acoustic stack before opening the decoder.
   </p>
 
   <p class="body">
-    <code>VAD</code> onset and offset thresholds were adjusted to test whether tighter speech detection would surface the ghost. <code>RMS</code> energy confirmed voiced activity in both ghost regions. <code>pYIN</code> pitch detection found traces of Friedberg's voice at <code>t≈21s</code> after subtracting Chamath's voice from the signal. The pitch exists. It is not noise.
+    VAD onset and offset thresholds were adjusted to test whether tighter speech detection would surface the ghost. RMS energy confirmed voiced activity in both ghost regions. pYIN pitch detection found traces of Friedberg's voice at t≈21s after subtracting Chamath's voice from the signal. The pitch exists. It is not noise.
   </p>
 
   <div class="img-block">
     <img src="residual.png" alt="Libsyn spectral subtraction — pYIN F0 on raw vs residual, t=19-30s" />
-    <p class="img-caption">Libsyn spectral subtraction — pYIN F0 on raw (left) vs residual (right) — <code>t=19–30s</code>. Friedberg's pitch emerges in the ghost region after subtraction. Gerstner's region shows RMS activity but weaker pitch confidence.</p>
+    <p class="img-caption">Libsyn spectral subtraction — pYIN F0 on raw (left) vs residual (right) — t=19–30s. Friedberg's pitch emerges in the ghost region after subtraction. Gerstner's region shows RMS activity but weaker pitch confidence.</p>
   </div>
 
   <p class="body">
-  An adjacent transcription pipeline was built using reference <code>PyTorch Whisper</code> because the production runtime uses <code>CTranslate2</code>, which does not expose logits. Cross-attention weights, filtered to audio-aligned heads, showed non-zero attention in both ghost regions — substantially more for Friedberg. The encoder saw the audio. The decoder was attending to it.
-</p>
+    An adjacent transcription pipeline was built using reference PyTorch Whisper because the production runtime uses CTranslate2, which does not expose logits. Cross-attention weights, filtered to audio-aligned heads, showed non-zero attention in both ghost regions — substantially more for Friedberg. The encoder saw the audio. The decoder was attending to it.
+  </p>
 
-<div class="img-block">
-  <img src="attention_both_ghosts.png" alt="Whisper cross-attention filtered to audio-aligned heads" />
-  <p class="img-caption">Whisper cross-attention filtered to audio-aligned heads. Attention spike at Friedberg's ghost region (<code>t≈21s</code>). Lower but present activity at Gerstner's (<code>t≈28s</code>). The decoder was looking at both timestamps.</p>
-</div>
+  <div class="img-block">
+    <img src="attention_both_ghosts.png" alt="Whisper cross-attention filtered to audio-aligned heads" />
+    <p class="img-caption">Whisper cross-attention filtered to audio-aligned heads. Attention spike at Friedberg's ghost region (t≈21s). Lower but present activity at Gerstner's (t≈28s). The decoder was looking at both timestamps.</p>
+  </div>
 
-<p class="body">
-  A separate line of investigation projected the speaker embeddings onto a manifold to visualize how the ghost segments were being geometrically interpreted. Friedberg's ghost regions did not cluster with Friedberg's confirmed speech. They fell inside Chamath's cluster. The audio was not only short enough to destabilize the embedding — it was acoustically close enough to the wrong speaker that the speaker identity layer independently misread it. The ASR decoder and the speaker embedding space failed on the same audio for different reasons.
-</p>
+  <p class="body">
+    A separate line of investigation projected the speaker embeddings onto a manifold to visualize how the ghost segments were being geometrically interpreted. Friedberg's ghost regions did not cluster with Friedberg's confirmed speech. They fell inside Chamath's cluster. The audio was not only short enough to destabilize the embedding — it was acoustically close enough to the wrong speaker that the speaker identity layer independently misread it. The ASR decoder and the speaker embedding space failed on the same audio for different reasons.
+  </p>
 
-<p class="body">
-Ghost Audio is not purely an ASR problem. At the segment level, the speech was too short and acoustically ambiguous to anchor reliably in embedding space. At the decoder level, different decoding configurations produced different failure modes over the same timestamps. Independent systems failed on the same audio for different reasons.</p>
+  <p class="body">
+    Ghost Audio is not an ASR problem. Independent systems failed on the same audio for different reasons. That shifted the investigation away from transcript accuracy and toward decoder behavior. The question was no longer "why was this word missed?" but "what does the decoder do when it encounters speech it cannot confidently transcribe?"
+  </p>
 
-<p class="body">
-  That shifted the investigation away from transcript accuracy and toward decoder behavior. The question was no longer "why was this word missed?" but "what does the decoder do when it encounters speech it cannot confidently transcribe?"
-</p>
+  <div class="section-heading">
+    <h2>Decoder Fork</h2>
+  </div>
 
-<div class="section-heading">
-  <h2>Decoder Fork</h2>
-</div>
+  <p class="body">
+    Rather than treating Whisper as a black box, I built PWW, a separate PyTorch Whisper pipeline for inspecting decoder behavior directly.
+  </p>
 
-<p class="body">
-  The original goal was to determine whether the omission was reproducible. Rather than treating <code>Whisper</code> as a black box, I built <code>PWW</code>, a separate <code>PyTorch Whisper</code> pipeline for inspecting decoder behavior directly.
-</p>
+  <p class="body">
+    Under a specific scout configuration — WhisperX VAD, 30-second merged chunks, reference PyTorch Whisper, beam=1, <code>condition_on_previous_text=False</code>, <code>pad_or_trim()</code>, and wav2vec alignment — Friedberg's missing "Oh, my god." reappeared.
+  </p>
 
-<p class="body">
-  Under a specific scout configuration — WhisperX VAD, 30-second merged chunks, reference PyTorch Whisper, beam=1, <code>condition_on_previous_text=False</code>, <code>pad_or_trim()</code>, and wav2vec alignment — Friedberg's missing <code>"Oh, my god."</code> reappeared.
-</p>
+  <p class="body">
+    The same pipeline produced localized hallucinations over the surrounding audio. Phrases such as <code>"I'm bullying when you're bullying."</code> appeared repeatedly across VAD-confirmed speech regions containing both Friedberg's and Gerstner's ghost audio. The scout transcript was not more accurate than the production transcript. It failed differently.
+  </p>
 
-<p class="body">
-  The same pipeline also produced localized hallucinations over the surrounding audio. Phrases such as <code>"I'm bullying when you're bullying."</code> appeared repeatedly across VAD-confirmed speech regions containing both Friedberg's and Gerstner's ghost audio. The scout transcript was not more accurate than the production transcript. It failed differently.
-</p>
+  <p class="body">
+    Production WhisperX advanced directly to the next stable phrase. The scout emitted short interjections, repetitions, and low-confidence text inside the skipped region. Those failures became the signal.
+  </p>
 
-<p class="body">
-  Production WhisperX advanced directly to the next stable phrase. The scout emitted short interjections, repetitions, and low-confidence text inside the skipped region. Those failures became the signal.
-</p>
-
-<p class="body">
-  The important discovery was not that an alternate decoder could sometimes recover the ghost. It was that unstable speech produced recognizable failure patterns. When the production transcript skipped a region entirely, the scout often emitted repetitions, short interjections, or otherwise unstable text over the same timestamps. The disagreement between the two decoding paths became a candidate detection signal.
-</p>
+  <p class="body">
+    The discovery was not that an alternate decoder could sometimes recover the ghost. It was that unstable speech produced recognizable failure patterns. When the production transcript skipped a region, the scout emitted repetitions, short interjections, or otherwise unstable text over the same timestamps. The disagreement between the two decoding paths became the detection signal.
+  </p>
 
   <div class="beam-fork" aria-label="Beam fork diagram">
     <div class="beam-root"><code>&lt;|18.98|&gt;</code></div>
@@ -546,16 +537,11 @@ Ghost Audio is not purely an ASR problem. At the segment level, the speech was t
   </div>
 
   <p class="body">
-The ground-truth path <code>"Oh, my god."</code> lost by <code>5.75 percentage points</code>. What makes this strange is that the winning path, <code>"He's not even here."</code>, is real, but it's the line Friedberg speaks next. The decoder skipped past Friedberg's actual utterance and locked onto his next line, scoring it higher than the thing he said first. With <code>beam=1</code>, the ground-truth path wins.
-
+    The ground-truth path "Oh, my god." lost by 5.75 percentage points. The winning path — "He's not even here." — is real: it is the line Friedberg speaks next. The decoder skipped his actual utterance, locked onto the following line, and scored it higher than the thing he said first. With beam=1, the ground-truth path wins.
   </p>
 
   <p class="body">
-    The <code>PWW</code> pipeline with <code>beam=1</code> produced hallucinations in the same regions where Friedberg and Gerstner spoke: <code>"Oh, my god."</code> and <code>"I'm bullying when you're bullying."</code> appeared over <code>VAD</code>-confirmed active speech. <code>Whisper</code> is most susceptible to hallucinations in regions of silence. Everything up to this point had confirmed these regions were not silent.
-  </p>
-
-  <p class="body">
-    Working hypothesis: the encoder is signaling that speech exists, but the decoder cannot transcribe it confidently, so it fills the gap with hallucinated output. Repetitive hallucinations in close proximity, over <code>VAD</code>-positive regions, became a candidate ghost signal.
+    The PWW pipeline with beam=1 produced hallucinations in the same regions where Friedberg and Gerstner spoke. Whisper is most susceptible to hallucinations in regions of silence. These regions were not silent. The encoder signals that speech exists. The decoder cannot transcribe it confidently and fills the gap with hallucinated output. Repetitive hallucinations in close proximity, over VAD-positive regions, are the ghost signal.
   </p>
 
   <div class="section-heading">
@@ -563,9 +549,9 @@ The ground-truth path <code>"Oh, my god."</code> lost by <code>5.75 percentage p
   </div>
 
   <p class="body">
-<code>BERD-1</code> compares two transcript inputs: the production <code>WhisperX</code> path using <code>beam=5</code> and <code>CTranslate2</code>, and a <code>beam=1</code> path that exposes Friedberg's ghost. The comparison can use either production <code>WhisperX</code> or the heavier <code>PWW</code> pipeline, which costs roughly <code>10× compute</code> but produces localized hallucinations over both Friedberg and Gerstner's ghost regions. <code>BERD-1</code> does not recover missing content. It creates a timestamped review queue. In <code>Episode 136</code>, it surfaced roughly a dozen candidate regions for human video review.
+    BERD-1 compares two transcript inputs: the production WhisperX path using beam=5 and CTranslate2, and a beam=1 path that exposes Friedberg's ghost. The comparison can use either production WhisperX or the heavier PWW pipeline, which costs roughly 10× compute but produces localized hallucinations over both Friedberg and Gerstner's ghost regions. BERD-1 does not recover missing content. It creates a timestamped review queue. In Episode 136, it surfaced roughly a dozen candidate regions for human video review.
   </p>
-  
+
   <div class="video-block">
     <video controls>
       <source src="berd.mp4" type="video/mp4">
@@ -580,7 +566,7 @@ The ground-truth path <code>"Oh, my god."</code> lost by <code>5.75 percentage p
         <span class="signal-title">Gap Topology</span>
       </div>
       <div class="signal-body">
-        Two runs of <code>WhisperX</code> on the same audio file. Where <code>beam=1</code> emits a segment and <code>beam=5</code> has nothing at that timestamp, the gap is the flag. In Friedberg's case, <code>beam=1</code> has <code>20.85–21.50s</code> <code>"Oh, my god."</code>; <code>beam=5</code> has nothing. Its next segment starts at <code>25.32s</code>: a <code>4.5-second</code> hole where speech existed.
+        Two runs of WhisperX on the same audio file. Where beam=1 emits a segment and beam=5 has nothing at that timestamp, the gap is the flag. In Friedberg's case, beam=1 has 20.85–21.50s "Oh, my god."; beam=5 has nothing. Its next segment starts at 25.32s: a 4.5-second hole where speech existed.
       </div>
     </div>
 
@@ -590,17 +576,17 @@ The ground-truth path <code>"Oh, my god."</code> lost by <code>5.75 percentage p
         <span class="signal-title">Repeat Hallucination</span>
       </div>
       <div class="signal-body">
-        In the adjacent <code>PWW</code> pipeline, when the decoder has no confident path, <code>beam=1</code> hallucinates a nearby phrase rather than emitting silence. <code>"I'm bullying when you're bullying."</code> does not appear anywhere else in the episode. It was emitted three times across consecutive <code>VAD</code>-confirmed speech regions containing both Friedberg and Gerstner's ghost audio. Hallucinated repetition appears only in the adjacent <code>PyTorch Whisper</code> pipeline with <code>beam=1</code>.
+        When the decoder has no confident path, beam=1 hallucinates a nearby phrase rather than emitting silence. <code>"I'm bullying when you're bullying."</code> does not appear anywhere else in the episode. It was emitted three times across consecutive VAD-confirmed speech regions containing both Friedberg and Gerstner's ghost audio.
+      </div>
     </div>
-  </div>
   </div>
 
   <p class="body">
-    The signals converge on the same timestamps. <code>VAD</code> confirmed speech. <code>beam=5</code> emitted nothing, emitted words that <code>wav2vec</code> could not anchor, or <code>beam=1</code> filled the slot with a phrase it had already said. Any one signal is a candidate. Together, they form a review target.
+    The signals converge on the same timestamps. VAD confirmed speech. beam=5 emitted nothing, emitted words that wav2vec could not anchor, or beam=1 filled the slot with a phrase it had already said. Any one signal is a candidate. Together, they form a review target.
   </p>
 
   <p class="body">
-    <code>BERD-1</code> does not recover the missing content. It flags timestamps and puts them in a review queue.
+    BERD-1 does not recover the missing content. It flags timestamps and puts them in a review queue.
   </p>
 
   <div class="section-heading">
@@ -608,23 +594,23 @@ The ground-truth path <code>"Oh, my god."</code> lost by <code>5.75 percentage p
   </div>
 
   <p class="body">
-    <code>BERD-1</code> is a forensic prototype, not a corpus-scale production component. It produces false positives, mostly lexical variants where both beams transcribed the same utterance but represented it differently. Example: <code>beam=1</code> emits <code>"seven and eight"</code> while <code>beam=5</code> emits <code>"7% and 8%"</code>. That can look like a gap, but it is not Ghost Audio.
+    BERD-1 is a forensic prototype, not a corpus-scale production component. It produces false positives, mostly lexical variants where both beams transcribed the same utterance differently — beam=1 emits "seven and eight" while beam=5 emits "7% and 8%". That looks like a gap. It is not Ghost Audio.
   </p>
 
   <p class="body">
-    The repeat hallucination signal is cleaner but narrower: it only catches cases where <code>beam=1</code> had no confident decode and recycled context. Gerstner's ghost, which was too quiet for any decoder configuration to surface, produces no repeat signal and no gap. It is invisible to <code>BERD-1</code> entirely.
+    The repeat hallucination signal is cleaner but narrower: it only catches cases where beam=1 had no confident decode and recycled context. Gerstner's ghost was too quiet for any decoder configuration to surface. It produces no repeat signal, no gap. It is invisible to BERD-1 entirely.
   </p>
 
   <p class="body">
-    The <code>wav2vec</code> alignment signal is the most reliable of the three, but it is also the most dependent on downstream tooling behaving consistently. Alignment failures can have causes unrelated to <code>Ghost Audio</code>.
+    The wav2vec alignment signal is the most reliable of the three and the most dependent on downstream tooling behaving consistently. Alignment failures have causes unrelated to Ghost Audio.
   </p>
 
   <p class="body">
-    What <code>BERD-1</code> produces is a review queue, not a corrected transcript. A human still has to inspect every flagged timestamp and decide whether content was missed. At roughly <code>10× compute</code> compared with a standard production pass, it is a forensic tool rather than a default pipeline component.
+    BERD-1 produces a review queue, not a corrected transcript. A human inspects every flagged timestamp. At roughly 10× compute compared with a standard production pass, it is a forensic tool rather than a default pipeline component.
   </p>
 
   <p class="body">
-    The signals are real. The system works. But it needs more iteration before it can run reliably at corpus scale without generating more noise than signal.
+    The signals are real. The system works. It needs more iteration before it runs reliably at corpus scale.
   </p>
 
   <div class="footer">
