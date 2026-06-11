@@ -2,9 +2,9 @@
 // Usage: <script src="nav-loader.js" data-page="pagename"></script>
 (function () {
 
-  // ── ANNOUNCEMENT BANNER ──────────────────────────────────────────────────
   const BANNER_ACTIVE = false;
   const BANNER_MESSAGE = "Work in progress.";
+
   if (BANNER_ACTIVE) {
     const banner = document.createElement('div');
     banner.id = 'site-banner';
@@ -15,7 +15,6 @@
     document.body.insertBefore(banner, document.body.firstChild);
   }
 
-  // ── INLINED NAV HTML ─────────────────────────────────────────────────────
   const NAV_HTML = `
 <div class="nav-logo">ALL-LLLM POD</div>
 <div class="nav-section-label">Pages</div>
@@ -30,10 +29,8 @@
 <a href="https://pdf-sorcerer.github.io/alp/arguments.html" class="nav-item" data-page="argument_pipeline">• Argument Pipeline</a>
 `;
 
-  // ── STYLES ───────────────────────────────────────────────────────────────
   const style = document.createElement('style');
   style.textContent = `
-    /* Nav base styles (applied via #shared-nav so they work on all pages) */
     #shared-nav {
       position: sticky;
       top: 0;
@@ -47,6 +44,7 @@
       padding: 32px 0;
       overflow-y: auto;
     }
+
     #shared-nav .nav-logo {
       font-family: 'IBM Plex Mono', monospace;
       font-size: 11px;
@@ -57,6 +55,7 @@
       padding: 0 24px 28px;
       border-bottom: 1px solid #e4e4e4;
     }
+
     #shared-nav .nav-section-label {
       font-family: 'IBM Plex Mono', monospace;
       font-size: 10px;
@@ -66,6 +65,7 @@
       color: #8c8c8c;
       padding: 18px 24px 8px;
     }
+
     #shared-nav .nav-item {
       display: block;
       font-family: 'IBM Plex Mono', monospace;
@@ -79,20 +79,58 @@
       overflow: hidden;
       text-overflow: ellipsis;
     }
+
     #shared-nav .nav-item:hover {
       color: #1a1a1a;
       background: #f9f9f9;
       border-left-color: #e4e4e4;
     }
+
     #shared-nav .nav-item.active {
       color: #0A84FF;
       border-left-color: #0A84FF;
       background: rgba(10,132,255,0.12);
     }
 
-    /* ── MOBILE ── */
+    /* ── GLOBAL ACCORDIONS ── */
+    .accordion-block {
+      max-width: 760px;
+      margin: 28px 0 36px;
+      border: 1px solid #e4e4e4;
+      border-radius: 4px;
+      overflow: hidden;
+      background: #ffffff;
+    }
+
+    .accordion-block summary {
+      cursor: pointer;
+      padding: 12px 16px;
+      list-style: none;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #0A84FF;
+      background: transparent;
+      border-bottom: 1px solid #e4e4e4;
+    }
+
+    .accordion-block summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .accordion-block summary::before {
+      content: "▸";
+      margin-right: 8px;
+      color: #0A84FF;
+    }
+
+    .accordion-block[open] summary::before {
+      content: "▾";
+    }
+
     @media (max-width: 768px) {
-      /* Drawer — off screen by default, override any page display:none */
       #shared-nav,
       nav#shared-nav {
         display: flex !important;
@@ -109,15 +147,14 @@
         box-shadow: 2px 0 12px rgba(0,0,0,0.12) !important;
         flex-direction: column !important;
         padding: 32px 0 !important;
-        /* Must NOT contribute to page width when hidden */
         flex-shrink: 0 !important;
       }
+
       #shared-nav.open,
       nav#shared-nav.open {
         transform: translateX(0) !important;
       }
 
-      /* Hamburger */
       #nav-hamburger {
         display: flex !important;
         align-items: center;
@@ -134,29 +171,43 @@
         cursor: pointer;
         box-shadow: 0 1px 4px rgba(0,0,0,0.08);
       }
+
       #nav-hamburger span {
-        display: block; width: 16px; height: 2px;
-        background: #1a1a1a; border-radius: 2px; position: relative;
+        display: block;
+        width: 16px;
+        height: 2px;
+        background: #1a1a1a;
+        border-radius: 2px;
+        position: relative;
       }
+
       #nav-hamburger span::before,
       #nav-hamburger span::after {
-        content: ''; display: block; width: 16px; height: 2px;
-        background: #1a1a1a; border-radius: 2px;
-        position: absolute; left: 0;
+        content: '';
+        display: block;
+        width: 16px;
+        height: 2px;
+        background: #1a1a1a;
+        border-radius: 2px;
+        position: absolute;
+        left: 0;
       }
+
       #nav-hamburger span::before { top: -5px; }
       #nav-hamburger span::after  { top: 5px; }
 
-      /* Overlay */
       #nav-overlay {
         display: none;
-        position: fixed; inset: 0;
+        position: fixed;
+        inset: 0;
         background: rgba(0,0,0,0.4);
         z-index: 10000;
       }
-      #nav-overlay.open { display: block; }
 
-      /* Main content: full width, clear hamburger */
+      #nav-overlay.open {
+        display: block;
+      }
+
       main {
         padding-top: 64px !important;
         width: 100% !important;
@@ -164,26 +215,26 @@
         min-width: 0 !important;
       }
 
-      body { overflow-x: hidden !important; }
+      body {
+        overflow-x: hidden !important;
+      }
     }
 
-    /* Hide hamburger on desktop */
     @media (min-width: 769px) {
       #nav-hamburger { display: none !important; }
-      #nav-overlay   { display: none !important; }
+      #nav-overlay { display: none !important; }
     }
   `;
   document.head.appendChild(style);
 
-  // ── INJECT NAV ───────────────────────────────────────────────────────────
   const script = document.currentScript;
   const currentPage = script ? script.getAttribute('data-page') : null;
 
   const nav = document.getElementById('shared-nav');
+
   if (nav) {
     nav.innerHTML = NAV_HTML;
 
-    // Mark active page
     if (currentPage) {
       nav.querySelectorAll('.nav-item[data-page]').forEach(function(a) {
         if (a.getAttribute('data-page') === currentPage) {
@@ -192,12 +243,12 @@
       });
     }
 
-    // On-this-page anchors (opt-in via window.NAV_ANCHORS)
     if (window.NAV_ANCHORS && window.NAV_ANCHORS.length) {
       var label = document.createElement('div');
       label.className = 'nav-section-label';
       label.textContent = 'On This Page';
       nav.appendChild(label);
+
       window.NAV_ANCHORS.forEach(function(item) {
         var a = document.createElement('a');
         a.href = item.href;
@@ -208,7 +259,6 @@
     }
   }
 
-  // ── MOBILE HAMBURGER ─────────────────────────────────────────────────────
   var hamburger = document.createElement('button');
   hamburger.id = 'nav-hamburger';
   hamburger.setAttribute('aria-label', 'Open navigation');
