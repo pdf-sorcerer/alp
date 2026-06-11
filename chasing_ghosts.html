@@ -482,7 +482,7 @@
   </div>
 
   <p class="body">
-    The audio was there. The investigation went through the acoustic stack before opening the decoder.
+  This investigation went through the acoustic stack before opening the decoder.
   </p>
 
   <p class="body">
@@ -495,7 +495,7 @@
   </div>
 
   <p class="body">
-    An adjacent transcription pipeline was built using reference PyTorch Whisper because the production runtime uses CTranslate2, which does not expose logits. Cross-attention weights, filtered to audio-aligned heads, showed non-zero attention in both ghost regions — substantially more for Friedberg. The encoder saw the audio. The decoder was attending to it.
+    An adjacent transcription pipeline was built using reference PyTorch Whisper because my WhisperX production runtime uses a CTranslate2 decoder, which does not expose logits. Cross-attention weights, filtered to audio-aligned heads, showed non-zero attention in both ghost regions. From my pov, very little attention paid - although Claude and Jippity say both encoder and decoder attended the regions 
   </p>
 
   <div class="img-block">
@@ -504,12 +504,9 @@
   </div>
 
   <p class="body">
-    A separate line of investigation projected the speaker embeddings onto a manifold to visualize how the ghost segments were being geometrically interpreted. Friedberg's ghost regions did not cluster with Friedberg's confirmed speech. They fell inside Chamath's cluster. The audio was not only short enough to destabilize the embedding — it was acoustically close enough to the wrong speaker that the speaker identity layer independently misread it. The ASR decoder and the speaker embedding space failed on the same audio for different reasons.
+    A separate line of investigation projected the speaker embeddings onto a manifold to visualize how the ghost segments were being geometrically interpreted. Friedberg's ghost regions did not cluster with Friedberg's confirmed speech. They fell inside Chamath's cluster. The audio was not only short enough to be misclassified to the wrong speaker (not surprising). To-do: upload that content. 
   </p>
 
-  <p class="body">
-    Ghost Audio is not an ASR problem. Independent systems failed on the same audio for different reasons. That shifted the investigation away from transcript accuracy and toward decoder behavior. The question was no longer "why was this word missed?" but "what does the decoder do when it encounters speech it cannot confidently transcribe?"
-  </p>
 
 <div class="section-heading">
   <h2>Decoder Fork</h2>
@@ -565,8 +562,10 @@
   </div>
 
   <div class="beam-margin">
-    Margin: <strong>5.75 percentage points</strong> ·
-    Ratio: <strong>1.16×</strong>
+    <code></code>WhisperX-wrapper: Whisper-large-v3</code>
+    <code></code>Pytorch decoder</code>
+    <code></code>beam=5</code>
+    <code></code>wav2vec</code>
   </div>
 </div>
 
