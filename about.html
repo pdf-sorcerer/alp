@@ -282,7 +282,7 @@
 
   <main>
     <p class="page-eyebrow">Project Background</p>
-    <h1>About / Motivation</h1>
+    <h1>About</h1>
 
     <div class="lede-card">
       <strong>Looking for a PM who is LLM-native? You found one.</strong>
@@ -320,7 +320,7 @@
           <div class="bullet-copy">
             Detailed review caught remarkably subtle data quality failure modes before they became model quality failures. Ghost Audio vanishing from transcripts without a fingerprint means the model learns the wrong relationships. Diagnosing it required reading the full pipeline — <code>VAD</code>, beam search, decoder behavior, embedding space — and designing a detection mechanism that could work at scale.
           </div>
-          <div class="req-tag">Job req: identify data quality failures before they become model quality failures</div>
+          <div class="req-tag">Proactive: surface data quality failures before they become model quality failures</div>
         </div>
       </div>
 
@@ -330,9 +330,9 @@
           <div class="bullet-label">HITL · Tooling</div>
           <div class="bullet-heading">Build tools you need to manage and solve the problems you have.</div>
           <div class="bullet-copy">
-            HITL is a product surface, not a concession. Clownfish and Brody exist because no AI transcription or classification pipeline is trustworthy — especially with super-short form audio (sub-4 seconds). Designing what the reviewer sees, hears, and how fast they move is product work. The reviewer is the user.
+          Clownfish and Brody exist because no AI pipeline is fully trustworthy — especially dealing with classification of super-short speech utterances that most people drop!
           </div>
-          <div class="req-tag">Job req: experience designing human-in-the-loop workflows</div>
+          <div class="req-tag">Augment your human operators: massive experience designing human-in-the-loop workflows</div>
         </div>
       </div>
 
@@ -342,9 +342,9 @@
           <div class="bullet-label">Tradeoffs · Hardware Constraints</div>
           <div class="bullet-heading">Manage tradeoffs with consumer-grade hardware.</div>
           <div class="bullet-copy">
-            A sliding memory window was chosen over full conversational context; zero-shot <code>F5-TTS</code> over heavier VibeVoice LoRA adapters — not because of system limits, but because heavier configurations felt worse to use on consumer hardware. The decision criteria was feel, not spec. That's product.
+            A sliding memory window was chosen over full conversational context; zero-shot <code>F5-TTS</code> over richer TTS libraries, not because of system limits, but because heavier configurations took longer to generate at inference and ruined the vibe. 
           </div>
-          <div class="req-tag">Job req: make pragmatic calls under real-world constraints</div>
+          <div class="req-tag">make pragmatic calls under real-world constraints</div>
         </div>
       </div>
 
@@ -356,7 +356,7 @@
           <div class="bullet-copy">
             The argument pipeline extracts claim chains, rebuttals, and long-term positions — not quotes — because a model trained on style alone won't hold a position under pressure. Defining what "accurate" means before asking engineering to build toward it is the job.
           </div>
-          <div class="req-tag">Job req: translate ambiguous product goals into engineering-ready definitions</div>
+          <div class="req-tag">translate ambiguous product goals into engineering-ready definitions</div>
         </div>
       </div>
 
@@ -368,7 +368,7 @@
           <div class="bullet-copy">
             560+ episodes, two pipelines, five heuristic repair patterns, Ghost Audio detection, ongoing ops. ALL-LLLM POD is cool, but the process is far more valuable. Knowing the difference — and being able to defend six months on transcription to a hiring committee — is product judgment.
           </div>
-          <div class="req-tag">Job req: wear many hats · comfortable rolling up your sleeves</div>
+          <div class="req-tag">wear many hats · comfortable rolling up your sleeves</div>
         </div>
       </div>
 
