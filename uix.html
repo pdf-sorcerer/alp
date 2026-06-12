@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ALL-LLLM POD | iOS App</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --green: #0A84FF;
+      --green-dim: rgba(10, 132, 255, 0.12);
+      --bg: #f9f9f9;
+      --surface: #ffffff;
+      --border: #e4e4e4;
+      --code-bg: #0d1117;
+      --text: #1a1a1a;
+      --muted: #6b6b6b;
+      --faint: #8c8c8c;
+      --nav-width: 220px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    #shared-nav {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      width: var(--nav-width);
+      flex-shrink: 0;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      padding: 32px 0;
+      overflow-y: auto;
+    }
+
+    .nav-logo {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--green);
+      padding: 0 24px 28px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-item {
+      display: block;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 7px 24px;
+      border-left: 2px solid transparent;
+      transition: color 0.15s, border-color 0.15s, background 0.15s;
+    }
+    .nav-item:hover { color: var(--text); background: var(--bg); border-left-color: var(--border); }
+    .nav-item.active { color: var(--green); border-left-color: var(--green); background: var(--green-dim); }
+
+    main {
+      flex: 1;
+      padding: 56px 64px 120px;
+      max-width: 900px;
+      min-width: 0;
+    }
+
+    .page-eyebrow {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 14px;
+    }
+
+    .lead {
+      font-size: 14px;
+      line-height: 1.75;
+      color: #3a3a3a;
+      max-width: 720px;
+      margin-bottom: 52px;
+    }
+    .lead strong { font-weight: 600; color: var(--text); }
+
+    /* ── SECTION ── */
+    .ui-section {
+      margin-bottom: 64px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-eyebrow {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--green);
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--text);
+    }
+
+    .section-desc {
+      font-size: 13.5px;
+      line-height: 1.72;
+      color: #4a4a4a;
+      max-width: 680px;
+      margin-bottom: 28px;
+    }
+
+    /* ── PHONE GRID ── */
+    .phone-grid-1 {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      max-width: 320px;
+    }
+
+    .phone-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .phone-grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 20px;
+    }
+
+    .phone-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .phone-card img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .phone-caption {
+      padding: 10px 14px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .phone-caption span {
+      display: block;
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0;
+      text-transform: none;
+      color: var(--faint);
+      margin-top: 3px;
+    }
+
+    /* ── INLINE TAG ── */
+    .inline-tag {
+      display: inline-block;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.9em;
+      color: var(--green);
+      background: var(--green-dim);
+      padding: 2px 5px;
+      border-radius: 3px;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      margin-top: 72px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--faint);
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 768px) {
+      #shared-nav {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        height: 100vh !important;
+        width: 260px !important;
+        z-index: 10001 !important;
+        transform: translateX(-100%) !important;
+        transition: transform 0.25s ease !important;
+        overflow-y: auto !important;
+        box-shadow: 2px 0 12px rgba(0,0,0,0.12) !important;
+        flex-shrink: 0 !important;
+      }
+      #shared-nav.open { transform: translateX(0) !important; }
+      main { padding: 64px 20px 80px; width: 100%; max-width: 100%; }
+      .phone-grid-2, .phone-grid-3 { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+  <nav id="shared-nav"></nav>
+
+  <main>
+    <p class="page-eyebrow">iOS Client</p>
+    <h1>App UI</h1>
+
+    <p class="lead">
+      A <strong>SwiftUI iOS app</strong> with a FaceTime-style interface. The phone is a frontend — audio capture, streamed TTS playback, transcript display, and persona animation. Inference, ASR, and TTS generation happen on the server.
+    </p>
+
+    <!-- SECTION 1: PERSONAS -->
+    <div class="ui-section">
+      <div class="section-header">
+        <div>
+          <div class="section-eyebrow">Surface 01</div>
+          <div class="section-title">Persona Roster</div>
+        </div>
+      </div>
+      <p class="section-desc">
+        The messages list is the home screen. Each persona has a satirical avatar and a live preview of their last message. The original Besties — Sacks, Chamath, Friedberg, JCal — are joined by Elon Musk, Jensen Huang, Mark Zuckerberg, Alex Karp, and Marc Andreessen.
+      </p>
+      <div class="phone-grid-1">
+        <div class="phone-card">
+          <img src="IMG_4544.PNG" alt="Persona roster showing all chatbot personas">
+          <div class="phone-caption">Persona roster
+            <span>Message previews show real inference output</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 2: 1:1 CHAT -->
+    <div class="ui-section">
+      <div class="section-header">
+        <div>
+          <div class="section-eyebrow">Surface 02</div>
+          <div class="section-title">1:1 Live Chat</div>
+        </div>
+      </div>
+      <p class="section-desc">
+        FaceTime-style chat with any persona. The debug overlay surfaces runtime telemetry inline — tokens generated, generation time, speed in t/s, model name, and prompt token count. Chain-of-thought reasoning is visible before the final response, showing the model working through its answer before committing.
+      </p>
+      <div class="phone-grid-2">
+        <div class="phone-card">
+          <img src="IMG_4487.PNG" alt="Chat debug overlay showing inference telemetry">
+          <div class="phone-caption">Debug overlay
+            <span>Tokens · speed · model · prompt size</span>
+          </div>
+        </div>
+        <div class="phone-card">
+          <img src="IMG_4488.PNG" alt="Chain of thought reasoning visible in chat">
+          <div class="phone-caption">Chain of thought
+            <span>Reasoning visible before final response</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 3: GROUP CALL -->
+    <div class="ui-section">
+      <div class="section-header">
+        <div>
+          <div class="section-eyebrow">Surface 03</div>
+          <div class="section-title">Group Call Setup</div>
+        </div>
+      </div>
+      <p class="section-desc">
+        A second product surface for multi-persona interactions. Three modes: <strong>Live Call</strong> for real-time group conversation, <strong>Panel Reenact</strong> to simulate a roundtable on any topic, and <strong>Mirror Episode</strong> to feed topics and have each persona speak in turn. Configurable turns per topic.
+      </p>
+      <div class="phone-grid-2">
+        <div class="phone-card">
+          <img src="IMG_4495.PNG" alt="Group call setup - Mirror Episode mode with topic input">
+          <div class="phone-caption">Topic entry
+            <span>Mirror Episode mode · turns per topic</span>
+          </div>
+        </div>
+        <div class="phone-card">
+          <img src="IMG_4494.PNG" alt="Group call setup showing topic added">
+          <div class="phone-caption">Topic queued
+            <span>Start Mirror Episode</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 4: SETTINGS -->
+    <div class="ui-section">
+      <div class="section-header">
+        <div>
+          <div class="section-eyebrow">Surface 04</div>
+          <div class="section-title">Model Parameters</div>
+        </div>
+      </div>
+      <p class="section-desc">
+        Full runtime configurability from the phone. Main tab controls model selection, ASR backend (<span class="inline-tag">WhisperX</span> vs <span class="inline-tag">Parakeet</span>), TTS engine, max tokens, and temperature. Advanced tab exposes Top-P, Top-K, repetition penalty, memory and RAG toggles, and persona selector. Remote PC tab manages GPU mode — <span class="inline-tag">Flywheel</span> and <span class="inline-tag">NeMo</span> share the GPU; switching stops one and starts the other.
+      </p>
+      <div class="phone-grid-3">
+        <div class="phone-card">
+          <img src="IMG_4545.PNG" alt="Model Parameters main tab">
+          <div class="phone-caption">Main
+            <span>Model · ASR · TTS · tokens · temp</span>
+          </div>
+        </div>
+        <div class="phone-card">
+          <img src="IMG_4546.PNG" alt="Model Parameters advanced tab">
+          <div class="phone-caption">Advanced
+            <span>Sampling · penalties · memory · persona</span>
+          </div>
+        </div>
+        <div class="phone-card">
+          <img src="IMG_4547.PNG" alt="Remote PC GPU mode switcher">
+          <div class="phone-caption">Remote PC
+            <span>Flywheel · NeMo · GPU processes</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">Mason Thompson · Berkeley, California</div>
+  </main>
+
+  <script src="https://pdf-sorcerer.github.io/alp/nav-loader.js" data-page="uix"></script>
+</body>
+</html>
