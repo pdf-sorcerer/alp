@@ -22,6 +22,7 @@
 <a href="https://pdf-sorcerer.github.io/alp/architecture.html" class="nav-item" data-page="architecture">2. Architecture</a>
 <a href="https://pdf-sorcerer.github.io/alp/metrics.html" class="nav-item" data-page="performance">3. Model Performance</a>
 <a href="https://pdf-sorcerer.github.io/alp/about.html" class="nav-item" data-page="about">4. About</a>
+<a href="https://pdf-sorcerer.github.io/alp/uix.html" class="nav-item" data-page="uix">5. UiX</a>
 <div class="nav-section-label">Side Quests</div>
 <a href="https://pdf-sorcerer.github.io/alp/clownfish.html" class="nav-item" data-page="clownfish">• Speaker labeling</a>
 <a href="https://pdf-sorcerer.github.io/alp/heuristics.html" class="nav-item" data-page="heuristics">• Transcript Forensics</a>
