@@ -345,7 +345,7 @@
 <p class="page-eyebrow">Transcript Reconstruction</p>
 <h1>Ghost Audio</h1>
 <p class="lead"><em>Investigation into transcript omissions and decoder disagreement</em></p>
-  <br<br>
+  <br>
 <p class="lead"> 
   <strong>What</strong>: This page investigates why speech went untranscribed—a phenomenon I call <em>Ghost Audio</em>—and the effort to build tooling capable of finding and recovering these omissions across the entire 
   All-In Podcast episode corpus.</p> 
@@ -356,10 +356,24 @@
 
   <details class="accordion-block">
     <summary><span>Why Omissions Matter: Featuring <em>The Empire Strikes Back (1980)</em></span></summary>
-  
-  
-    <div class="video-block"> <video controls> <source src="sw_ghost.mp4" type="video/mp4"> </video> <div class="video-caption">SOURCE VIDEO · THE EMPIRE STRIKES BACK (1980)</div> </div>
-  
+
+    <div class="video-block">
+      <video controls>
+        <source src="sw_ghost.mp4" type="video/mp4">
+      </video>
+      <div class="video-caption">SOURCE VIDEO · THE EMPIRE STRIKES BACK (1980)</div>
+    </div>
+
+    <div class="callout">
+      <p>
+        This staged example removes Vader's central reveal: <code>"No. I am your father."</code>
+      </p>
+
+      <p>
+        Nothing appears broken in the transcript. Luke still reacts emotionally, but the cause of that reaction is gone. A downstream model would see Luke rejecting his own accusation, not responding to new information from Vader.
+      </p>
+    </div>
+
     <div class="comparison-grid">
       <div class="comparison-card">
         <h3>Movie Screenplay</h3>
@@ -370,7 +384,7 @@
           <p><strong>Luke:</strong> "No. No. That's not true! That's impossible!"</p>
         </div>
       </div>
-  
+
       <div class="comparison-card">
         <h3>Ghost Audio Transcript</h3>
         <div class="transcript-box">
@@ -380,50 +394,47 @@
         </div>
       </div>
     </div>
-  
-    <div class="callout">
-      <p>This is a staged example, but the impact is the same: ghost audio removes an entire segment of content from the transcript, quietly altering the intent and meaning of the speech around it.</p>
-      <p>Here, the transcript still reads cleanly. Nothing appears broken. Yet the central reveal disappears. A downstream model never learns that Vader says he is Luke's father, and may instead infer that Luke is reacting to his own accusation rather than to new information from Vader.</p>
-    </div>
   </details>
 
   <details class="accordion-block">
-  <summary><span>Why Omissions Matter: Featuring <em>The Dark Knight (2008)</em></span></summary>
+    <summary><span>Why Omissions Matter: Featuring <em>The Dark Knight (2008)</em></span></summary>
 
-  <div class="video-block">
-    <video controls>
-      <source src="them.mp4" type="video/mp4">
-    </video>
-    <div class="video-caption">SOURCE VIDEO · THE DARK KNIGHT (2008)</div>
-  </div>
+    <div class="video-block">
+      <video controls>
+        <source src="them.mp4" type="video/mp4">
+      </video>
+      <div class="video-caption">SOURCE VIDEO · THE DARK KNIGHT (2008)</div>
+    </div>
 
-  <div class="comparison-grid">
-    <div class="comparison-card">
-      <h3>Movie Screenplay</h3>
-       <div class="callout">
-    <p>YouTube ASR failed to transcribe a single-word response from Batman: <code>"Them?"</code>. Batman's response reflects an unwelcome change in his understanding: Joker has <em>two</em>t hostages, not one.</p>
-       Nothing appears missing in the transcript; you'd have to be familiar with the movie to know something is missing.</p>
-      <div class="transcript-box">
-        <p><strong>Joker:</strong> "There's only minutes left, so you'll have to play my little game if you want to save one of them."</p>
-        <p class="ghost-line"><strong>Batman:</strong> "Them?"</p>
-        <p><strong>Joker:</strong> "You know, for a while there, I thought you really were Dent. The way you threw yourself after her."</p>
+    <div class="callout">
+      <p>
+        YouTube ASR failed to transcribe a single-word response from Batman: <code>"Them?"</code>. Batman's response reflects an unwelcome change in his understanding: Joker has <em>two</em> hostages, not one.
+      </p>
+
+      <p>
+        Nothing appears missing in the transcript; you'd have to be familiar with the movie to know something is missing.
+      </p>
+    </div>
+
+    <div class="comparison-grid">
+      <div class="comparison-card">
+        <h3>Movie Screenplay</h3>
+        <div class="transcript-box">
+          <p><strong>Joker:</strong> "There's only minutes left, so you'll have to play my little game if you want to save one of them."</p>
+          <p class="ghost-line"><strong>Batman:</strong> "Them?"</p>
+          <p><strong>Joker:</strong> "You know, for a while there, I thought you really were Dent. The way you threw yourself after her."</p>
+        </div>
+      </div>
+
+      <div class="comparison-card">
+        <h3>Ghost Audio Transcript</h3>
+        <div class="transcript-box">
+          <p><strong>Joker:</strong> "There's only minutes left, so you'll have to play my little game if you want to save one of them."</p>
+          <p><strong>Joker:</strong> "You know, for a while there, I thought you really were Dent. The way you threw yourself after her."</p>
+        </div>
       </div>
     </div>
-    <div class="comparison-card">
-      <h3>Ghost Audio Transcript</h3>
-      <div class="transcript-box">
-        <p><strong>Joker:</strong> "There's only minutes left, so you'll have to play my little game if you want to save one of them."</p>
-        <p><strong>Joker:</strong> "You know, for a while there, I thought you really were Dent. The way you threw yourself after her."</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="callout">
-    <p>YouTube ASR failed to transcribe a single-word response from Batman: <code>"Them?"</code>. That response communicates a sudden shift in Batman's understanding: Joker has two hostages, not one.</p>
-    <p>The transcript reads cleanly. Nothing appears broken. The moment of realization — and the causal link between Joker's statement and Batman's reaction — is gone.</p>
-  </div>
-</details>
-
+  </details>
 
   <div class="section-heading">
     <h2>Discovery</h2>
@@ -434,7 +445,6 @@
   </p>
 
   <p class="body">
-<p class="body">
   Libsyn was intended as a going-forward source change, but curiosity got the better of me. I ran Episode 136 through the pipeline. This episode is important for reasons I can't adequately explain here. Around <code>t≈20s</code>, Friedberg says a short phrase — <strong>"Oh, my God."</strong> — that was missing from the new Libsyn transcript and absent from my corpus. It did exist in a very early 2025 transcript run, back when the pipeline was still closer to "move fast and MVP by prompt-and-pray."
 </p>
 
@@ -566,10 +576,10 @@
   </div>
 
   <div class="beam-margin">
-    <code></code>WhisperX-wrapper: Whisper-large-v3</code>
-    <code></code>Pytorch decoder</code>
-    <code></code>beam=5</code>
-    <code></code>wav2vec</code>
+    <code>WhisperX-wrapper: Whisper-large-v3</code>
+    <code>PyTorch decoder</code>
+    <code>beam=5</code>
+    <code>wav2vec</code>
   </div>
 </div>
 
@@ -586,44 +596,48 @@
 </p>
 
 <p class="body">
-  Using WhisperX large-v3 with Beam=5, I ran the same Libsyn audio twice: once with decoder timestamp tokens disabled and once with decoder timestamp tokens enabled. The model, audio, beam size, alignment step, and production runtime were otherwise held constant.
+  Using identical WhisperX Beam=5 production settings, I ran the same Libsyn audio twice. The model, audio, beam size, alignment step, and runtime were held constant. The only change was the decoder timestamp-token setting.
 </p>
 
-<p class="body">
-  With timestamp tokens disabled, the transcript jumped directly from:
-</p>
+<div class="comparison-grid">
 
-<div class="comparison-card" style="max-width:760px;margin:24px 0;">
-  <div class="transcript-box">
-    <p><code>18.873–19.914</code> And the fattest, that's the dumbest.</p>
-    <p><code>25.317–26.097</code> He's not even here.</p>
+  <div class="comparison-card">
+    <h3>Timestamp Tokens OFF</h3>
+    <div class="transcript-box">
+      <p><strong>18.873–19.914</strong></p>
+      <p>And the fattest, that's the dumbest.</p>
+
+      <br><br>
+
+      <p><strong>25.317–26.097</strong></p>
+      <p>He's not even here.</p>
+    </div>
   </div>
+
+  <div class="comparison-card">
+    <h3>Timestamp Tokens ON</h3>
+    <div class="transcript-box">
+      <p><strong>18.873–19.914</strong></p>
+      <p>And the fattest, that's the dumbest.</p>
+
+      <p class="ghost-line">
+        <strong>20.834–21.495</strong><br>
+        Oh, my god.
+      </p>
+
+      <p><strong>25.317–26.097</strong></p>
+      <p>He's not even here.</p>
+    </div>
+  </div>
+
 </div>
 
 <p class="body">
-  The entire ghost region disappeared.
+  With timestamp tokens enabled, WhisperX recovered Friedberg's missing utterance.
 </p>
 
 <p class="body">
-  With timestamp tokens enabled, WhisperX recovered:
-</p>
-
-<div class="comparison-card" style="max-width:760px;margin:24px 0;">
-  <div class="transcript-box">
-    <p class="ghost-line"><code>20.834–21.495</code> Oh, my god.</p>
-  </div>
-</div>
-
-<p class="body">
-  Timestamp tokens are not merely output metadata. They participate in decoding.
-</p>
-
-<p class="body">
-  With WhisperX Beam=5 decoding, timestamp tokens appear to reduce the likelihood that faint speech events are skipped during beam-path selection.
-</p>
-
-<p class="body">
-  Working hypothesis: timestamp tokens add temporal structure to the decode path. In ambiguous regions, that structure helps faint speech remain represented in the winning beam path rather than being silently omitted.
+  Timestamp tokens are not merely output metadata. They appear to participate in decoding itself. Working hypothesis: timestamp tokens introduce temporal structure that helps weak speech events survive beam-path selection.
 </p>
 
 <div class="section-heading">
@@ -631,39 +645,11 @@
 </div>
 
 <p class="body">
-  BERD-1 now uses decoder disagreement as the detection signal.
+  BERD-1 operationalizes this observation. Rather than comparing a production transcript against a separate scout decode, BERD-1 compares two production-equivalent WhisperX Beam=5 transcripts: <strong>Timestamp Tokens OFF</strong> (<code>without_timestamps=True</code>) and <strong>Timestamp Tokens ON</strong> (<code>without_timestamps=False</code>).
 </p>
 
 <p class="body">
-  Instead of comparing production WhisperX against a separate beam=1 scout transcript, BERD-1 compares two production-equivalent WhisperX Beam=5 decodes:
-</p>
-
-<div class="signal-list">
-
-  <div class="signal-card">
-    <div class="signal-card-header">
-      <span class="signal-num">01</span>
-      <span class="signal-title">Timestamp Tokens OFF</span>
-    </div>
-    <div class="signal-body">
-      WhisperX Beam=5 with <code>without_timestamps=True</code>.
-    </div>
-  </div>
-
-  <div class="signal-card">
-    <div class="signal-card-header">
-      <span class="signal-num">02</span>
-      <span class="signal-title">Timestamp Tokens ON</span>
-    </div>
-    <div class="signal-body">
-      WhisperX Beam=5 with <code>without_timestamps=False</code>.
-    </div>
-  </div>
-
-</div>
-
-<p class="body">
-  Where the timestamp-token ON transcript contains speech that the timestamp-token OFF transcript skips, BERD-1 creates a candidate transcript repair.
+  When the timestamp-enabled transcript contains speech absent from the timestamp-disabled transcript, BERD-1 generates a candidate transcript repair.
 </p>
 
 <div class="video-block">
