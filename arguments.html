@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- saved from url=(0054)https://pdf-sorcerer.github.io/alp/arguments.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -123,12 +122,66 @@
       font-size: 14px;
       line-height: 1.75;
       color: #3a3a3a;
-      max-width: 740px;
+      max-width: 820px;
       margin-bottom: 34px;
     }
 
     .lead p { margin-bottom: 16px; }
     .lead strong { font-weight: 600; color: var(--text); }
+
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin: 22px 0 24px;
+    }
+
+    .comparison-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .comparison-card h3 {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--green);
+      background: var(--green-dim);
+      border-bottom: 1px solid rgba(10, 132, 255, 0.18);
+      padding: 10px 12px;
+    }
+
+    .transcript-box {
+      padding: 12px 14px 14px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      line-height: 1.65;
+      color: var(--text);
+    }
+
+    .transcript-box p {
+      margin: 0 0 12px;
+    }
+
+    .transcript-box p:last-child {
+      margin-bottom: 0;
+    }
+
+    .transcript-box strong {
+      color: var(--text);
+      font-weight: 700;
+    }
+
+    .ghost-line {
+      background: var(--green-dim);
+      border-left: 2px solid var(--green);
+      padding: 7px 9px;
+      border-radius: 2px;
+    }
 
     .section-heading {
       display: flex;
@@ -201,6 +254,9 @@
       max-width: 760px;
     }
 
+    .block-why p { margin-bottom: 12px; }
+    .block-why p:last-child { margin-bottom: 0; }
+
     .code-card {
       background: var(--code-bg);
       border-radius: 3px;
@@ -264,7 +320,6 @@
       white-space: nowrap;
     }
 
-
     .footer {
       margin-top: 72px;
       padding-top: 24px;
@@ -285,7 +340,10 @@
     .footer a:hover { color: var(--green); border-bottom-color: var(--green-dim); }
 
     @media (max-width: 768px) {
+      body { display: block; }
+      nav { position: relative; width: 100%; height: auto; border-right: 0; border-bottom: 1px solid var(--border); }
       main { padding: 64px 20px 80px; }
+      .comparison-grid { grid-template-columns: 1fr; }
       .footer { flex-direction: column; align-items: flex-start; }
       .block-title { white-space: normal; }
       .arg-row { grid-template-columns: 1fr; gap: 4px; }
@@ -302,19 +360,57 @@
       <h1>Argument Pipeline</h1>
 
       <div class="lead">
-<p>
-Labeled transcripts are converted into persona-specific training data by batching same-speaker continuations and using prior conversational turns as context (the prompt) and the target speaker's response as the completion. This works well for style transfer and mimicry, but I wanted a reasoning layer underneath it.</p>
+        <p>
+          Speaker-labeled transcripts are converted into training data by consolidating consecutive segments from the same speaker. Prior conversation becomes the prompt, and the target speaker's response becomes the completion.
+        </p>
 
+        <div class="comparison-grid" aria-label="Same-speaker segment consolidation example">
+          <div class="comparison-card">
+            <h3>Original Transcript</h3>
+            <div class="transcript-box">
+              <p><strong>Bob (IT):</strong> Do we have the budget to move the database to the cloud?</p>
 
+              <p><strong>Luke (Finance):</strong> Maybe, but costs could explode.</p>
 
-<p>
-So, I mined the transcript corpus using local Qwen3-30B MoE. Across a couple dozen of extractions passes, the system identified recurring beliefs, topic ownership, argument patterns, domain expertise, behavioral tendencies, and long-running positions. These artifacts were then transformed into runtime embeddings for the four Besties.
-</p>
+              <p class="ghost-line"><strong>Luke (Finance):</strong> I'd like to understand our long-term storage requirements before making any decisions.</p>
 
+              <p><strong>Bob (IT):</strong> The ops team spends half their week maintaining servers.</p>
+
+              <p><strong>Luke (Finance):</strong> That's true, but we'd be trading labor costs for vendor costs.</p>
+            </div>
+          </div>
+
+          <div class="comparison-card">
+            <h3>Training Example</h3>
+            <div class="transcript-box">
+              <p><strong>Bob (IT):</strong> Do we have the budget to move the database to the cloud?</p>
+
+              <p class="ghost-line"><strong>Luke (Finance):</strong> Maybe, but costs could explode. I'd like to understand our long-term storage requirements before making any decisions.</p>
+
+              <p><strong>Bob (IT):</strong> The ops team spends half their week maintaining servers.</p>
+
+              <p><strong>Luke (Finance):</strong> That's true, but we'd be trading labor costs for vendor costs.</p>
+            </div>
+          </div>
+        </div>
+
+        <p>
+          This works well for style transfer. The model learns vocabulary, phrasing, cadence, and conversational habits.
+        </p>
+
+        <p>
+          The problem is that style is not the same thing as reasoning.
+        </p>
+
+        <p>
+          A model trained this way may learn how David Sacks sounds without learning why he consistently arrives at certain conclusions.
+        </p>
+
+        <p>
+          To address that, I mined the transcript corpus using local Qwen3-30B MoE. Across multiple extraction passes, the system identified recurring beliefs, topic ownership, argument patterns, domain expertise, behavioral tendencies, and long-running positions.
+        </p>
       </div>
     </section>
-
-
 
     <div class="section-heading" id="events">
       <h2>Discourse Events</h2>
@@ -331,7 +427,9 @@ So, I mined the transcript corpus using local Qwen3-30B MoE. Across a couple doz
       </div>
       <div class="block-body">
         <div class="block-why">
-          The goal was never summarization. Summaries flatten conversations. They collapse disagreements, remove rebuttal structure, strip away uncertainty, and lose provenance. Instead, the pipeline attempts to preserve conversational state.
+          <p>Summaries kept destroying the thing I cared about.</p>
+          <p>A summary can tell you the hosts discussed AI regulation, China, or interest rates. It usually does not preserve who made the claim, who challenged it, who changed their position, or what remained unresolved.</p>
+          <p>Those are the parts I wanted to keep.</p>
         </div>
         <div class="code-card">claim
 counterclaim
@@ -360,7 +458,7 @@ joke</div>
       </div>
       <div class="block-body">
         <div class="block-why">
-          An argument chain is not a summary of a topic. It is the local machinery of the conversation: who made the claim, who challenged it, who clarified it, who agreed, and which position each speaker ultimately held.
+          <p>An argument chain is not a summary of a topic. It is the local machinery of the conversation: who made the claim, who challenged it, who clarified it, who agreed, and which position each speaker ultimately held.</p>
         </div>
         <div class="argument-card" aria-label="Example argument chain">
           <div class="arg-row">
@@ -437,13 +535,12 @@ persona memory</div>
       </div>
       <div class="block-body">
         <div class="block-why">
-          The resulting system extracts discourse events, argument chains, speaker positions, and persona memories that can be referenced later during inference. The point is not to make the model recite old episodes. The point is to preserve the reasoning tendencies underneath the speech.
-          <br><br>
-          Motion RNA attempts to recover behavioral tendencies.<br>
-          The argument pipeline attempts to recover reasoning tendencies.
-          <br><br>
-          One models how the hosts carry themselves.<br>
-          The other models how they carry ideas.
+          <p>The objective is not to make the model recite old episodes.</p>
+          <p>The objective is to preserve some of the reasoning patterns underneath the speech.</p>
+          <p>Motion RNA attempts to recover behavioral tendencies.<br>
+          The Argument Pipeline attempts to recover reasoning tendencies.</p>
+          <p>One models how the hosts carry themselves.<br>
+          The other models how they carry ideas.</p>
         </div>
       </div>
     </div>
@@ -464,9 +561,7 @@ persona memory</div>
         block.classList.toggle('open');
       });
     });
-
   </script>
   <script src="https://pdf-sorcerer.github.io/alp/nav-loader.js" data-page="argument_pipeline"></script>
-
 
 </body></html>
