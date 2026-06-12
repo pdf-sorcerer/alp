@@ -1,5 +1,5 @@
 // nav-loader.js — inlined nav, no fetch
-// Usage: <script src="nav-loader.js" data-page="pagename"></script>
+// Usage: <script src="nav-loader.js" data-page="pagename" data-title="Page Title"></script>
 (function () {
 
   const BANNER_ACTIVE = false;
@@ -32,10 +32,93 @@
 
   const style = document.createElement('style');
   style.textContent = `
+    /* ── STICKY TOP BAR (mobile + desktop) ── */
+    #nav-topbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 44px;
+      background: #ffffff;
+      border-bottom: 1px solid #e4e4e4;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      z-index: 10003;
+    }
+
+    #nav-topbar-title {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 60%;
+    }
+
+    #nav-topbar-logo {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #0A84FF;
+      text-decoration: none;
+    }
+
+    #nav-hamburger {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      background: transparent;
+      border: 1px solid #e4e4e4;
+      border-radius: 6px;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    #nav-hamburger span {
+      display: block;
+      width: 14px;
+      height: 2px;
+      background: #1a1a1a;
+      border-radius: 2px;
+      position: relative;
+    }
+
+    #nav-hamburger span::before,
+    #nav-hamburger span::after {
+      content: '';
+      display: block;
+      width: 14px;
+      height: 2px;
+      background: #1a1a1a;
+      border-radius: 2px;
+      position: absolute;
+      left: 0;
+    }
+
+    #nav-hamburger span::before { top: -5px; }
+    #nav-hamburger span::after  { top: 5px; }
+
+    /* push body down to clear topbar */
+    body { padding-top: 44px; }
+
+    /* ── DESKTOP NAV ── */
     #shared-nav {
       position: sticky;
-      top: 0;
-      height: 100vh;
+      top: 44px;
+      height: calc(100vh - 44px);
       width: 220px;
       flex-shrink: 0;
       background: #ffffff;
@@ -117,28 +200,19 @@
       border-bottom: 1px solid #e4e4e4;
     }
 
-    .accordion-block summary::-webkit-details-marker {
-      display: none;
-    }
+    .accordion-block summary::-webkit-details-marker { display: none; }
+    .accordion-block summary::before { content: "▸"; margin-right: 8px; color: #0A84FF; }
+    .accordion-block[open] summary::before { content: "▾"; }
 
-    .accordion-block summary::before {
-      content: "▸";
-      margin-right: 8px;
-      color: #0A84FF;
-    }
-
-    .accordion-block[open] summary::before {
-      content: "▾";
-    }
-
+    /* ── MOBILE ── */
     @media (max-width: 768px) {
       #shared-nav,
       nav#shared-nav {
         display: flex !important;
         position: fixed !important;
-        top: 0 !important;
+        top: 44px !important;
         left: 0 !important;
-        height: 100vh !important;
+        height: calc(100vh - 44px) !important;
         width: 260px !important;
         z-index: 10001 !important;
         transform: translateX(-100%) !important;
@@ -156,81 +230,84 @@
         transform: translateX(0) !important;
       }
 
-      #nav-hamburger {
-        display: flex !important;
-        align-items: center;
-        justify-content: center;
-        position: fixed;
-        top: 14px;
-        left: 14px;
-        z-index: 10002;
-        width: 36px;
-        height: 36px;
-        background: #ffffff;
-        border: 1px solid #e4e4e4;
-        border-radius: 6px;
-        cursor: pointer;
-        box-shadow: 0 1px 4px rgba(0,0,0,0.08);
-      }
-
-      #nav-hamburger span {
-        display: block;
-        width: 16px;
-        height: 2px;
-        background: #1a1a1a;
-        border-radius: 2px;
-        position: relative;
-      }
-
-      #nav-hamburger span::before,
-      #nav-hamburger span::after {
-        content: '';
-        display: block;
-        width: 16px;
-        height: 2px;
-        background: #1a1a1a;
-        border-radius: 2px;
-        position: absolute;
-        left: 0;
-      }
-
-      #nav-hamburger span::before { top: -5px; }
-      #nav-hamburger span::after  { top: 5px; }
-
       #nav-overlay {
         display: none;
         position: fixed;
-        inset: 0;
+        top: 44px;
+        left: 0;
+        right: 0;
+        bottom: 0;
         background: rgba(0,0,0,0.4);
         z-index: 10000;
       }
 
-      #nav-overlay.open {
-        display: block;
-      }
+      #nav-overlay.open { display: block; }
 
       main {
-        padding-top: 64px !important;
         width: 100% !important;
         max-width: 100% !important;
         min-width: 0 !important;
       }
 
-      body {
-        overflow-x: hidden !important;
-      }
+      body { overflow-x: hidden !important; }
+
+      /* hide desktop nav logo on mobile since topbar has it */
+      #shared-nav .nav-logo { display: none; }
     }
 
+    /* ── DESKTOP: hide hamburger, topbar still shows title ── */
     @media (min-width: 769px) {
       #nav-hamburger { display: none !important; }
       #nav-overlay { display: none !important; }
+      #nav-topbar-logo { display: none; }
     }
   `;
   document.head.appendChild(style);
 
   const script = document.currentScript;
   const currentPage = script ? script.getAttribute('data-page') : null;
+  const dataTitle = script ? script.getAttribute('data-title') : null;
 
+  // resolve page title: data-title > <title> tag > fallback
+  const rawTitle = dataTitle || document.title || 'ALL-LLLM POD';
+  // strip site prefix like "ALL-LLLM POD | " for cleaner display
+  const displayTitle = rawTitle.replace(/^ALL-LLLM POD\s*[\|·]\s*/i, '').trim() || 'ALL-LLLM POD';
+
+  // ── BUILD TOPBAR ──
+  const topbar = document.createElement('div');
+  topbar.id = 'nav-topbar';
+
+  const hamburger = document.createElement('button');
+  hamburger.id = 'nav-hamburger';
+  hamburger.setAttribute('aria-label', 'Open navigation');
+  hamburger.setAttribute('aria-expanded', 'false');
+  hamburger.innerHTML = '<span></span>';
+
+  const titleEl = document.createElement('div');
+  titleEl.id = 'nav-topbar-title';
+  titleEl.textContent = displayTitle;
+
+  const logoEl = document.createElement('a');
+  logoEl.id = 'nav-topbar-logo';
+  logoEl.href = 'https://pdf-sorcerer.github.io/alp/welcome.html';
+  logoEl.textContent = 'ALL-LLLM POD';
+
+  // spacer to balance hamburger on right
+  const spacer = document.createElement('div');
+  spacer.style.cssText = 'width:32px;flex-shrink:0;';
+
+  topbar.appendChild(hamburger);
+  topbar.appendChild(titleEl);
+  topbar.appendChild(spacer);
+
+  document.body.insertBefore(topbar, document.body.firstChild);
+
+  // ── BUILD OVERLAY ──
+  const overlay = document.createElement('div');
+  overlay.id = 'nav-overlay';
+  document.body.appendChild(overlay);
+
+  // ── POPULATE NAV ──
   const nav = document.getElementById('shared-nav');
 
   if (nav) {
@@ -260,18 +337,7 @@
     }
   }
 
-  var hamburger = document.createElement('button');
-  hamburger.id = 'nav-hamburger';
-  hamburger.setAttribute('aria-label', 'Open navigation');
-  hamburger.setAttribute('aria-expanded', 'false');
-  hamburger.innerHTML = '<span></span>';
-
-  var overlay = document.createElement('div');
-  overlay.id = 'nav-overlay';
-
-  document.body.appendChild(overlay);
-  document.body.insertBefore(hamburger, document.body.firstChild);
-
+  // ── NAV OPEN/CLOSE ──
   function openNav() {
     if (nav) nav.classList.add('open');
     overlay.classList.add('open');
