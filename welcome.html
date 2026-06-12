@@ -307,7 +307,6 @@
 
     /* ── MOBILE ── */
     @media (max-width: 768px) {
-      /* Nav hidden off-screen — nav-loader.js handles the drawer */
       #shared-nav {
         position: fixed !important;
         top: 0 !important;
@@ -319,12 +318,9 @@
         transition: transform 0.25s ease !important;
         overflow-y: auto !important;
         box-shadow: 2px 0 12px rgba(0,0,0,0.12) !important;
-        /* override the desktop sticky/flex behaviour */
         flex-shrink: 0 !important;
       }
-      #shared-nav.open {
-        transform: translateX(0) !important;
-      }
+      #shared-nav.open { transform: translateX(0) !important; }
 
       main {
         padding: 64px 20px 80px;
@@ -334,7 +330,6 @@
 
       .site-banner img { height: 110px; }
 
-      /* Fix tab content overflow */
       .tabs-wrapper { overflow: hidden; }
       .tab-panel { overflow-x: auto; }
       .pipeline-table { font-size: 9px; padding: 16px; }
@@ -363,8 +358,9 @@
       <br><br>
       Welcome to the number one <strong>ALL-LLLM POD</strong>: a technically serious generative AI system built around an intentionally unserious premise: conversational chatbot parodies of the <i>All-In Podcast</i> Besties.
       <br><br>
-      The Besties are reconstructed from 560+ episodes, clips, and shorts from official YouTube channels. Development continues to source other thought-luminaries such as Elon Musk, Alex Karp, Mark Zuckerberg, and Jensen Huang, among others!       
-      <br><br>See the left navbar for the big picture. More detailed looks at helper apps and supporting workflows are in <a href="sidequests.html" class="inline-tag">Important Sidequests ↗</a>.
+      The Besties are reconstructed from 560+ episodes, clips, and shorts from official YouTube channels. Development continues to source other thought-luminaries such as Elon Musk, Alex Karp, Mark Zuckerberg, and Jensen Huang, among others!
+      <br><br>
+      See the left navbar for the big picture. More detailed looks at helper apps and supporting workflows are in <a href="sidequests.html" class="inline-tag">Important Sidequests ↗</a>.
     </p>
 
     <div class="tabs-wrapper">
@@ -374,54 +370,46 @@
       </div>
 
       <div class="tab-panel" id="tab-pipeline" role="tabpanel" aria-labelledby="btn-pipeline">
-        <pre class="pipeline-table">+-----------------------------+----------------------+----------------------------+
-| PIPELINE STAGE              | TOOL / LIBRARY       | FUNCTION                   |
-+-----------------------------+----------------------+----------------------------+
-|            AUDIO PIPELINE                                                       |
-+-----------------------------+----------------------+----------------------------+
-| VAD                         | Pyannote (library)   | Detects speech activity    |
-|                             |                      | boundaries; runs inside    |
-|                             |                      | WhisperX prior to ASR      |
-+-----------------------------+----------------------+----------------------------+
-| ASR / Transcription         | WhisperX (library)   | Converts audio to          |
-|                             |                      | structured text with       |
-|                             |                      | word-level timestamps      |
-+-----------------------------+----------------------+----------------------------+
-| UEM Generation              | WhisperX (library)   | Writes segment timestamps  |
-|                             |                      | to UEM; boundaries are     |
-|                             |                      | VAD-informed by Pyannote   |
-+-----------------------------+----------------------+----------------------------+
-| Diarization (constrained)   | NeMo (toolkit)       | Answers "who spoke here"   |
-|                             |                      | within Pyannote VAD +      |
-|                             |                      | WhisperX timestamp windows |
-+-----------------------------+----------------------+----------------------------+
-| Speaker Classification      | NeMo (toolkit)       | Assigns embedding IDs to   |
-|                             |                      | diarized segments          |
-+-----------------------------+----------------------+----------------------------+
-| HITL Classification         | Streamlit (framework)| Human maps embedding IDs   |
-|                             |                      | to named speakers via      |
-|                             |                      | audio playback review      |
-+-----------------------------+----------------------+----------------------------+
-| Transcript Forensics        | Streamlit (framework)| Heuristic pass catches     |
-|                             |                      | ASR errors and segment     |
-|                             |                      | boundary errors; blind to  |
-|                             |                      | errors of omission         |
-+-----------------------------+----------------------+----------------------------+
-| Transcript Mining           | Python / terminal    | Extracts recurring         |
-|                             |                      | arguments, reasoning       |
-|                             |                      | patterns, long-term views  |
-+-----------------------------+----------------------+----------------------------+
-|            VIDEO PIPELINE                                                       |
-+-----------------------------+----------------------+----------------------------+
-| Face & Body Recognition     | InsightFace, OpenCV  | Identifies speakers        |
-|                             | (libraries)          | visually across video      |
-+-----------------------------+----------------------+----------------------------+
-| Non-Verbal Extraction       | MediaPipe (library), | Captures posture,          |
-|                             | ONNX Runtime (GPU)   | movement, gaze, expression |
-+-----------------------------+----------------------+----------------------------+
-| Voice / TTS                 | F5-TTS (library)     | Synthesizes speaker voice  |
-|                             |                      | for inference and playback |
-+-----------------------------+----------------------+----------------------------+</pre>
+        <pre class="pipeline-table">+----------------------+------------------+----------------------------+
+| STAGE                | TOOL             | FUNCTION                   |
++----------------------+------------------+----------------------------+
+|        AUDIO PIPELINE                                                |
++----------------------+------------------+----------------------------+
+| VAD                  | Pyannote         | Detects speech boundaries; |
+|                      |                  | runs inside WhisperX       |
++----------------------+------------------+----------------------------+
+| ASR                  | WhisperX         | Audio to text with         |
+|                      |                  | word-level timestamps      |
++----------------------+------------------+----------------------------+
+| UEM Generation       | WhisperX         | Writes VAD-informed        |
+|                      |                  | segment timestamps to UEM  |
++----------------------+------------------+----------------------------+
+| Diarization          | NeMo             | Answers "who spoke here"   |
+|                      |                  | within WhisperX windows    |
++----------------------+------------------+----------------------------+
+| Speaker Class.       | NeMo             | Assigns embedding IDs to   |
+|                      |                  | diarized segments          |
++----------------------+------------------+----------------------------+
+| HITL                 | Streamlit        | Human maps embedding IDs   |
+|                      |                  | to named speakers          |
++----------------------+------------------+----------------------------+
+| TX Forensics         | Streamlit        | Heuristic pass catches     |
+|                      |                  | ASR + boundary errors      |
++----------------------+------------------+----------------------------+
+| TX Mining            | Python           | Extracts arguments,        |
+|                      |                  | reasoning, long-term views |
++----------------------+------------------+----------------------------+
+|        VIDEO PIPELINE                                                |
++----------------------+------------------+----------------------------+
+| Face + Body          | InsightFace      | Identifies speakers        |
+|                      | OpenCV           | visually across video      |
++----------------------+------------------+----------------------------+
+| Non-Verbal           | MediaPipe        | Captures posture,          |
+|                      | ONNX (GPU)       | movement, gaze, expression |
++----------------------+------------------+----------------------------+
+| Voice / TTS          | F5-TTS           | Synthesizes speaker voice  |
+|                      |                  | for inference and playback |
++----------------------+------------------+----------------------------+</pre>
       </div>
 
       <div class="tab-panel" id="tab-videos" role="tabpanel" aria-labelledby="btn-videos" style="display:none;">
@@ -433,13 +421,16 @@
           </div>
           <div class="youtube-frame">
             <iframe
-              src="https://www.youtube.com/embed/lSu89pR7ghg"              
+              src="https://www.youtube.com/embed/lSu89pR7ghg"
               title="June 2026 Trailer"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               allowfullscreen>
             </iframe>
           </div>
         </div>
+      </div>
+    </div>
+
     <div class="footer">Mason Thompson · Berkeley, California</div>
   </main>
 
