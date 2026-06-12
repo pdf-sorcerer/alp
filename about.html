@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ALL-LLLM POD | Motivation</title>
+  <title>ALL-LLLM POD | About</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -107,19 +107,33 @@
       margin-bottom: 32px;
     }
 
-    .lead {
-      font-size: 14px;
+    .lede-card {
+      margin-bottom: 36px;
+      padding: 20px 24px;
+      background: var(--code-bg);
+      border-radius: 4px;
+      border-left: 3px solid var(--green);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 13px;
       line-height: 1.75;
-      color: #3a3a3a;
-      max-width: 720px;
-      margin-bottom: 20px;
+      color: #c9d1d9;
+    }
+    .lede-card strong {
+      color: #ffffff;
+      font-weight: 600;
+      display: block;
+      margin-bottom: 10px;
+    }
+    .lede-card a {
+      color: var(--green);
+      text-decoration: none;
+    }
+    .lede-card a:hover {
+      text-decoration: underline;
     }
 
-    .lead em { font-style: italic; }
-
-    /* divider between story and bullets */
     .section-break {
-      margin: 48px 0 40px;
+      margin: 0 0 36px;
       display: flex;
       align-items: center;
       gap: 16px;
@@ -139,21 +153,21 @@
       white-space: nowrap;
     }
 
-    /* lede card */
-    .lede-card {
-      margin: 40px 0 52px;
-      padding: 20px 24px;
-      background: var(--code-bg);
-      border-radius: 4px;
-      border-left: 3px solid var(--green);
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 13px;
+    .lead {
+      font-size: 14px;
       line-height: 1.75;
-      color: #c9d1d9;
+      color: #3a3a3a;
+      max-width: 720px;
+      margin-bottom: 20px;
     }
-    .lede-card strong { color: #ffffff; font-weight: 600; }
+    .lead em { font-style: italic; }
 
-    /* bullet blocks */
+    .story-to-bullets {
+      margin: 48px 0 0;
+      height: 1px;
+      background: var(--border);
+    }
+
     .bullet-list {
       display: flex;
       flex-direction: column;
@@ -257,17 +271,8 @@
         flex-shrink: 0 !important;
       }
       #shared-nav.open { transform: translateX(0) !important; }
-
-      main {
-        padding: 64px 20px 80px;
-        width: 100%;
-        max-width: 100%;
-      }
-
-      .bullet-item {
-        grid-template-columns: 3px 1fr;
-        gap: 0 18px;
-      }
+      main { padding: 64px 20px 80px; width: 100%; max-width: 100%; }
+      .bullet-item { grid-template-columns: 3px 1fr; gap: 0 18px; }
     }
   </style>
 </head>
@@ -277,18 +282,15 @@
 
   <main>
     <p class="page-eyebrow">Project Background</p>
-    <h1>About/Motivation</h1>
+    <h1>About / Motivation</h1>
 
-    
     <div class="lede-card">
       <strong>Looking for a PM who is LLM-native? You found one.</strong>
-      <br>
-      https://www.linkedin.com/in/mmt510/
-      <br>
-      ALL-LLLM POD was built in VS Code with venvs, along with the help from Claude and Jippity in browser (No Codex; No Claude Code). Increasingly dogfooding Qwen3-30B MoE for personal assistant and code gen. #ownTheMeans<br><br>
-
+      <a href="https://www.linkedin.com/in/mmt510/" target="_blank">linkedin.com/in/mmt510</a><br><br>
+      ALL-LLLM POD was built in VS Code with venvs, along with the help from Claude and Jippity in browser (No Codex; No Claude Code). Increasingly dogfooding Qwen3-30B MoE for personal assistant and code gen. #ownTheMeans
     </div>
-       <div class="section-break">
+
+    <div class="section-break">
       <div class="section-break-line"></div>
       <div class="section-break-label">Technical Product Manager - I solve problems</div>
       <div class="section-break-line"></div>
@@ -306,10 +308,9 @@
       So what began as a "move fast and MVP chatbot" project turned into a serious observability project for AI pipelines and the future of training data ingestion. Transcripts have been, by far, the most challenging and rewarding part of the project. My detailed nature and the pursuit of quality and ground-truth accuracy led to a series of increasingly specialized tools.
     </p>
 
- 
+    <div class="story-to-bullets"></div>
 
-
-    <div class="bullet-list">
+    <div class="bullet-list" style="margin-top: 0;">
 
       <div class="bullet-item">
         <div class="bullet-accent"></div>
