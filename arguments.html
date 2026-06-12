@@ -366,48 +366,35 @@
 
         <div class="comparison-grid" aria-label="Same-speaker segment consolidation example">
           <div class="comparison-card">
-            <h3>Original Transcript</h3>
+            <h3>Example: Original Transcript</h3>
             <div class="transcript-box">
               <p><strong>Bob (IT):</strong> Do we have the budget to move the database to the cloud?</p>
 
               <p><strong>Luke (Finance):</strong> Maybe, but costs could explode.</p>
 
-              <p class="ghost-line"><strong>Luke (Finance):</strong> I'd like to understand our long-term storage requirements before making any decisions.</p>
+              <p><strong>Luke (Finance):</strong> I'd like to understand our long-term storage requirements before making any decisions.</p>
 
               <p><strong>Bob (IT):</strong> The ops team spends half their week maintaining servers.</p>
 
-              <p><strong>Luke (Finance):</strong> That's true, but we'd be trading labor costs for vendor costs.</p>
             </div>
           </div>
 
           <div class="comparison-card">
-            <h3>Training Example</h3>
+            <h3>Example: Transcript as Training Data</h3>
             <div class="transcript-box">
               <p><strong>Bob (IT):</strong> Do we have the budget to move the database to the cloud?</p>
 
               <p class="ghost-line"><strong>Luke (Finance):</strong> Maybe, but costs could explode. I'd like to understand our long-term storage requirements before making any decisions.</p>
 
               <p><strong>Bob (IT):</strong> The ops team spends half their week maintaining servers.</p>
-
-              <p><strong>Luke (Finance):</strong> That's true, but we'd be trading labor costs for vendor costs.</p>
             </div>
           </div>
         </div>
 
         <p>
-          This works well for style transfer. The model learns vocabulary, phrasing, cadence, and conversational habits.
-        </p>
-
+          This works for style transfer for the chatbot personas: The model learns vocabulary, phrasing, cadence, and conversational habits but is suceiptible to drift.
         <p>
-          The problem is that style is not the same thing as reasoning.
-        </p>
-
-        <p>
-          A model trained this way may learn how David Sacks sounds without learning why he consistently arrives at certain conclusions.
-        </p>
-
-        <p>
-          To address that, I mined the transcript corpus using local Qwen3-30B MoE. Across multiple extraction passes, the system identified recurring beliefs, topic ownership, argument patterns, domain expertise, behavioral tendencies, and long-running positions.
+        To create an anchor, I mined transcripts using local Qwen3-30B MoE to surface recurring beliefs, topic ownership, argument patterns, domain expertise, behavioral tendencies, and long-running positions.
         </p>
       </div>
     </section>
