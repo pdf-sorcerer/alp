@@ -1,303 +1,381 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ALL-LLM Pod | About</title>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap');
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ALL-LLLM POD | Motivation</title>
 
-  :root {
-    --accent: #2563eb;
-    --accent-dim: rgba(37, 99, 235, 0.10);
-    --bg: #f9f9f9;
-    --surface: #ffffff;
-    --border: #e4e4e4;
-    --code-bg: #0d1117;
-    --text: #1a1a1a;
-    --muted: #6b6b6b;
-    --faint: #aaaaaa;
-    --nav-width: 220px;
-  }
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+  <style>
+    :root {
+      --green: #0A84FF;
+      --green-dim: rgba(10, 132, 255, 0.12);
+      --bg: #f9f9f9;
+      --surface: #ffffff;
+      --border: #e4e4e4;
+      --code-bg: #0d1117;
+      --text: #1a1a1a;
+      --muted: #6b6b6b;
+      --faint: #8c8c8c;
+      --nav-width: 220px;
+    }
 
-  body {
-    font-family: 'Inter', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    display: flex;
-    min-height: 100vh;
-  }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-  nav {
-    position: sticky;
-    top: 0;
-    height: 100vh;
-    width: var(--nav-width);
-    flex-shrink: 0;
-    background: var(--surface);
-    border-right: 1px solid var(--border);
-    display: flex;
-    flex-direction: column;
-    padding: 32px 0;
-    overflow-y: auto;
-  }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
 
-  .nav-logo {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-     var(--accent)
-    padding: 0 24px 28px;
-    border-bottom: 1px solid var(--border);
-  }
+    #shared-nav {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      width: var(--nav-width);
+      flex-shrink: 0;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      padding: 32px 0;
+      overflow-y: auto;
+    }
 
-  .nav-section-label {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 9px;
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--faint);
-    padding: 20px 24px 8px;
-  }
+    .nav-logo {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--green);
+      padding: 0 24px 28px;
+      border-bottom: 1px solid var(--border);
+    }
 
-  .nav-item {
-    display: block;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    color: var(--muted);
-    text-decoration: none;
-    padding: 7px 24px;
-    border-left: 2px solid transparent;
-    transition: color 0.15s, border-color 0.15s, background 0.15s;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+    .nav-section-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--faint);
+      padding: 18px 24px 8px;
+    }
 
-  .nav-item:hover {
-    color: var(--text);
-    background: var(--bg);
-    border-left-color: var(--border);
-  }
+    .nav-item {
+      display: block;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 7px 24px;
+      border-left: 2px solid transparent;
+      transition: color 0.15s, border-color 0.15s, background 0.15s;
+    }
+    .nav-item:hover { color: var(--text); background: var(--bg); border-left-color: var(--border); }
+    .nav-item.active { color: var(--green); border-left-color: var(--green); background: var(--green-dim); }
 
-  .nav-item.active {
-    color: var(--accent);
-    border-left-color: var(--accent);
-    background: var(--accent-dim);
-  }
+    main {
+      flex: 1;
+      padding: 56px 64px 120px;
+      max-width: 860px;
+      min-width: 0;
+    }
 
-  .nav-footer {
-    margin-top: auto;
-    padding: 20px 24px 0;
-    border-top: 1px solid var(--border);
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px;
-    color: var(--faint);
-    line-height: 1.6;
-  }
+    .page-eyebrow {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 12px;
+    }
 
-  main {
-    flex: 1;
-    padding: 56px 64px 120px;
-    max-width: 860px;
-  }
+    h1 {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 32px;
+    }
 
-  .page-eyebrow {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 12px;
-  }
+    .lead {
+      font-size: 14px;
+      line-height: 1.75;
+      color: #3a3a3a;
+      max-width: 720px;
+      margin-bottom: 20px;
+    }
 
-  h1 {
-    font-size: 28px;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    line-height: 1.2;
-    color: var(--text);
-    margin-bottom: 20px;
-  }
+    .lead em { font-style: italic; }
 
-  .lead {
-    font-size: 14px;
-    line-height: 1.75;
-    color: #3a3a3a;
-    margin-bottom: 28px;
-    max-width: 680px;
-  }
+    /* divider between story and bullets */
+    .section-break {
+      margin: 48px 0 40px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .section-break-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+    .section-break-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--faint);
+      white-space: nowrap;
+    }
 
-  .lead strong { color: var(--text); font-weight: 600; }
+    /* lede card */
+    .lede-card {
+      margin: 40px 0 52px;
+      padding: 20px 24px;
+      background: var(--code-bg);
+      border-radius: 4px;
+      border-left: 3px solid var(--green);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 13px;
+      line-height: 1.75;
+      color: #c9d1d9;
+    }
+    .lede-card strong { color: #ffffff; font-weight: 600; }
 
-  .lead a {
-    color: var(--accent);
-    text-decoration: none;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 13px;
-  }
+    /* bullet blocks */
+    .bullet-list {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 52px;
+    }
 
-  .tool-list {
-    display: grid;
-    gap: 14px;
-    max-width: 680px;
-    margin: 4px 0 32px;
-  }
+    .bullet-item {
+      display: grid;
+      grid-template-columns: 3px 1fr;
+      gap: 0 28px;
+      padding: 28px 0;
+      border-bottom: 1px solid var(--border);
+      align-items: start;
+    }
+    .bullet-item:first-child { border-top: 1px solid var(--border); }
 
-  .tool-item {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-left: 3px solid var(--accent);
-    border-radius: 3px;
-    padding: 16px 18px;
-    font-size: 14px;
-    line-height: 1.7;
-    color: #3a3a3a;
-  }
+    .bullet-accent {
+      width: 3px;
+      align-self: stretch;
+      background: var(--border);
+      border-radius: 2px;
+      transition: background 0.2s;
+    }
+    .bullet-item:hover .bullet-accent { background: var(--green); }
 
-  .tool-item strong {
-    color: var(--text);
-    font-weight: 600;
-  }
+    .bullet-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 8px;
+    }
 
-  .tool-item em {
-    color: var(--muted);
-    font-style: italic;
-  }
+    .bullet-heading {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--text);
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
 
-  .divider {
-    border: none;
-    border-top: 1px solid var(--border);
-    margin: 40px 0;
-    max-width: 680px;
-  }
+    .bullet-copy {
+      font-size: 13.5px;
+      line-height: 1.72;
+      color: #4a4a4a;
+      max-width: 660px;
+    }
 
-  .stats-row {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2px;
-    margin-top: 52px;
-    margin-bottom: 2px;
-    max-width: 680px;
-  }
+    .bullet-copy code {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.9em;
+      background: var(--green-dim);
+      border: 1px solid rgba(10, 132, 255, 0.18);
+      border-radius: 3px;
+      padding: 2px 6px;
+      color: var(--text);
+      white-space: nowrap;
+    }
 
-  .stat-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 3px;
-    padding: 20px 18px;
-  }
+    .req-tag {
+      display: inline-block;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9.5px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 3px 8px;
+      margin-top: 14px;
+    }
 
-  .stat-num {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 22px;
-    font-weight: 600;
-    color: var(--accent);
-    display: block;
-    margin-bottom: 4px;
-  }
+    .footer {
+      margin-top: 72px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--faint);
+    }
 
-  .stat-label {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--faint);
-  }
+    @media (max-width: 768px) {
+      #shared-nav {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        height: 100vh !important;
+        width: 260px !important;
+        z-index: 10001 !important;
+        transform: translateX(-100%) !important;
+        transition: transform 0.25s ease !important;
+        overflow-y: auto !important;
+        box-shadow: 2px 0 12px rgba(0,0,0,0.12) !important;
+        flex-shrink: 0 !important;
+      }
+      #shared-nav.open { transform: translateX(0) !important; }
 
-  .footer {
-    margin-top: 80px;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.06em;
-    color: var(--faint);
-    text-transform: uppercase;
-  }
+      main {
+        padding: 64px 20px 80px;
+        width: 100%;
+        max-width: 100%;
+      }
 
-  @media (max-width: 768px) {
-    nav { display: none; }
-    main { padding: 32px 24px 80px; }
-    .stats-row { grid-template-columns: 1fr 1fr; }
-  }
-</style>
+      .bullet-item {
+        grid-template-columns: 3px 1fr;
+        gap: 0 18px;
+      }
+    }
+  </style>
 </head>
+
 <body>
+  <nav id="shared-nav"></nav>
 
-<nav id="shared-nav"></nav>
+  <main>
+    <p class="page-eyebrow">Project Background</p>
+    <h1>About/Motivation</h1>
 
-<main>
+    
+    <div class="lede-card">
+      <strong>Looking for a PM who is LLM-native? You found one.</strong>
+      <br>
+      https://www.linkedin.com/in/mmt510/
+      <br>
+      ALL-LLLM POD was built in VS Code with venvs, along with the help from Claude and Jippity in browser (No Codex; No Claude Code). Increasingly dogfooding Qwen3-30B MoE for personal assistant and code gen. #ownTheMeans<br><br>
 
-  <p class="page-eyebrow">Project Background</p>
-  <h1>Motivation</h1>
-
-  <p class="lead">
-    The original goal in 2025 was simple: create a helper iOS app that could rewrite my ideas in the voices of the All-In hosts. I think style transfer is fascinating and, because frankly, I think the idea is hilarious.
-  </p>
-
-  <p class="lead">
-    Having the voices of the All-In hosts implied having transcripts from their podcast, which had to be created from the ground up. Transcripts required accurate speaker labeling. Accurate speaker labeling required HITL forensic review and repair. So on, so forth.
-  </p>
-
-  <p class="lead">
-    Every milestone revealed another layer. The princess was always in another castle.
-  </p>
-
-  <p class="lead">
-    So what began as a "move fast and MVP chatbot" project gradually turned into a serious observability project for AI pipelines. Transcripts have been, by far, the most challenging and rewarding part of the project. The pursuit of quality and ground-truth accuracy led to a series of increasingly specialized tools:
-  </p>
-
-  <div class="tool-list">
-    <div class="tool-item">
-      <strong>Clownfish</strong> — maps speaker IDs to names and extracts labeled training audio and video.
+    </div>
+       <div class="section-break">
+      <div class="section-break-line"></div>
+      <div class="section-break-label">Technical Product Manager - I solve problems</div>
+      <div class="section-break-line"></div>
     </div>
 
-    <div class="tool-item">
-      <strong>Brody</strong> — applies lexical heuristics and transcript inspection workflows to identify, review, and repair transcription and classification errors.
+    <p class="lead">
+      The original goal in 2025 was to create a helper iOS app that could rewrite my ideas in the style of other people. Text style transfer is fascinating, and a few weeks into the project I settled on the <em>All-In Podcast</em> Besties as chatbot personas.
+    </p>
+
+    <p class="lead">
+      Being able to mimic the Besties implied having transcripts from their podcast, which had to be created from the ground up. Transcripts required accurate speaker labeling. Accurate speaker labeling required HITL forensic review and repair. This was a balance of learning and doing. Every milestone revealed another layer, and the princess was always in another castle.
+    </p>
+
+    <p class="lead">
+      So what began as a "move fast and MVP chatbot" project turned into a serious observability project for AI pipelines and the future of training data ingestion. Transcripts have been, by far, the most challenging and rewarding part of the project. My detailed nature and the pursuit of quality and ground-truth accuracy led to a series of increasingly specialized tools.
+    </p>
+
+ 
+
+
+    <div class="bullet-list">
+
+      <div class="bullet-item">
+        <div class="bullet-accent"></div>
+        <div class="bullet-body">
+          <div class="bullet-label">Data Quality · Model Quality</div>
+          <div class="bullet-heading">Own the outcome.</div>
+          <div class="bullet-copy">
+            Detailed review caught remarkably subtle data quality failure modes before they became model quality failures. Ghost Audio vanishing from transcripts without a fingerprint means the model learns the wrong relationships. Diagnosing it required reading the full pipeline — <code>VAD</code>, beam search, decoder behavior, embedding space — and designing a detection mechanism that could work at scale.
+          </div>
+          <div class="req-tag">Job req: identify data quality failures before they become model quality failures</div>
+        </div>
+      </div>
+
+      <div class="bullet-item">
+        <div class="bullet-accent"></div>
+        <div class="bullet-body">
+          <div class="bullet-label">HITL · Tooling</div>
+          <div class="bullet-heading">Build tools you need to manage and solve the problems you have.</div>
+          <div class="bullet-copy">
+            HITL is a product surface, not a concession. Clownfish and Brody exist because no AI transcription or classification pipeline is trustworthy — especially with super-short form audio (sub-4 seconds). Designing what the reviewer sees, hears, and how fast they move is product work. The reviewer is the user.
+          </div>
+          <div class="req-tag">Job req: experience designing human-in-the-loop workflows</div>
+        </div>
+      </div>
+
+      <div class="bullet-item">
+        <div class="bullet-accent"></div>
+        <div class="bullet-body">
+          <div class="bullet-label">Tradeoffs · Hardware Constraints</div>
+          <div class="bullet-heading">Manage tradeoffs with consumer-grade hardware.</div>
+          <div class="bullet-copy">
+            A sliding memory window was chosen over full conversational context; zero-shot <code>F5-TTS</code> over heavier VibeVoice LoRA adapters — not because of system limits, but because heavier configurations felt worse to use on consumer hardware. The decision criteria was feel, not spec. That's product.
+          </div>
+          <div class="req-tag">Job req: make pragmatic calls under real-world constraints</div>
+        </div>
+      </div>
+
+      <div class="bullet-item">
+        <div class="bullet-accent"></div>
+        <div class="bullet-body">
+          <div class="bullet-label">Persona · Reasoning</div>
+          <div class="bullet-heading">Persona fidelity requires more than a product spec.</div>
+          <div class="bullet-copy">
+            The argument pipeline extracts claim chains, rebuttals, and long-term positions — not quotes — because a model trained on style alone won't hold a position under pressure. Defining what "accurate" means before asking engineering to build toward it is the job.
+          </div>
+          <div class="req-tag">Job req: translate ambiguous product goals into engineering-ready definitions</div>
+        </div>
+      </div>
+
+      <div class="bullet-item">
+        <div class="bullet-accent"></div>
+        <div class="bullet-body">
+          <div class="bullet-label">Corpus · Infrastructure</div>
+          <div class="bullet-heading">The corpus is the product.</div>
+          <div class="bullet-copy">
+            560+ episodes, two pipelines, five heuristic repair patterns, Ghost Audio detection, ongoing ops. ALL-LLLM POD is cool, but the process is far more valuable. Knowing the difference — and being able to defend six months on transcription to a hiring committee — is product judgment.
+          </div>
+          <div class="req-tag">Job req: wear many hats · comfortable rolling up your sleeves</div>
+        </div>
+      </div>
+
     </div>
 
-    <div class="tool-item">
-      <strong>BERD-1</strong> (<em>Bio-Ectoplasmic Resonance Detector</em>) — compares production and experimental Whisper decoding paths to surface Ghost Audio signals — instances where audible speech may vanish during transcription.
-    </div>
-  </div>
+    <div class="footer">Mason Thompson · Berkeley, California</div>
+  </main>
 
-  <p class="lead">
-    At some point the pipeline stopped being a prerequisite for the project and became the project itself. The chatbot was the destination. The transcripts were the journey.
-  </p>
-
-  <hr class="divider">
-
-  <p class="lead">
-    The pipeline detail is in <a href="voice_classifier.html">Voice Classification ↗</a>. The edge cases are in <a href="heuristics.html">HITL Heuristics ↗</a>. What fell out of all of it is in <a href="chasing_ghosts.html">Chasing Ghosts ↗</a>.
-  </p>
-
-  <div class="stats-row">
-    <div class="stat-card">
-      <span class="stat-num">530+</span>
-      <span class="stat-label">Episodes labeled</span>
-    </div>
-    <div class="stat-card">
-      <span class="stat-num">100k+</span>
-      <span class="stat-label">Training audio clips</span>
-    </div>
-    <div class="stat-card">
-      <span class="stat-num">100+</span>
-      <span class="stat-label">Guests classified</span>
-    </div>
-  </div>
-
-  <div class="footer">Mason Thompson · Berkeley, California</div>
-
-</main>
-
-<script>
-window.NAV_ANCHORS = [];
-</script>
-<script src="https://pdf-sorcerer.github.io/alp/nav-loader.js" data-page="about"></script>
+  <script src="https://pdf-sorcerer.github.io/alp/nav-loader.js" data-page="about"></script>
 </body>
 </html>
