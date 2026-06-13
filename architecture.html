@@ -283,6 +283,29 @@
     </p>
 
     <div class="section-heading">
+      <h2>Infrastructure Control</h2>
+    </div>
+
+    <p class="body">
+      ALL-LLLM runs on consumer hardware which creates an operational challenge: the system needs to be manageable remotely, without physical access to either machine. The solution is a pair of always-on controller processes, one on PC and one on Mac, that expose boot, kill, and restart over HTTP regardless of whether the inference stack is running.
+    </p>
+
+    <p class="body">
+      <strong>pc_launcher.py</strong><br>
+      Runs on the Windows machine. Handles boot, kill, and restart for flywheel, clownfish, the pipeline controller, and venvs for NeMo and WhisperX. Starts automatically at Windows login via Task Scheduler and survives flywheel being down.
+    </p>
+
+    <p class="body">
+      <strong>mac_controller.py</strong><br>
+      Runs on the MacBook Pro. Manages omlx and the persona memory service. Starts automatically via launchd and is reachable directly from iOS over Tailscale, independent of the PC.
+    </p>
+
+    <p class="body">
+      <strong>iOS venv control</strong><br>
+      The app's Hosts settings tab exposes a per-service control surface with load, reload, and unload actions. The mlx card routes directly to the Mac controller — the PC is not in that path. All other services route through the PC controller. Both controllers are polled every 4 seconds; state persists across sheet open/close so the last known status is always visible.
+    </p>
+
+    <div class="section-heading">
       <h2>Bottlenecks</h2>
     </div>
 
@@ -317,10 +340,8 @@
     function openLightbox(src, alt) {
       const lightbox = document.getElementById('architectureLightbox');
       const image = document.getElementById('lightboxImage');
-
       image.src = src;
       image.alt = alt || 'Architecture diagram enlarged';
-
       lightbox.classList.add('is-open');
       document.body.style.overflow = 'hidden';
     }
