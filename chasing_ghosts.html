@@ -531,11 +531,11 @@
 </p>
 
 <p class="body">
-  Rather than treating Whisper as a black box, I built PWW, an adjacent PyTorch Whisper pipeline that exposes decoder probabilities directly.
+  Rather than treating Whisper as a black box an adjacent PyTorch / reference Whisper pipeline that exposes decoder probabilities directly (which I learned you could do at the time when troubleshooting)
 </p>
 
 <p class="body">
-  PWW showed that Friedberg's missing line was not impossible. After the timestamp anchor <code>&lt;|18.98|&gt;</code>, two viable futures existed: one matched the audio, and one skipped ahead to Friedberg's next line.
+  This adjacent pipeline ("PWW") showed that Friedberg's missing line was considered. It showed the timestamp anchor <code>&lt;|18.98|&gt;</code> and from that, two viable paths existed: one matched the audio. The other skipped ahead.  The losing path, which mapped the audio ("Oh, my god") lost by 5.75 percentage points. The winning path, "He's not even here.", is real: but it is early; it's Friedberg's <em>next</em> line. The decoder skipped his actual utterance, locked onto the following line, and scored it higher than the thing he said first.
 </p>
 
 <div class="beam-fork" aria-label="Beam fork diagram">
@@ -583,26 +583,21 @@
   </div>
 </div>
 
-<p class="body">
-  The ground-truth path "Oh, my god." lost by only 5.75 percentage points. The winning path, "He's not even here.", is real: it is the line Friedberg speaks next. The decoder skipped his actual utterance, locked onto the following line, and scored it higher than the thing he said first.
-</p>
 
-<p class="body">
-  This reframed Ghost Audio as a beam-path survival problem. The speech exists acoustically. A valid decode path exists. That path simply does not always survive into the final transcript.
-</p>
 
-<p class="body">
-  The breakthrough came from the production WhisperX path itself.
+<p class="body"> <p class="body">
+Three things came out of this:
 </p>
-
-<p class="body">
-  Using identical WhisperX Beam=5 production settings, I ran the same Libsyn audio twice. The model, audio, beam size, alignment step, and runtime were held constant. The only change was the decoder timestamp-token setting.
-</p>
+<ol class="body">
+  <li>The new transcription pipeline was roughly 3× more GPU-compute expensive — 9.5 minutes versus 3.</li>
+  <li>It also surfaced hallucinated text in the region spanning Friedberg and Gerstner's ghosts. Where VAD asserts speech but the decoder fails, that failure pattern is itself a possibly invaluable signal to recover audio that's not recoverable with settings — as is the case with Brad Gerstner.</li>
+  <li>The most actionable finding: the production pipeline's speed is recoverable. A modified version could emit timestamp tokens at ghost regions without paying the full compute cost — fast transcription that still flags where something was missed.</li>
+</ol>
 
 <div class="comparison-grid">
 
   <div class="comparison-card">
-    <h3>Timestamp Tokens OFF</h3>
+    <h3>Production Whx beam=5, Timestamp Tokens OFF</h3>
     <div class="transcript-box">
       <p><strong>18.873–19.914</strong></p>
       <p>And the fattest, that's the dumbest.</p>
@@ -615,7 +610,7 @@
   </div>
 
   <div class="comparison-card">
-    <h3>Timestamp Tokens ON</h3>
+    <h3>Production Whx beam=5, Timestamp Tokens ON</h3>
     <div class="transcript-box">
       <p><strong>18.873–19.914</strong></p>
       <p>And the fattest, that's the dumbest.</p>
