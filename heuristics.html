@@ -421,20 +421,74 @@
   <nav id="shared-nav"></nav>
 
   <main>
-    <div id="intro">
-      <p class="page-eyebrow">Heuristic Diarization Repair</p>
-      <h1>Transcript Forensics and Repair</h1>
+<div class="block" id="h0">
+  <div class="block-header">
+    <div class="block-header-left">
+      <span class="block-id">0</span>
+      <span class="block-title">word-level voiceprints: multi-speaker segment detection</span>
+    </div>
+    <span class="chevron">▼</span>
+  </div>
 
-      <p class="lead">
-        Transcripts were generated in an AI production pipeline using WhisperX, with NeMo adapted to operate within WhisperX's segment-level timestamps.
-        In other words, WhisperX determined <em>what</em> speech existed and <em>when</em> it occurred, while NeMo's diarization process—identifying <em>who</em> spoke—was made secondary to those boundaries.
-      </p>
+  <div class="block-body">
+    <div class="block-why">
+      Earlier HITL tooling treated WhisperX segment boundaries as canonical and looked for
+      artifacts in the text structure — ellipses, non-terminated sentences, lowercase continuations,
+      third-person self-references — all artifacts that signal potential misattribution and route
+      segments for manual review. WhisperX timestamps (what was said, when) were trusted as
+      ground truth; enforcing NeMo's RTTM boundaries directly produced fragmented transcripts
+      of lesser quality. The pragmatic solution was to use RTTM only for speaker identity within
+      WhisperX windows, and discard the rest. More than sufficient for a first pass.
 
-      <p class="lead">
-        In practice, most AI errors fell into two categories: incorrect segment boundaries or speaker misclassification.
-        Both left recognizable fingerprints in the transcript that could be surfaced through human-in-the-loop review and repaired before entering the training corpus.
-        This review was iterated on over months, and evolved into a fast auditing workflow rather than a full episode retranscription pass.
-      </p>
+      <strong>June 2026:</strong> NeMo now applies word-level diarization within segments
+      alongside the structural heuristics. Rather than asking whether a segment
+      <em>looks</em> suspicious, it asks whether the words inside it <em>sound like</em>
+      the attributed speaker. Short interjections that previously fell through — a 0.375s
+      <code>Yes</code> from Sacks buried mid-segment — are now surfaced. The structure
+      is preserved; the delta is surfaced.
+    </div>
+
+    <div class="diff">
+      <div class="before" style="display:flex; flex-direction:column; gap:0; padding:0; background:none; border:none;">
+        <div class="before" style="margin-bottom:8px;">
+          <span class="panel-label">before</span>
+          <span class="spk">Jcal</span>
+          Yeah <span class="flagged">&lt;got it&gt;</span> which is why they all waited till the last minute to vote for it <span class="flagged">&lt;how do you coordinate something like that, that's always the question i have about these people&gt;</span> <span class="flagged">&lt;are all brilliant geniuses</span> it's hundreds of thousands of brilliant geniuses in Skid Row that figure this shit out <span class="flagged">year</span> <span class="flagged">there's a chat group&gt;</span>
+        </div>
+        <div style="background:#0d1117; border-radius:3px; padding:14px 18px; font-family:'IBM Plex Mono',monospace; font-size:11px; line-height:1.9; border:1px solid #1e2530; border-left:2px solid #3a3f4b; color:#8b9eb0;">
+          <span style="display:block; font-size:9px; text-transform:uppercase; letter-spacing:0.12em; color:#4a5568; margin-bottom:8px;">📡 RTTM context (±15s)</span>
+          <div style="display:flex; gap:16px;"><span style="min-width:72px;">friedberg</span><span style="color:#4a5568;">100:01.24</span></div>
+          <div style="display:flex; gap:16px;"><span style="min-width:72px;">jcal</span><span style="color:#4a5568;">100:01.80</span></div>
+          <div style="display:flex; gap:16px;"><span style="min-width:72px;">friedberg</span><span style="color:#4a5568;">100:02.18</span></div>
+          <div style="display:flex; gap:16px;"><span style="min-width:72px;">jcal</span><span style="color:#4a5568;">100:05.18</span></div>
+          <div style="display:flex; gap:16px;"><span style="min-width:72px;">friedberg</span><span style="color:#4a5568;">100:09.68</span></div>
+          <div style="display:flex; gap:16px;"><span style="min-width:72px;">sacks</span><span style="color:#4a5568;">100:14.18</span></div>
+          <div style="display:flex; gap:16px;"><span style="min-width:72px;">friedberg</span><span style="color:#4a5568;">100:14.93</span></div>
+          <div style="display:flex; gap:16px;"><span style="min-width:72px;">chamath</span><span style="color:#4a5568;">100:15.68</span></div>
+        </div>
+      </div>
+
+      <div class="after">
+        <span class="panel-label">after</span>
+        <span class="spk">Jcal</span>
+        Yeah
+        <span class="spk">Friedberg</span>
+        <span class="flagged">Got it</span>
+        <span class="spk">Friedberg</span>
+        <span class="flagged">which is why they all waited till the last minute to vote for it</span>
+        <span class="spk">Jcal</span>
+        <span class="flagged">how do you coordinate something like that, that's always the question I have with these people.</span>
+        <span class="spk">Friedberg</span>
+        <span class="flagged">They're all brilliant geniuses — it's hundreds of thousands of brilliant geniuses in Skid Row that figure this shit out</span>
+        <span class="spk">Sacks</span>
+        <span class="flagged">they have a chat group</span>
+        <span class="spk">Chamath</span>
+        <span class="flagged">There's a chat group, it's not that complicated.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <div class="intro-note">
   The resulting workflow prioritized investigator time over GPU time:
