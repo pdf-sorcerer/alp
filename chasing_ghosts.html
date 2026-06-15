@@ -305,6 +305,75 @@
       white-space: nowrap;
     }
 
+
+
+    .body-list {
+      max-width: 760px;
+      margin: 10px 0 28px 20px;
+      padding-left: 18px;
+      font-size: 14px;
+      line-height: 1.85;
+      color: #3a3a3a;
+    }
+    .body-list li { margin-bottom: 12px; }
+    .body-list li:last-child { margin-bottom: 0; }
+
+    .table-title {
+      max-width: 760px;
+      margin: 18px 0 12px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .transcript-table-wrap {
+      max-width: 760px;
+      margin: 0 0 28px;
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: var(--surface);
+    }
+    .transcript-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      line-height: 1.55;
+    }
+    .transcript-table th {
+      text-align: left;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+      background: #fafafa;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .transcript-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid #f0f0f0;
+      vertical-align: top;
+      color: #3a3a3a;
+    }
+    .transcript-table tbody tr:last-child td { border-bottom: 0; }
+    .transcript-table td:first-child,
+    .transcript-table td:nth-child(2) {
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .transcript-table td:last-child {
+      color: var(--faint);
+      white-space: nowrap;
+    }
+    .transcript-table .hl-repeat td { background: var(--purple-dim); }
+    .transcript-table .hl-halluc td { background: var(--gold-dim); }
+
     .footer {
       margin-top: 80px;
       padding-top: 24px;
@@ -441,7 +510,7 @@
   </div>
 
   <p class="body">
-    In early 2026, I moved to Libsyn as the canonical source of truth for <i>All-In Podcast</i> episodes. Libsyn simplified the pipeline: full episodes without the short-form content commingled with <i>All-In Podcast</i> material across the two official YouTube channels. At time of writing, 2026-June: 383 Libsyn episodes · 2,230 official YouTube uploads (of which, I have processed 564 processed).
+    In early 2026, I moved to Libsyn as the canonical source of truth for <i>All-In Podcast</i> episodes. Libsyn simplified the pipeline: full episodes without the short-form content commingled with <i>All-In Podcast</i> material across the two official YouTube channels. At time of writing, 2026-June: 383 Libsyn episodes · 2,230 official YouTube uploads (of which, I have processed 564).
   </p>
 
   <p class="body">
@@ -509,7 +578,7 @@
   </div>
 
   <p class="body">
-    An adjacent transcription pipeline was built using reference PyTorch Whisper because my WhisperX production runtime uses a CTranslate2 decoder, which does not expose logits. Cross-attention weights, filtered to audio-aligned heads, showed non-zero attention in both ghost regions. From my pov, very little attention paid - although Claude and Jippity say both encoder and decoder attended the regions 
+    An adjacent transcription pipeline was built using reference PyTorch Whisper because my WhisperX production runtime uses a CTranslate2 decoder, which does not expose logits. Cross-attention weights, filtered to audio-aligned heads, showed non-zero attention in both ghost regions. The attention paid to those regions was not large, but it was not zero: both encoder and decoder activity appeared around the omitted timestamps.
   </p>
 
   <div class="img-block">
@@ -518,7 +587,7 @@
   </div>
 
   <p class="body">
-    A separate line of investigation projected the speaker embeddings onto a manifold to visualize how the ghost segments were being geometrically interpreted. Friedberg's ghost regions did not cluster with Friedberg's confirmed speech. They fell inside Chamath's cluster. The audio was not only short enough to be misclassified to the wrong speaker (not surprising). To-do: upload that content. 
+    A separate line of investigation projected the speaker embeddings onto a manifold to visualize how the ghost segments were being geometrically interpreted. Friedberg's ghost regions did not cluster with Friedberg's confirmed speech. They fell inside Chamath's cluster. The audio was short enough and overlapped enough to be misclassified to the wrong speaker, which helps explain why speaker attribution and transcription both became fragile.
   </p>
 
 </details>
@@ -531,7 +600,7 @@
 </p>
 
 <p class="body">
-  Rather than treating Whisper as a black box an adjacent PyTorch / reference Whisper pipeline that exposes decoder probabilities directly (which I learned you could do at the time when troubleshooting)
+  Rather than treating Whisper as a black box, I built an adjacent PyTorch-based reference Whisper pipeline that exposes decoder probabilities directly.
 </p>
 
 <p class="body">
@@ -585,15 +654,19 @@
 
 
 
-<p class="body"> <p class="body">
+<p class="body">
 Three things came out of this:
 </p>
-<ol class="body">
+<ol class="body-list">
   <li>The new transcription pipeline was roughly 3× more GPU-compute expensive — 9.5 minutes versus 3 — but had a unique upside: it hallucinated text in the ghost regions, and that hallucination pattern is itself a signal. Where VAD asserts speech but the decoder fails, the failure manifests as localized repetition and confabulation rather than silence. That fingerprint is recoverable.</li>
   <li>As is the case with Brad Gerstner at t=~27s: the decoder never transcribed his utterance across any configuration. But the hallucination cluster around that timestamp marks the region. Manual review can act on a marked region. It cannot act on silence.</li>
   <li>The most actionable finding: the production pipeline's speed is recoverable. A modified version could emit timestamp tokens at ghost regions without paying the full compute cost — fast transcription that still flags where something was missed.</li>
 </ol>
-<h4 class="table-title">Reference Whisper large-v3 · Pyannote decoder · wav2vec2 · beam=1 · 9.5 min GPU compute</h4>
+<details class="accordion-block">
+  <summary><span>Reference Whisper Hallucination Trace (Optional)</span></summary>
+
+  <h4 class="table-title">Reference Whisper large-v3 · Pyannote decoder · wav2vec2 · beam=1 · 9.5 min GPU compute</h4>
+<div class="transcript-table-wrap">
 <table class="transcript-table">
   <thead>
     <tr><th>start</th><th>end</th><th>text</th><th>flag</th></tr>
@@ -612,6 +685,8 @@ Three things came out of this:
     <tr class="hl-halluc"><td>30.243</td><td>30.942</td><td>I'm bullying when you're bullying.</td><td>⚠ localized hallucination</td></tr>
   </tbody>
 </table>
+  </div>
+</details>
 
 <p class="body">
   The hallucinations above are a byproduct of the reference pipeline's decoder configuration — not a property of the audio. The production pipeline avoids them entirely. The tradeoff: with timestamp tokens enabled, the production decoder can surface ghost utterances like Friedberg's "Oh, my god." without hallucinating surrounding content. The comparison below shows what that looks like in practice.
