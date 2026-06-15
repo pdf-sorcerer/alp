@@ -121,18 +121,8 @@
       max-width: 680px;
     }
 
-    .lead strong {
-      color: var(--text);
-      font-weight: 600;
-    }
-
-    .lead a {
-      color: var(--green);
-      text-decoration: none;
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 12px;
-    }
-
+    .lead strong { color: var(--text); font-weight: 600; }
+    .lead a { color: var(--green); text-decoration: none; font-family: 'IBM Plex Mono', monospace; font-size: 12px; }
     .lead a:hover { text-decoration: underline; }
 
     .intro-note {
@@ -148,13 +138,7 @@
       line-height: 1.65;
     }
 
-    .intro-note a {
-      color: var(--green);
-      text-decoration: none;
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 11px;
-    }
-
+    .intro-note a { color: var(--green); text-decoration: none; font-family: 'IBM Plex Mono', monospace; font-size: 11px; }
     .intro-note a:hover { text-decoration: underline; }
 
     .block {
@@ -226,13 +210,7 @@
       padding: 14px 0 12px;
     }
 
-    .block-why a {
-      color: var(--green);
-      text-decoration: none;
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 11px;
-    }
-
+    .block-why a { color: var(--green); text-decoration: none; font-family: 'IBM Plex Mono', monospace; font-size: 11px; }
     .block-why a:hover { text-decoration: underline; }
 
     .source {
@@ -246,11 +224,7 @@
       flex-wrap: wrap;
     }
 
-    .source a {
-      color: var(--green);
-      text-decoration: none;
-    }
-
+    .source a { color: var(--green); text-decoration: none; }
     .source a:hover { text-decoration: underline; }
 
     .diff {
@@ -312,11 +286,7 @@
       color: #c9d1d9;
     }
 
-    .flagged {
-      color: #ff6b6b;
-      font-weight: 600;
-    }
-
+    .flagged { color: #ff6b6b; font-weight: 600; }
     .after .flagged { color: #a8d672; }
 
     .video-card {
@@ -337,15 +307,9 @@
       box-shadow: 0 4px 12px rgba(0,0,0,.06);
     }
 
-    .video-card img {
-      display: block;
-      width: 100%;
-      height: auto;
-    }
+    .video-card img { display: block; width: 100%; height: auto; }
 
-    .video-card-caption {
-      padding: 10px 12px;
-    }
+    .video-card-caption { padding: 10px 12px; }
 
     .video-card-title {
       font-family: 'IBM Plex Mono', monospace;
@@ -400,13 +364,24 @@
 
       <p class="lead">
         Transcripts were generated in an AI production pipeline using WhisperX, with NeMo adapted to operate within WhisperX's segment-level timestamps.
-        In other words, WhisperX determined <em>what</em> speech existed and <em>when</em> it occurred, while NeMo's diarization process—identifying <em>who</em> spoke—was made secondary to those boundaries.
+        In other words, WhisperX determined <em>what</em> speech existed and <em>when</em> it occurred, while NeMo's diarization process — identifying <em>who</em> spoke — was made secondary to those boundaries.
       </p>
 
       <p class="lead">
-        In practice, most AI errors fell into two categories: incorrect segment boundaries or speaker misclassification.
-        Both left recognizable fingerprints in the transcript that could be surfaced through human-in-the-loop review and repaired before entering the training corpus.
-        This review was iterated on over months, evolving from surface-level ASR artifact detection — ellipses, awkwardly terminated sentences, lowercase continuations — into acoustic analysis at the word level, where NeMo's voiceprints expose speaker changes that segment boundaries miss entirely.
+        Think of yourself skimming a newspaper, just quickly covering the page. Your brain catches on something — because it intuitively knows it looks off.
+      </p>
+
+      <p class="lead">
+        That's the first generation of HITL tooling: top-down pattern detection, looking for text that was generated, much more often than not, because the AI was operating beyond its confidence and left reliable breadcrumbs — ellipses, non-terminating sentences, lowercase continuations.
+      </p>
+
+      <p class="lead">
+        June 2026 adds a complementary layer: bottom-up acoustics. NeMo's word-level diarization is applied to each word within a labeled segment. Words that are acoustically different than the labeled speaker are highlighted for review.
+        Short interjections that left no surface trace, that read as grammatically correct — a 0.375s <em>"they have a chat group"</em> from Sacks buried mid-segment — are now discoverable at scale.
+      </p>
+
+      <p class="lead">
+        Top-down catches errors that surface as text artifacts. Bottom-up catches errors that don't. The tradeoff is more review work, not less — every new detection layer opens a new queue. The gap between finding the error, knowing why it exists, and where to fix it remains the open problem.
       </p>
 
       <div class="intro-note">
@@ -455,8 +430,8 @@
         </div>
 
         <div class="diff">
-          <div class="before" style="display:flex; flex-direction:column; gap:0; padding:0; background:none; border:none;">
-            <div class="before" style="margin-bottom:8px;">
+          <div style="display:flex; flex-direction:column; gap:8px;">
+            <div class="before">
               <span class="panel-label">before</span>
               <span class="spk">Jcal</span>
               Yeah <span class="flagged">&lt;got it&gt;</span> which is why they all waited till the last minute to vote for it <span class="flagged">&lt;how do you coordinate something like that, that's always the question i have about these people&gt;</span> <span class="flagged">&lt;are all brilliant geniuses</span> it's hundreds of thousands of brilliant geniuses in Skid Row that figure this shit out <span class="flagged">year</span> <span class="flagged">there's a chat group&gt;</span>
@@ -523,7 +498,6 @@
             <span class="spk">Sacks</span>
             Interest rates just have to go up to a point that<span class="flagged">… To</span> what's happening in Japan, right?
           </div>
-
           <div class="after">
             <span class="panel-label">after</span>
             <span class="spk">Sacks</span>
@@ -566,7 +540,6 @@
             <span class="spk">Jcal</span>
             <span class="flagged">you know,</span> superhero groups that it's like a real throwback.
           </div>
-
           <div class="after">
             <span class="panel-label">after</span>
             <span class="spk">Jcal</span>
@@ -605,14 +578,12 @@
             <span class="spk">Friedberg</span>
             Less than the $1.4 billion in funding it has raised to <span class="flagged">Friedberg's</span> been bringing this point up over and over about the overfunding and cash in less than the valuation most yeah of these unicorns are worth less than their total press stack and this is a good example I've been through this week I went and saw a company I was an investor in that I saw this happen
           </div>
-
           <div class="diff-right">
             <div class="after">
               <span class="panel-label">after</span>
               <span class="spk">Jcal</span>
               Less than the $1.4 billion in funding it has raised to <span class="flagged">Friedberg's</span> been bringing this point up over and over about the overfunding and cash in less than the valuation most
             </div>
-
             <div class="after">
               <span class="panel-label">after</span>
               <span class="spk">Friedberg</span>
@@ -651,7 +622,6 @@
             <span class="spk">Chamath</span>
             <span class="flagged">so uh he was saying</span> he said we have a big hit on our hands he said uh he said we're like tv stars now that's incredible imagine if uh if we had if we didn't have to push sand uphill with some of these folks...
           </div>
-
           <div class="after">
             <span class="panel-label">after</span>
             <span class="spk">Sacks</span>
@@ -696,7 +666,6 @@
             <span class="spk">Jcal</span>
             Thank you.
           </div>
-
           <div class="after">
             <span class="panel-label">after</span>
             <span class="spk">Sacks</span>
