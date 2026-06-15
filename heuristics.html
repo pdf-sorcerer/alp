@@ -365,6 +365,80 @@
       white-space: nowrap;
     }
 
+
+    .example-tabs {
+      display: flex;
+      gap: 8px;
+      margin: 4px 0 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .example-tab {
+      appearance: none;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-bottom: none;
+      color: var(--muted);
+      padding: 8px 14px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      border-radius: 3px 3px 0 0;
+      transition: color .15s, background .15s, border-color .15s;
+    }
+
+    .example-tab:hover {
+      color: var(--text);
+      background: var(--bg);
+    }
+
+    .example-tab.active {
+      background: var(--code-bg);
+      color: #e6edf3;
+      border-color: #1e2530;
+    }
+
+    .example-panel {
+      display: none;
+    }
+
+    .example-panel.active {
+      display: block;
+    }
+
+    .example-note {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.65;
+      margin: 0 0 14px;
+    }
+
+    .video-stub {
+      margin-top: 10px;
+      background: var(--surface);
+      border: 1px dashed var(--border);
+      border-left: 2px solid var(--green);
+      border-radius: 3px;
+      padding: 14px 16px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      line-height: 1.6;
+      color: var(--muted);
+    }
+
+    .video-stub-label {
+      display: block;
+      font-size: 9px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--green);
+      margin-bottom: 4px;
+    }
+
     .footer {
       margin-top: 80px;
       font-family: 'IBM Plex Mono', monospace;
@@ -400,7 +474,7 @@
       </div>
 
       <p class="lead">
-        The first generation of HITL tooling was built in late 2025. The workflow: map each <code>SPEAKER_ID</code> to a named host using supporting audio clips, then run heuristic detection across the transcript — searching for patterns that AI leaves behind when it operates beyond its confidence. Ellipses, non-terminating sentences, lowercase continuations. Those instances get routed for review and repair.
+        The first generation of HITL tooling was built in late 2025. The workflow: map each <code>SPEAKER_ID</code> to a named host using supporting audio clips <a href="clownfish.html" class="inline-tag">Clownfish↗</a>, and then built on top of that heuristic detection across the transcript — searching for patterns that AI leaves behind when it operates beyond its confidence. Ellipses, non-terminating sentences, lowercase continuations. Those instances get routed for review and repair.
       </p>
 
       <div class="video-grid">
@@ -439,9 +513,19 @@
       </p>
 
       <div class="intro-note">
-        The resulting workflow prioritized investigator time over GPU time:
-        heuristic rules surfaced suspicious regions, generated short audio clips,
-        and routed them for rapid review instead of requiring complete episode audits.
+        <div style="margin-bottom:16px;">
+          <strong>2026 HITL (WIP)</strong><br>
+          [0] Word-level voiceprints: multi-speaker segment detection
+        </div>
+
+        <div>
+          <strong>2025 HITL (Production)</strong><br>
+          [1a] Turn contamination: ellipsis boundary<br>
+          [1b] Turn contamination: speaker sandwich<br>
+          [2] Third-person self-reference<br>
+          [3] Lowercase continuation<br>
+          [4] Backchannel bleed
+        </div>
       </div>
     </div>
 
@@ -449,66 +533,103 @@
       <div class="block-header">
         <div class="block-header-left">
           <span class="block-id">0</span>
-          <span class="block-title">word-level voiceprints: multi-speaker segment detection</span>
+          <span class="block-title">2026 · word-level voiceprints: multi-speaker segment detection</span>
         </div>
         <span class="chevron">▼</span>
       </div>
 
       <div class="block-body">
         <div class="block-why">
-          Earlier HITL tooling treated WhisperX segment boundaries as canonical and looked for
-          artifacts in the text structure — ellipses, non-terminated sentences, lowercase continuations,
-          third-person self-references — all artifacts that signal potential misattribution and route
-          segments for manual review. WhisperX timestamps (what was said, when) were trusted as
-          ground truth; enforcing NeMo's RTTM boundaries directly produced fragmented transcripts
-          of lesser quality. The pragmatic solution was to use RTTM only for speaker identity within
-          WhisperX windows, and discard the rest. More than sufficient for a first pass.
-
-          <br><br>
-
-          <strong>June 2026:</strong> NeMo now applies word-level diarization within segments
-          alongside the structural heuristics. Rather than asking whether a segment
-          <em>looks</em> suspicious, it asks whether the words inside it <em>sound like</em>
-          the attributed speaker. Short interjections that previously fell through — a 0.375s
-          <code>Yes</code> from Sacks buried mid-segment — are now surfaced. The structure
-          is preserved; the delta is surfaced.
+          <strong>2026:</strong> word-level voiceprints: multi-speaker segment detection.
         </div>
 
-        <div class="diff">
-          <div style="display:flex; flex-direction:column; gap:8px;">
-            <div class="before">
-              <span class="panel-label">before</span>
-              <span class="spk">Jcal</span>
-              Yeah <span class="flagged">&lt;got it&gt;</span> which is why they all waited till the last minute to vote for it <span class="flagged">&lt;how do you coordinate something like that, that's always the question i have about these people&gt;</span> <span class="flagged">&lt;are all brilliant geniuses</span> it's hundreds of thousands of brilliant geniuses in Skid Row that figure this shit out <span class="flagged">year</span> <span class="flagged">there's a chat group&gt;</span>
+        <div class="example-tabs">
+          <button class="example-tab active" type="button" data-example="h0-ex1">Example 1</button>
+          <button class="example-tab" type="button" data-example="h0-ex2">Example 2</button>
+        </div>
+
+        <div class="example-panel active" id="h0-ex1">
+          <p class="example-note">
+            <strong>June 2026:</strong> NeMo now applies word-level diarization within segments
+            alongside the structural heuristics. Rather than asking whether a segment
+            <em>looks</em> suspicious, it asks whether the words inside it <em>sound like</em>
+            the attributed speaker. Short interjections that previously fell through — a 0.375s
+            <code>Yes</code> from Sacks buried mid-segment — are now surfaced. The structure
+            is preserved; the delta is surfaced.
+          </p>
+
+          <p class="example-note">
+            Text transcript below, and video showing the editing process follows.
+          </p>
+
+          <div class="diff">
+            <div style="display:flex; flex-direction:column; gap:8px;">
+              <div class="before">
+                <span class="panel-label">before</span>
+                <span class="spk">Jcal</span>
+                Yeah <span class="flagged">&lt;got it&gt;</span> which is why they all waited till the last minute to vote for it <span class="flagged">&lt;how do you coordinate something like that, that's always the question i have about these people&gt;</span> <span class="flagged">&lt;are all brilliant geniuses&gt;</span> it's hundreds of thousands of brilliant geniuses in Skid Row that figure this shit out <span class="flagged">year</span> <span class="flagged">there's a chat group&gt;</span>
+              </div>
+              <div style="background:#0d1117; border-radius:3px; padding:14px 18px; font-family:'IBM Plex Mono',monospace; font-size:11px; line-height:1.9; border:1px solid #1e2530; border-left:2px solid #3a3f4b; color:#8b9eb0;">
+                <span style="display:block; font-size:9px; text-transform:uppercase; letter-spacing:0.12em; color:#4a5568; margin-bottom:8px;">📡 RTTM context (±15s)</span>
+                <div style="display:flex; gap:16px;"><span style="min-width:72px;">friedberg</span><span style="color:#4a5568;">100:01.24</span></div>
+                <div style="display:flex; gap:16px;"><span style="min-width:72px;">jcal</span><span style="color:#4a5568;">100:01.80</span></div>
+                <div style="display:flex; gap:16px;"><span style="min-width:72px;">friedberg</span><span style="color:#4a5568;">100:02.18</span></div>
+                <div style="display:flex; gap:16px;"><span style="min-width:72px;">jcal</span><span style="color:#4a5568;">100:05.18</span></div>
+                <div style="display:flex; gap:16px;"><span style="min-width:72px;">friedberg</span><span style="color:#4a5568;">100:09.68</span></div>
+                <div style="display:flex; gap:16px;"><span style="min-width:72px;">sacks</span><span style="color:#4a5568;">100:14.18</span></div>
+                <div style="display:flex; gap:16px;"><span style="min-width:72px;">chamath</span><span style="color:#4a5568;">100:15.68</span></div>
+              </div>
             </div>
-            <div style="background:#0d1117; border-radius:3px; padding:14px 18px; font-family:'IBM Plex Mono',monospace; font-size:11px; line-height:1.9; border:1px solid #1e2530; border-left:2px solid #3a3f4b; color:#8b9eb0;">
-              <span style="display:block; font-size:9px; text-transform:uppercase; letter-spacing:0.12em; color:#4a5568; margin-bottom:8px;">📡 RTTM context (±15s)</span>
-              <div style="display:flex; gap:16px;"><span style="min-width:72px;">friedberg</span><span style="color:#4a5568;">100:01.24</span></div>
-              <div style="display:flex; gap:16px;"><span style="min-width:72px;">jcal</span><span style="color:#4a5568;">100:01.80</span></div>
-              <div style="display:flex; gap:16px;"><span style="min-width:72px;">friedberg</span><span style="color:#4a5568;">100:02.18</span></div>
-              <div style="display:flex; gap:16px;"><span style="min-width:72px;">jcal</span><span style="color:#4a5568;">100:05.18</span></div>
-              <div style="display:flex; gap:16px;"><span style="min-width:72px;">friedberg</span><span style="color:#4a5568;">100:09.68</span></div>
-              <div style="display:flex; gap:16px;"><span style="min-width:72px;">sacks</span><span style="color:#4a5568;">100:14.18</span></div>
-              <div style="display:flex; gap:16px;"><span style="min-width:72px;">chamath</span><span style="color:#4a5568;">100:15.68</span></div>
+
+            <div class="after">
+              <span class="panel-label">after</span>
+              <span class="spk">Friedberg</span>
+              Yeah
+              <span class="spk">Jcal</span>
+              <span class="flagged">Got it</span>
+              <span class="spk">Friedberg</span>
+              <span class="flagged">which is why they all waited till the last minute to vote for it</span>
+              <span class="spk">Jcal</span>
+              <span class="flagged">how do you coordinate something like that, that's always the question I have with these people.</span>
+              <span class="spk">Friedberg</span>
+              <span class="flagged">They're all brilliant geniuses — it's hundreds of thousands of brilliant geniuses in Skid Row that figure this shit out</span>
+              <span class="spk">Sacks</span>
+              <span class="flagged">they have a chat group</span>
+              <span class="spk">Chamath</span>
+              <span class="flagged">There's a chat group, it's not that complicated.</span>
             </div>
           </div>
 
-          <div class="after">
-            <span class="panel-label">after</span>
-            <span class="spk">Friedberg</span>
-            Yeah
-            <span class="spk">Jcal</span>
-            <span class="flagged">Got it</span>
-            <span class="spk">Friedberg</span>
-            <span class="flagged">which is why they all waited till the last minute to vote for it</span>
-            <span class="spk">Jcal</span>
-            <span class="flagged">how do you coordinate something like that, that's always the question I have with these people.</span>
-            <span class="spk">Friedberg</span>
-            <span class="flagged">They're all brilliant geniuses — it's hundreds of thousands of brilliant geniuses in Skid Row that figure this shit out</span>
-            <span class="spk">Sacks</span>
-            <span class="flagged">they have a chat group</span>
-            <span class="spk">Chamath</span>
-            <span class="flagged">There's a chat group, it's not that complicated.</span>
+          <div class="video-stub">
+            <span class="video-stub-label">video stub</span>
+            Local video placeholder — add Example 1 editing-process video here.
+          </div>
+        </div>
+
+        <div class="example-panel" id="h0-ex2">
+          <div class="diff">
+            <div class="before">
+              <span class="panel-label">before</span>
+              <span class="spk">Jcal</span>
+              Why would they do that? Why would they want to get regulated? The answer is super simple. They don't, they want to apply that regulation to open source, which is impossible. But this would be a great way to scuttle and sandbag open source models. <span class="flagged">Yes</span>, because they don't have the ability to be regulated
+            </div>
+
+            <div class="after">
+              <span class="panel-label">after</span>
+              <span class="spk">Jcal</span>
+              Why would they do that? Why would they want to get regulated? The answer is super simple. They don't, they want to apply that regulation to open source, which is impossible. But this would be a great way to scuttle and sandbag open source models.
+
+              <span class="spk">Sacks</span>
+              <span class="flagged">Yes.</span>
+
+              <span class="spk">Jcal</span>
+              because they don't have the ability to be regulated
+            </div>
+          </div>
+
+          <div class="video-stub">
+            <span class="video-stub-label">video stub</span>
+            Local video placeholder — add Example 2 editing-process video here.
           </div>
         </div>
       </div>
@@ -731,6 +852,29 @@
       const header = block.querySelector('.block-header');
       if (!header) return;
       header.addEventListener('click', () => block.classList.toggle('open'));
+    });
+
+
+    document.querySelectorAll('.example-tabs').forEach(tabGroup => {
+      const buttons = tabGroup.querySelectorAll('.example-tab');
+
+      buttons.forEach(button => {
+        button.addEventListener('click', event => {
+          event.stopPropagation();
+
+          const body = tabGroup.closest('.block-body');
+          const targetId = button.dataset.example;
+
+          buttons.forEach(btn => btn.classList.remove('active'));
+          body.querySelectorAll('.example-panel').forEach(panel => {
+            panel.classList.remove('active');
+          });
+
+          button.classList.add('active');
+          const target = body.querySelector('#' + targetId);
+          if (target) target.classList.add('active');
+        });
+      });
     });
 
     const sections = ['intro', 'h0', 'h1a', 'h1b', 'h2', 'h3', 'h4'];
