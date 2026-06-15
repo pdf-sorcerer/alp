@@ -206,6 +206,20 @@
       line-height: 1.65;
     }
 
+
+
+    .era-header {
+      margin: 52px 0 12px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--green);
+    }
+
+    .era-header:first-of-type { margin-top: 42px; }
+
     .block {
       margin-bottom: 2px;
       background: var(--surface);
@@ -512,27 +526,14 @@
         Top-down catches errors that surface as text artifacts. Bottom-up catches errors that don't. The gap between finding the error, knowing why it exists, and where to fix it remains the open problem.
       </p>
 
-      <div class="intro-note">
-        <div style="margin-bottom:16px;">
-          <strong>2026 HITL (WIP)</strong><br>
-          [0] Word-level voiceprints: multi-speaker segment detection
-        </div>
-
-        <div>
-          <strong>2025 HITL (Production)</strong><br>
-          [1a] Turn contamination: ellipsis boundary<br>
-          [1b] Turn contamination: speaker sandwich<br>
-          [2] Third-person self-reference<br>
-          [3] Lowercase continuation<br>
-          [4] Backchannel bleed
-        </div>
-      </div>
     </div>
+
+    <h2 class="era-header" id="hitl-2026">2026 HITL (WIP)</h2>
 
     <div class="block" id="h0">
       <div class="block-header">
         <div class="block-header-left">
-          <span class="block-id">0</span>
+          <span class="block-id">1</span>
           <span class="block-title">2026 · word-level voiceprints: multi-speaker segment detection</span>
         </div>
         <span class="chevron">▼</span>
@@ -643,6 +644,8 @@
         </div>
       </div>
     </div>
+
+    <h2 class="era-header" id="hitl-2025">2025 HITL (Production)</h2>
 
     <div class="block" id="h1a">
       <div class="block-header">
@@ -886,7 +889,7 @@
       });
     });
 
-    const sections = ['intro', 'h0', 'h1a', 'h1b', 'h2', 'h3', 'h4'];
+    const sections = ['intro', 'hitl-2026', 'h0', 'hitl-2025', 'h1a', 'h1b', 'h2', 'h3', 'h4'];
 
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
