@@ -151,6 +151,48 @@
       letter-spacing: 0.04em;
     }
 
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      max-width: 680px;
+      margin: 0 0 28px;
+    }
+
+    .video-card {
+      display: block;
+      text-decoration: none;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      overflow: hidden;
+      transition: all .15s ease;
+    }
+
+    .video-card:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0,0,0,.06);
+    }
+
+    .video-card img { display: block; width: 100%; height: auto; }
+    .video-card-caption { padding: 10px 12px; }
+
+    .video-card-title {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text);
+    }
+
+    .video-card-subtitle {
+      margin-top: 4px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      color: var(--green);
+    }
+
     .intro-note {
       max-width: 680px;
       margin: 0 0 52px;
@@ -163,9 +205,6 @@
       color: var(--muted);
       line-height: 1.65;
     }
-
-    .intro-note a { color: var(--green); text-decoration: none; font-family: 'IBM Plex Mono', monospace; font-size: 11px; }
-    .intro-note a:hover { text-decoration: underline; }
 
     .block {
       margin-bottom: 2px;
@@ -315,43 +354,6 @@
     .flagged { color: #ff6b6b; font-weight: 600; }
     .after .flagged { color: #a8d672; }
 
-    .video-card {
-      display: inline-block;
-      margin-top: 14px;
-      max-width: 320px;
-      width: 100%;
-      text-decoration: none;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 3px;
-      overflow: hidden;
-      transition: all .15s ease;
-    }
-
-    .video-card:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(0,0,0,.06);
-    }
-
-    .video-card img { display: block; width: 100%; height: auto; }
-    .video-card-caption { padding: 10px 12px; }
-
-    .video-card-title {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--text);
-    }
-
-    .video-card-subtitle {
-      margin-top: 4px;
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 10px;
-      color: var(--green);
-    }
-
     code {
       font-family: 'IBM Plex Mono', monospace;
       font-size: 0.92em;
@@ -375,6 +377,7 @@
     @media (max-width: 768px) {
       main { padding: 32px 24px 80px; }
       .diff { grid-template-columns: 1fr; }
+      .video-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -393,47 +396,52 @@
 
       <div class="arch-callout">
         <p><strong>WhisperX is canonical.</strong> It is the authority on <em>what</em> was said and <em>when</em> it was said.</p>
-        <p><strong>NeMo answers who spoke</strong>, but only within boundaries of the timestamps WhisperX created. This preserves the structure of the transcript.
+        <p><strong>NeMo answers who spoke</strong> — by majority vote, and only within the boundaries WhisperX created. This preserves the structure of the transcript whole. Direct experience showed that applying NeMo's RTTM boundaries directly produced highly fragmented transcripts that required unreasonable effort to repair.</p>
       </div>
 
       <p class="lead">
-        The first generation of HITL tooling was created in 2025. I manually map speaker_id to names with supporting audio. Then, the transcript is fed into the system where top-down pattern detection searches the transcript text for breadcrumbs that AI often leaves when it makes errors: ellipses, non-terminating sentences, lowercase continuations. Those instances get routed to me for review and repair. For Episode 146, there were 24 segments requiring review. 
+        The first generation of HITL tooling was built in late 2025. The workflow: map each <code>SPEAKER_ID</code> to a named host using supporting audio clips, then run heuristic detection across the transcript — searching for patterns that AI leaves behind when it operates beyond its confidence. Ellipses, non-terminating sentences, lowercase continuations. Those instances get routed for review and repair.
+      </p>
 
-               <a class="video-card" href="https://www.loom.com/share/41f39185e6f240e9a7c712f33e77bef1" target="_blank">
+      <div class="video-grid">
+        <a class="video-card" href="https://www.loom.com/share/443f64dbf9454aa68695001f63df8200" target="_blank">
           <div class="video-card-caption">
-            <div class="video-card-title">Episode 115 HITL Review</div>
+            <div class="video-card-title">Episode 75 · HITL Review</div>
             <div class="video-card-subtitle">Human-in-the-loop transcript auditing ↗</div>
           </div>
         </a>
+        <a class="video-card" href="https://www.loom.com/share/ada43b6769704b3ca42daf99594ef73a" target="_blank">
+          <div class="video-card-caption">
+            <div class="video-card-title">Episode 113 · HITL Review</div>
+            <div class="video-card-subtitle">Human-in-the-loop transcript auditing ↗</div>
+          </div>
+        </a>
+        <a class="video-card" href="https://www.loom.com/share/1d8218707c054368ac47d3a1d79c1c4d" target="_blank">
+          <div class="video-card-caption">
+            <div class="video-card-title">Episode 114 · HITL Review</div>
+            <div class="video-card-subtitle">Human-in-the-loop transcript auditing ↗</div>
+          </div>
+        </a>
+        <a class="video-card" href="https://www.loom.com/share/8cd52145239c445caaff389f1b560647" target="_blank">
+          <div class="video-card-caption">
+            <div class="video-card-title">Episode 115 · HITL Review</div>
+            <div class="video-card-subtitle">Human-in-the-loop transcript auditing ↗</div>
+          </div>
+        </a>
+      </div>
+
+      <p class="lead">
+        Returning to this in June 2026, I've added a complementary second layer: word-level acoustics. For every segment WhisperX marks as valid, NeMo majority-votes a speaker ID across the whole window — but majority vote is the key phrase. Cross-talk that doesn't get flagged by the heuristics above gets absorbed, credited to the wrong speaker. Word-level acoustics provides a rescue path: NeMo's diarization is applied word by word within each segment, flagging words that are acoustically inconsistent with the attributed speaker for review and repair. There are false positives — usually single-word utterances, most often from Jcal, who is more expressive with his voice than the others. But longer chains are surfaced reliably. The downside: it's more time intensive.
       </p>
 
       <p class="lead">
-      Returning to HITL in June 2026, I've added a complementary second layer: word-level acoustics. Why's this matter? For every segment in the transcript WhisperX says is valid, NeMo 'majority votes' which speaker_id spooke those words. But the key finding is 'majority vote' -- there could be cross-talk that's simply buried under a mountain of dissimilar voice. Word-level acoustics helps address this.   flagging words acoustically inconsistent with the attributed speaker. 
-        
-        
-        This becomes helpful at finding instances of brief cross-talk and barge-ins by other speakers that otherwise were not segmented properly by WhisperX 
-        
-        
-        remarkably effective at finding cases for spearker cross-talk and overlap, barge-ins, etc. that read as grammatically correct — a 0.375s <em>"they have a chat group"</em> from Sacks buried mid-segment — are now discoverable at scale.
-      </p>
-
-      <p class="lead">
-        Top-down catches errors that surface as text artifacts. Bottom-up catches errors that don't. The downside? More review, not less — every new detection layer adds more work, at least temporarily. The gap between finding the error, knowing why it exists, and where to fix it remains the open problem.
+        Top-down catches errors that surface as text artifacts. Bottom-up catches errors that don't. The gap between finding the error, knowing why it exists, and where to fix it remains the open problem.
       </p>
 
       <div class="intro-note">
         The resulting workflow prioritized investigator time over GPU time:
         heuristic rules surfaced suspicious regions, generated short audio clips,
         and routed them for rapid review instead of requiring complete episode audits.
-
-        <br><br>
-
-        <a class="video-card" href="https://www.loom.com/share/41f39185e6f240e9a7c712f33e77bef1" target="_blank">
-          <div class="video-card-caption">
-            <div class="video-card-title">Episode 115 HITL Review</div>
-            <div class="video-card-subtitle">Human-in-the-loop transcript auditing ↗</div>
-          </div>
-        </a>
       </div>
     </div>
 
