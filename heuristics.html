@@ -362,28 +362,21 @@
       <p class="page-eyebrow">Heuristic Diarization Repair</p>
       <h1>Transcript Forensics and Repair</h1>
 
-      <p class="lead">
-        Transcripts were generated in an AI production pipeline using WhisperX, with NeMo adapted to operate within WhisperX's segment-level timestamps.
-        In other words, WhisperX determined <em>what</em> speech existed and <em>when</em> it occurred, while NeMo's diarization process — identifying <em>who</em> spoke — was made secondary to those boundaries.
-      </p>
+<p class="lead">
+  The first run of <strong>ALL-LLLM POD</strong> transcripts were generated using a WhisperX / NeMo hybrid pipeline built around a deliberate architectural choice: WhisperX segment-level timestamps are canonical. WhisperX determines <em>what</em> was said and <em>when</em>. NeMo answers <em>who</em> spoke — constrained to operate within those boundariesconstrained to operate within those boundaries. Experience showed that applying NeMo's RTTM boundaries created highly fragmented transcripts that were unuseable. 
+</p>
 
-      <p class="lead">
-        Think of yourself skimming a newspaper, just quickly covering the page. Your brain catches on something — because it intuitively knows it looks off.
-      </p>
+<p class="lead">
+  With that in mind, The first generation of HITL tooling used top-down pattern detection, searching for breadcrumbs that WhisperX would leave in the transcript -- artificats that it was operating beyond its confidence — ellipses, non-terminating sentences, lowercase continuations. Those get routed for review and repair.
+</p>
 
-      <p class="lead">
-        That's the first generation of HITL tooling: top-down pattern detection, looking for text that was generated, much more often than not, because the AI was operating beyond its confidence and left reliable breadcrumbs — ellipses, non-terminating sentences, lowercase continuations.
-      </p>
+<p class="lead">
+  June 2026 adds a complementary second layer: bottom-up acoustics. NeMo's word-level diarization was soft-applied to each word within a labeled segment, flagging words that are acoustically inconsistent with the attributed speaker. Short interjections that left no surface trace, that read as grammatically correct — a 0.375s <em>"they have a chat group"</em> from Sacks buried mid-segment — are now discoverable at scale.
+</p>
 
-      <p class="lead">
-        June 2026 adds a complementary layer: bottom-up acoustics. NeMo's word-level diarization is applied to each word within a labeled segment. Words that are acoustically different than the labeled speaker are highlighted for review.
-        Short interjections that left no surface trace, that read as grammatically correct — a 0.375s <em>"they have a chat group"</em> from Sacks buried mid-segment — are now discoverable at scale.
-      </p>
-
-      <p class="lead">
-        Top-down catches errors that surface as text artifacts. Bottom-up catches errors that don't. The tradeoff is more review work, not less — every new detection layer opens a new queue. The gap between finding the error, knowing why it exists, and where to fix it remains the open problem.
-      </p>
-
+<p class="lead">
+  Top-down catches errors that surface as text artifacts. Bottom-up catches errors that don't. The downside? More review, not less — every new detection layer adds more work, at least temporarily. The gap between finding the error, knowing why it exists, and where to fix it remains the open problem.
+</p>
       <div class="intro-note">
         The resulting workflow prioritized investigator time over GPU time:
         heuristic rules surfaced suspicious regions, generated short audio clips,
