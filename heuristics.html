@@ -125,6 +125,32 @@
     .lead a { color: var(--green); text-decoration: none; font-family: 'IBM Plex Mono', monospace; font-size: 12px; }
     .lead a:hover { text-decoration: underline; }
 
+    .arch-callout {
+      max-width: 680px;
+      margin: 0 0 28px;
+      padding: 18px 20px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--green);
+      border-radius: 3px;
+      font-size: 13px;
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    .arch-callout p { margin-bottom: 10px; }
+    .arch-callout p:last-child { margin-bottom: 0; }
+
+    .arch-callout strong {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--green);
+      display: block;
+      margin-bottom: 4px;
+      letter-spacing: 0.04em;
+    }
+
     .intro-note {
       max-width: 680px;
       margin: 0 0 52px;
@@ -308,7 +334,6 @@
     }
 
     .video-card img { display: block; width: 100%; height: auto; }
-
     .video-card-caption { padding: 10px 12px; }
 
     .video-card-title {
@@ -362,21 +387,28 @@
       <p class="page-eyebrow">Heuristic Diarization Repair</p>
       <h1>Transcript Forensics and Repair</h1>
 
-<p class="lead">
-  The first run of <strong>ALL-LLLM POD</strong> transcripts were generated using a WhisperX / NeMo hybrid pipeline built around a deliberate architectural choice: WhisperX segment-level timestamps are canonical. WhisperX determines <em>what</em> was said and <em>when</em>. NeMo answers <em>who</em> spoke — constrained to operate within those boundariesconstrained to operate within those boundaries. Experience showed that applying NeMo's RTTM boundaries created highly fragmented transcripts that were unuseable. 
-</p>
+      <p class="lead">
+        The first run of <strong>ALL-LLM Pod</strong> transcripts were generated using a WhisperX / NeMo hybrid pipeline built around a deliberate architectural choice.
+      </p>
 
-<p class="lead">
-  With that in mind, The first generation of HITL tooling used top-down pattern detection, searching for breadcrumbs that WhisperX would leave in the transcript -- artificats that it was operating beyond its confidence — ellipses, non-terminating sentences, lowercase continuations. Those get routed for review and repair.
-</p>
+      <div class="arch-callout">
+        <p><strong>WhisperX is canonical.</strong> It is the authority on <em>what</em> was said and <em>when</em> it was said.</p>
+        <p><strong>NeMo answers who spoke</strong>, but only within boundaries of the timestamps WhisperX created. This preserves the structure of the transcript, which otherwise becomes highly fragmented when and essentially unsuable if NeMo's RTTM file is applied.
 
-<p class="lead">
-  June 2026 adds a complementary second layer: bottom-up acoustics. NeMo's word-level diarization was soft-applied to each word within a labeled segment, flagging words that are acoustically inconsistent with the attributed speaker. Short interjections that left no surface trace, that read as grammatically correct — a 0.375s <em>"they have a chat group"</em> from Sacks buried mid-segment — are now discoverable at scale.
-</p>
+          The result: Each speaker_id is mapped to a name in HITL, then that name is backfilled for every matching speaker segment and consecutive segments are condensed together. Finally, the labeled transcript is now ready for HITL.</div>
 
-<p class="lead">
-  Top-down catches errors that surface as text artifacts. Bottom-up catches errors that don't. The downside? More review, not less — every new detection layer adds more work, at least temporarily. The gap between finding the error, knowing why it exists, and where to fix it remains the open problem.
-</p>
+      <p class="lead">
+        The first generation of HITL tooling used top-down pattern detection (aka: heuristics). This meant, the tooling searched for breadcrumbs that AI leaves when operating beyond its confidence — ellipses, non-terminating sentences, lowercase continuations. Those instances get routed to me for review and repair. HEre's what that looks like: 
+      </p>
+
+      <p class="lead">
+        June 2026 adds a complementary second layer: bottom-up acoustics. NeMo's word-level diarization is applied to each word within a labeled segment, flagging words that are acoustically inconsistent with the attributed speaker. Short interjections that left no surface trace, that read as grammatically correct — a 0.375s <em>"they have a chat group"</em> from Sacks buried mid-segment — are now discoverable at scale.
+      </p>
+
+      <p class="lead">
+        Top-down catches errors that surface as text artifacts. Bottom-up catches errors that don't. The downside? More review, not less — every new detection layer adds more work, at least temporarily. The gap between finding the error, knowing why it exists, and where to fix it remains the open problem.
+      </p>
+
       <div class="intro-note">
         The resulting workflow prioritized investigator time over GPU time:
         heuristic rules surfaced suspicious regions, generated short audio clips,
