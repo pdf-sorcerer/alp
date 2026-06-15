@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0055)https://pdf-sorcerer.github.io/alp/heuristics.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ALL-LLM Pod | Heuristics</title>
   <style>
@@ -21,8 +19,8 @@
       --red: #c0392b;
     }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
-#shared-nav { display: flex; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    #shared-nav { display: flex; }
 
     body {
       font-family: 'Inter', sans-serif;
@@ -321,65 +319,49 @@
 
     .after .flagged { color: #a8d672; }
 
-    .video-thumb {
+    .video-card {
       display: inline-block;
-      margin: 14px 0 4px;
+      margin-top: 14px;
+      max-width: 320px;
+      width: 100%;
+      text-decoration: none;
+      background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 3px;
       overflow: hidden;
-      line-height: 0;
+      transition: all .15s ease;
     }
 
-    .video-thumb img {
-      width: 320px;
+    .video-card:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0,0,0,.06);
+    }
+
+    .video-card img {
       display: block;
+      width: 100%;
+      height: auto;
     }
 
-    .video-card {
-  display: inline-block;
-  margin-top: 14px;
-  max-width: 320px;
-  width: 100%;
+    .video-card-caption {
+      padding: 10px 12px;
+    }
 
-  text-decoration: none;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 3px;
-  overflow: hidden;
+    .video-card-title {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text);
+    }
 
-  transition: all .15s ease;
-}
-
-.video-card:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0,0,0,.06);
-}
-
-.video-card img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-.video-card-caption {
-  padding: 10px 12px;
-}
-
-.video-card-title {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--text);
-}
-
-.video-card-subtitle {
-  margin-top: 4px;
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 10px;
-  color: var(--green);
-}
+    .video-card-subtitle {
+      margin-top: 4px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      color: var(--green);
+    }
 
     code {
       font-family: 'IBM Plex Mono', monospace;
@@ -392,7 +374,6 @@
       white-space: nowrap;
     }
 
-
     .footer {
       margin-top: 80px;
       font-family: 'IBM Plex Mono', monospace;
@@ -403,116 +384,116 @@
     }
 
     @media (max-width: 768px) {
-      
-
-      main {
-        padding: 32px 24px 80px;
-      }
-
-      .diff {
-        grid-template-columns: 1fr;
-      }
+      main { padding: 32px 24px 80px; }
+      .diff { grid-template-columns: 1fr; }
     }
   </style>
-<script src="chrome-extension://liecbddmkiiihnedobmlmillhodjkdmb/js/recordConsoleEvents.js"></script></head>
+</head>
 
 <body>
-
   <nav id="shared-nav"></nav>
 
   <main>
-<div class="block" id="h0">
-  <div class="block-header">
-    <div class="block-header-left">
-      <span class="block-id">0</span>
-      <span class="block-title">word-level voiceprints: multi-speaker segment detection</span>
+    <div id="intro">
+      <p class="page-eyebrow">Heuristic Diarization Repair</p>
+      <h1>Transcript Forensics and Repair</h1>
+
+      <p class="lead">
+        Transcripts were generated in an AI production pipeline using WhisperX, with NeMo adapted to operate within WhisperX's segment-level timestamps.
+        In other words, WhisperX determined <em>what</em> speech existed and <em>when</em> it occurred, while NeMo's diarization process—identifying <em>who</em> spoke—was made secondary to those boundaries.
+      </p>
+
+      <p class="lead">
+        In practice, most AI errors fell into two categories: incorrect segment boundaries or speaker misclassification.
+        Both left recognizable fingerprints in the transcript that could be surfaced through human-in-the-loop review and repaired before entering the training corpus.
+        This review was iterated on over months, evolving from surface-level ASR artifact detection — ellipses, awkwardly terminated sentences, lowercase continuations — into acoustic analysis at the word level, where NeMo's voiceprints expose speaker changes that segment boundaries miss entirely.
+      </p>
+
+      <div class="intro-note">
+        The resulting workflow prioritized investigator time over GPU time:
+        heuristic rules surfaced suspicious regions, generated short audio clips,
+        and routed them for rapid review instead of requiring complete episode audits.
+
+        <br><br>
+
+        <a class="video-card" href="https://www.loom.com/share/41f39185e6f240e9a7c712f33e77bef1" target="_blank">
+          <div class="video-card-caption">
+            <div class="video-card-title">Episode 115 HITL Review</div>
+            <div class="video-card-subtitle">Human-in-the-loop transcript auditing ↗</div>
+          </div>
+        </a>
+      </div>
     </div>
-    <span class="chevron">▼</span>
-  </div>
 
-  <div class="block-body">
-    <div class="block-why">
-      Earlier HITL tooling treated WhisperX segment boundaries as canonical and looked for
-      artifacts in the text structure — ellipses, non-terminated sentences, lowercase continuations,
-      third-person self-references — all artifacts that signal potential misattribution and route
-      segments for manual review. WhisperX timestamps (what was said, when) were trusted as
-      ground truth; enforcing NeMo's RTTM boundaries directly produced fragmented transcripts
-      of lesser quality. The pragmatic solution was to use RTTM only for speaker identity within
-      WhisperX windows, and discard the rest. More than sufficient for a first pass.
-
-      <strong>June 2026:</strong> NeMo now applies word-level diarization within segments
-      alongside the structural heuristics. Rather than asking whether a segment
-      <em>looks</em> suspicious, it asks whether the words inside it <em>sound like</em>
-      the attributed speaker. Short interjections that previously fell through — a 0.375s
-      <code>Yes</code> from Sacks buried mid-segment — are now surfaced. The structure
-      is preserved; the delta is surfaced.
-    </div>
-
-    <div class="diff">
-      <div class="before" style="display:flex; flex-direction:column; gap:0; padding:0; background:none; border:none;">
-        <div class="before" style="margin-bottom:8px;">
-          <span class="panel-label">before</span>
-          <span class="spk">Jcal</span>
-          Yeah <span class="flagged">&lt;got it&gt;</span> which is why they all waited till the last minute to vote for it <span class="flagged">&lt;how do you coordinate something like that, that's always the question i have about these people&gt;</span> <span class="flagged">&lt;are all brilliant geniuses</span> it's hundreds of thousands of brilliant geniuses in Skid Row that figure this shit out <span class="flagged">year</span> <span class="flagged">there's a chat group&gt;</span>
+    <div class="block" id="h0">
+      <div class="block-header">
+        <div class="block-header-left">
+          <span class="block-id">0</span>
+          <span class="block-title">word-level voiceprints: multi-speaker segment detection</span>
         </div>
-        <div style="background:#0d1117; border-radius:3px; padding:14px 18px; font-family:'IBM Plex Mono',monospace; font-size:11px; line-height:1.9; border:1px solid #1e2530; border-left:2px solid #3a3f4b; color:#8b9eb0;">
-          <span style="display:block; font-size:9px; text-transform:uppercase; letter-spacing:0.12em; color:#4a5568; margin-bottom:8px;">📡 RTTM context (±15s)</span>
-          <div style="display:flex; gap:16px;"><span style="min-width:72px;">friedberg</span><span style="color:#4a5568;">100:01.24</span></div>
-          <div style="display:flex; gap:16px;"><span style="min-width:72px;">jcal</span><span style="color:#4a5568;">100:01.80</span></div>
-          <div style="display:flex; gap:16px;"><span style="min-width:72px;">friedberg</span><span style="color:#4a5568;">100:02.18</span></div>
-          <div style="display:flex; gap:16px;"><span style="min-width:72px;">jcal</span><span style="color:#4a5568;">100:05.18</span></div>
-          <div style="display:flex; gap:16px;"><span style="min-width:72px;">friedberg</span><span style="color:#4a5568;">100:09.68</span></div>
-          <div style="display:flex; gap:16px;"><span style="min-width:72px;">sacks</span><span style="color:#4a5568;">100:14.18</span></div>
-          <div style="display:flex; gap:16px;"><span style="min-width:72px;">friedberg</span><span style="color:#4a5568;">100:14.93</span></div>
-          <div style="display:flex; gap:16px;"><span style="min-width:72px;">chamath</span><span style="color:#4a5568;">100:15.68</span></div>
+        <span class="chevron">▼</span>
+      </div>
+
+      <div class="block-body">
+        <div class="block-why">
+          Earlier HITL tooling treated WhisperX segment boundaries as canonical and looked for
+          artifacts in the text structure — ellipses, non-terminated sentences, lowercase continuations,
+          third-person self-references — all artifacts that signal potential misattribution and route
+          segments for manual review. WhisperX timestamps (what was said, when) were trusted as
+          ground truth; enforcing NeMo's RTTM boundaries directly produced fragmented transcripts
+          of lesser quality. The pragmatic solution was to use RTTM only for speaker identity within
+          WhisperX windows, and discard the rest. More than sufficient for a first pass.
+
+          <br><br>
+
+          <strong>June 2026:</strong> NeMo now applies word-level diarization within segments
+          alongside the structural heuristics. Rather than asking whether a segment
+          <em>looks</em> suspicious, it asks whether the words inside it <em>sound like</em>
+          the attributed speaker. Short interjections that previously fell through — a 0.375s
+          <code>Yes</code> from Sacks buried mid-segment — are now surfaced. The structure
+          is preserved; the delta is surfaced.
+        </div>
+
+        <div class="diff">
+          <div class="before" style="display:flex; flex-direction:column; gap:0; padding:0; background:none; border:none;">
+            <div class="before" style="margin-bottom:8px;">
+              <span class="panel-label">before</span>
+              <span class="spk">Jcal</span>
+              Yeah <span class="flagged">&lt;got it&gt;</span> which is why they all waited till the last minute to vote for it <span class="flagged">&lt;how do you coordinate something like that, that's always the question i have about these people&gt;</span> <span class="flagged">&lt;are all brilliant geniuses</span> it's hundreds of thousands of brilliant geniuses in Skid Row that figure this shit out <span class="flagged">year</span> <span class="flagged">there's a chat group&gt;</span>
+            </div>
+            <div style="background:#0d1117; border-radius:3px; padding:14px 18px; font-family:'IBM Plex Mono',monospace; font-size:11px; line-height:1.9; border:1px solid #1e2530; border-left:2px solid #3a3f4b; color:#8b9eb0;">
+              <span style="display:block; font-size:9px; text-transform:uppercase; letter-spacing:0.12em; color:#4a5568; margin-bottom:8px;">📡 RTTM context (±15s)</span>
+              <div style="display:flex; gap:16px;"><span style="min-width:72px;">friedberg</span><span style="color:#4a5568;">100:01.24</span></div>
+              <div style="display:flex; gap:16px;"><span style="min-width:72px;">jcal</span><span style="color:#4a5568;">100:01.80</span></div>
+              <div style="display:flex; gap:16px;"><span style="min-width:72px;">friedberg</span><span style="color:#4a5568;">100:02.18</span></div>
+              <div style="display:flex; gap:16px;"><span style="min-width:72px;">jcal</span><span style="color:#4a5568;">100:05.18</span></div>
+              <div style="display:flex; gap:16px;"><span style="min-width:72px;">friedberg</span><span style="color:#4a5568;">100:09.68</span></div>
+              <div style="display:flex; gap:16px;"><span style="min-width:72px;">sacks</span><span style="color:#4a5568;">100:14.18</span></div>
+              <div style="display:flex; gap:16px;"><span style="min-width:72px;">friedberg</span><span style="color:#4a5568;">100:14.93</span></div>
+              <div style="display:flex; gap:16px;"><span style="min-width:72px;">chamath</span><span style="color:#4a5568;">100:15.68</span></div>
+            </div>
+          </div>
+
+          <div class="after">
+            <span class="panel-label">after</span>
+            <span class="spk">Jcal</span>
+            Yeah
+            <span class="spk">Friedberg</span>
+            <span class="flagged">Got it</span>
+            <span class="spk">Friedberg</span>
+            <span class="flagged">which is why they all waited till the last minute to vote for it</span>
+            <span class="spk">Jcal</span>
+            <span class="flagged">how do you coordinate something like that, that's always the question I have with these people.</span>
+            <span class="spk">Friedberg</span>
+            <span class="flagged">They're all brilliant geniuses — it's hundreds of thousands of brilliant geniuses in Skid Row that figure this shit out</span>
+            <span class="spk">Sacks</span>
+            <span class="flagged">they have a chat group</span>
+            <span class="spk">Chamath</span>
+            <span class="flagged">There's a chat group, it's not that complicated.</span>
+          </div>
         </div>
       </div>
-
-      <div class="after">
-        <span class="panel-label">after</span>
-        <span class="spk">Jcal</span>
-        Yeah
-        <span class="spk">Friedberg</span>
-        <span class="flagged">Got it</span>
-        <span class="spk">Friedberg</span>
-        <span class="flagged">which is why they all waited till the last minute to vote for it</span>
-        <span class="spk">Jcal</span>
-        <span class="flagged">how do you coordinate something like that, that's always the question I have with these people.</span>
-        <span class="spk">Friedberg</span>
-        <span class="flagged">They're all brilliant geniuses — it's hundreds of thousands of brilliant geniuses in Skid Row that figure this shit out</span>
-        <span class="spk">Sacks</span>
-        <span class="flagged">they have a chat group</span>
-        <span class="spk">Chamath</span>
-        <span class="flagged">There's a chat group, it's not that complicated.</span>
-      </div>
     </div>
-  </div>
-</div>
-
-
-<div class="intro-note">
-  The resulting workflow prioritized investigator time over GPU time:
-  heuristic rules surfaced suspicious regions, generated short audio clips,
-  and routed them for rapid review instead of requiring complete episode audits.
-
-  <br><br>
-
-  <a class="video-card" href="https://www.loom.com/share/41f39185e6f240e9a7c712f33e77bef1" target="_blank">
-
-    src="../loom.png" alt="Episode 115 HITL Review">
-
-    <div class="video-card-caption">
-      <div class="video-card-title">
-        Episode 115 HITL Review
-      </div>
-
-      <div class="video-card-subtitle">
-        Human-in-the-loop transcript auditing ↗
-      </div>
-    </div>
-
-  </a>
-</div>
 
     <div class="block" id="h1a">
       <div class="block-header">
@@ -727,38 +708,8 @@
       </div>
     </div>
 
-    <div class="block" id="h5">
-      <div class="block-header">
-        <div class="block-header-left">
-          <span class="block-id">5</span>
-          <span class="block-title">blob: speaker collapse / gross under-classification</span>
-        </div>
-        <span class="chevron">▼</span>
-      </div>
-
-      <div class="block-body">
-        <div class="block-why">
-          A single NeMo <code style="font-family:&#39;IBM Plex Mono&#39;,monospace;font-size:11px;color:var(--green);">speaker_id</code> absorbs a long, multi-speaker passage — multiple speakers collapsed into one label.
-          The fingerprint is a segment spanning 20+ seconds attributed to a single speaker, containing speech that clearly belongs to several.
-          In the example below, a 20-second wall of text assigned to Jcal was split across three speakers on review.
-          <br><br>
-          Root cause is not yet known. These blobs are rare and have not been observed in recent months.
-        </div>
-
-        <div class="source">
-          <span>E50_Crypto_investing_deep_dive__Facebook_s_whistleblower_fallout</span>
-          <span>187.8s – 208.4s</span>
-        </div>
-
-        <a class="video-thumb" href="https://youtu.be/seg-lbqHcwo" target="_blank">
-          <img src="./ALL-LLM Pod _ Heuristics_files/mqdefault.jpg" alt="Blob repair example">
-        </a>
-      </div>
-    </div>
-
     <div class="footer">Mason Thompson · Berkeley, California</div>
-  </div></main>
-
+  </main>
 
   <script src="https://pdf-sorcerer.github.io/alp/nav-loader.js" data-page="heuristics"></script>
 
@@ -769,7 +720,7 @@
       header.addEventListener('click', () => block.classList.toggle('open'));
     });
 
-    const sections = ['intro', 'h1a', 'h1b', 'h2', 'h3', 'h4', 'h5'];
+    const sections = ['intro', 'h0', 'h1a', 'h1b', 'h2', 'h3', 'h4'];
 
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
@@ -786,7 +737,5 @@
       if (el) observer.observe(el);
     });
   </script>
-
-
 
 </body></html>
