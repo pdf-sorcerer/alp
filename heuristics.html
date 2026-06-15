@@ -393,16 +393,21 @@
 
       <div class="arch-callout">
         <p><strong>WhisperX is canonical.</strong> It is the authority on <em>what</em> was said and <em>when</em> it was said.</p>
-        <p><strong>NeMo answers who spoke</strong>, but only within boundaries of the timestamps WhisperX created. This preserves the structure of the transcript, which otherwise becomes highly fragmented when and essentially unsuable if NeMo's RTTM file is applied.
-
-          The result: Each speaker_id is mapped to a name in HITL, then that name is backfilled for every matching speaker segment and consecutive segments are condensed together. Finally, the labeled transcript is now ready for HITL.</div>
+        <p><strong>NeMo answers who spoke</strong>, but only within boundaries of the timestamps WhisperX created. This preserves the structure of the transcript.
 
       <p class="lead">
-        The first generation of HITL tooling used top-down pattern detection (aka: heuristics). This meant, the tooling searched for breadcrumbs that AI leaves when operating beyond its confidence — ellipses, non-terminating sentences, lowercase continuations. Those instances get routed to me for review and repair. HEre's what that looks like: 
+        The first generation of HITL was created in 2025, and maps maps speaker_id to names and updates teh transcript. Top-down pattern detection searches the transcript text for breadcrumbs that AI often leaves when it makes errors: ellipses, non-terminating sentences, lowercase continuations. Those instances get routed to me for review and repair. Here's what that looks like: 
+
+               <a class="video-card" href="https://www.loom.com/share/41f39185e6f240e9a7c712f33e77bef1" target="_blank">
+          <div class="video-card-caption">
+            <div class="video-card-title">Episode 115 HITL Review</div>
+            <div class="video-card-subtitle">Human-in-the-loop transcript auditing ↗</div>
+          </div>
+        </a>
       </p>
 
       <p class="lead">
-        June 2026 adds a complementary second layer: bottom-up acoustics. NeMo's word-level diarization is applied to each word within a labeled segment, flagging words that are acoustically inconsistent with the attributed speaker. Short interjections that left no surface trace, that read as grammatically correct — a 0.375s <em>"they have a chat group"</em> from Sacks buried mid-segment — are now discoverable at scale.
+      Returning to HITL in June 2026, being presented with Epsiode 2026-06-13: I've added a complementary second layer: bottom-up acoustics. NeMo's word-level diarization is soft-applied to each word within labeled segments. What this does, is flag words acoustically inconsistent with the attributed speaker, which is remarkably effective at finding cases for spearker cross-talk and overlap, barge-ins, etc. that read as grammatically correct — a 0.375s <em>"they have a chat group"</em> from Sacks buried mid-segment — are now discoverable at scale.
       </p>
 
       <p class="lead">
