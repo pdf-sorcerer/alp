@@ -519,12 +519,15 @@
       </div>
 
       <p class="lead">
-        <strong>Returning to HITL in 2026</strong>, I'm experimenting with a complementary second layer: word-level acoustics. For every segment WhisperX marks as valid, NeMo majority-votes a speaker ID and it generally works really well and cross-talk and interjections are often caught using heuristics mentioned earlier (elipses, hyphen, non-terminators, etc). Word-level acoustics add another safety net: 
-        a rescue path: NeMo's diarization is applied word by word within each segment, flagging words that are acoustically inconsistent with the attributed speaker for review and repair.
+        <strong>Returning to HITL in 2026</strong>, I'm experimenting with a complementary second layer: word-level acoustics. For every segment WhisperX marks as valid, NeMo majority-votes a speaker ID. This works well, and cross-talk/interjections are often caught 
+        using heuristics mentioned earlier (elipses, hyphen, non-terminators, etc). 
+        
+      <p class="lead">
+        Word-level acoustics add another safety net: a rescue path: NeMo's diarization is applied word by word within each segment, flagging words that are acoustically inconsistent with the attributed speaker for review and repair.
       </p>
 
       <p class="lead">
-   Still, the gap between finding the error, knowing why it exists, and where to fix it remains a persistent problem.
+ The upside: transcript accuracy continues to get better, down to word-level accuracy. The tradeoff, is manual review is required to get that accuracy. The gap between finding the error, knowing why it exists, and where to fix it remains a persistent problem.
       </p>
 
     </div>
