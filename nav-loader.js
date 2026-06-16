@@ -27,9 +27,7 @@
 <div class="nav-section-label">Side Quests</div>
 
 <a href="https://pdf-sorcerer.github.io/alp/heuristics.html" class="nav-item" data-page="heuristics">• Transcript Forensics</a>
-<a href="https://pdf-sorcerer.github.io/alp/chasing_ghosts.html" class="nav-item" data-page="chasing-ghosts">• Ghost Audio</a>
-<a href="https://pdf-sorcerer.github.io/alp/arguments.html" class="nav-item" data-page="argument_pipeline">• Argument Pipeline</a>
-`;
+<a href="https://pdf-sorcerer.github.io/alp/chasing_ghosts.html" class="nav-item" data-page="chasing-ghosts">• Ghost Audio</a>`;
 
   const style = document.createElement('style');
   style.textContent = `
