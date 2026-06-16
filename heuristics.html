@@ -519,15 +519,15 @@
       </div>
 
       <p class="lead">
-        <strong>Returning to HITL in 2026</strong>, I'm experimenting with a complementary second layer: word-level acoustics. For every segment WhisperX marks as valid, NeMo majority-votes a speaker ID. This works well, and cross-talk/interjections are often caught 
-        using heuristics mentioned earlier (elipses, hyphen, non-terminators, etc). 
+        <strong>Returning to HITL in 2026</strong>, I'm experimenting with a complementary second layer: word-level acoustics. 
         
       <p class="lead">
-        Word-level acoustics add another safety net: a rescue path: NeMo's diarization is applied word by word within each segment, flagging words that are acoustically inconsistent with the attributed speaker for review and repair.
+        Word-level acoustics add another safety net: a rescue path: NeMo's diarization is applied word by word within each segment, flagging words that are acoustically inconsistent with the attributed speaker for review and repair. 
       </p>
 
       <p class="lead">
- The upside: transcript accuracy continues to get better, down to word-level accuracy. The tradeoff, is manual review is required to get that accuracy. The gap between finding the error, knowing why it exists, and where to fix it remains a persistent problem.
+ The upside: transcript accuracy continues to get better, with resolution into word-level atomics. The tradeoff, is that manual review is required to earn that accuracy. At time of writing in June 2026, about I have a backlog of fifty episodes in 2026 to process and I don't want to commit to that unless I can come to 
+        a better place with this new addition. 
       </p>
 
     </div>
@@ -556,11 +556,10 @@
         <div class="example-panel active" id="h0-ex1">
           <p class="example-note">
             <strong>June 2026:</strong> NeMo now applies word-level diarization within segments
-            alongside the structural heuristics. Rather than asking whether a segment
+            alongside structural heuristics. Rather than asking whether a segment
             <em>looks</em> suspicious, it asks whether the words inside it <em>sound like</em>
-            the attributed speaker. Short interjections that previously fell through — a 0.375s
-            <code>Yes</code> from Sacks buried mid-segment — are now surfaced. The structure
-            is preserved; the delta is surfaced.
+            the attributed speaker. Short interjections that previously fell through, such as a 0.12s
+            <code>Yes</code> from Sacks get absorbed into other speakers segments.
           </p>
 
           <p class="example-note">
