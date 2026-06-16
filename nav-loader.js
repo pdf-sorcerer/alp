@@ -20,9 +20,8 @@
 <div class="nav-section-label">Pages</div>
 <a href="https://pdf-sorcerer.github.io/alp/welcome.html" class="nav-item" data-page="welcome">1. Welcome</a>
 <a href="https://pdf-sorcerer.github.io/alp/architecture.html" class="nav-item" data-page="architecture">2. Architecture</a>
-<a href="https://pdf-sorcerer.github.io/alp/metrics.html" class="nav-item" data-page="performance">3. Model Performance</a>
-<a href="https://pdf-sorcerer.github.io/alp/uix.html" class="nav-item" data-page="uix">4. UiX</a>
-<a href="https://pdf-sorcerer.github.io/alp/about.html" class="nav-item" data-page="about">5. About</a>
+<a href="https://pdf-sorcerer.github.io/alp/uix.html" class="nav-item" data-page="uix">3. UiX</a>
+<a href="https://pdf-sorcerer.github.io/alp/about.html" class="nav-item" data-page="about">4. About</a>
 
 <div class="nav-section-label">Side Quests</div>
 
