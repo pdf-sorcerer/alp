@@ -519,11 +519,12 @@
       </div>
 
       <p class="lead">
-        Returning to this in June 2026, I've added a complementary second layer: word-level acoustics. For every segment WhisperX marks as valid, NeMo majority-votes a speaker ID across the whole window — but majority vote is the key phrase. Cross-talk that doesn't get flagged by the heuristics above gets absorbed, credited to the wrong speaker. Word-level acoustics provides a rescue path: NeMo's diarization is applied word by word within each segment, flagging words that are acoustically inconsistent with the attributed speaker for review and repair. There are false positives — usually single-word utterances, most often from Jcal, who is more expressive with his voice than the others. But longer chains are surfaced reliably. The downside: it's more time intensive.
+        <strong>Returning to HITL in 2026</strong>, I'm experimenting with a complementary second layer: word-level acoustics. For every segment WhisperX marks as valid, NeMo majority-votes a speaker ID and it generally works really well and cross-talk and interjections are often caught using heuristics mentioned earlier (elipses, hyphen, non-terminators, etc). Word-level acoustics add another safety net: 
+        a rescue path: NeMo's diarization is applied word by word within each segment, flagging words that are acoustically inconsistent with the attributed speaker for review and repair.
       </p>
 
       <p class="lead">
-        Top-down catches errors that surface as text artifacts. Bottom-up catches errors that don't. The gap between finding the error, knowing why it exists, and where to fix it remains the open problem.
+   Still, the gap between finding the error, knowing why it exists, and where to fix it remains a persistent problem.
       </p>
 
     </div>
