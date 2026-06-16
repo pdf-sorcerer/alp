@@ -663,8 +663,9 @@
 Three things came out of this:
 </p>
 <ol class="body-list">
-  <li>The PWW pipeline was roughly 3× more GPU-compute expensive — 9.5 minutes versus 3 at beam=5. Howver, I also tested beam=1: it hallucinated text in the regions spanning Friedberg and Gerstner, and the hallucination pattern is detectable with heuristics. Unlike my production pipeline, here VAD asserts speech but the decoder fails. The failures manifest as localized repetition and confabulation. With manual review, missing content is entirely recoverable.</li>
-  <li>The most actionable finding: the production pipeline's speed is recoverable. A modified version of production WhisperX could emit timestamp tokens at ghost regions without paying the full compute cost — fast transcription that still flags where something was missed.</li>
+  <li>The most actionable finding: My original WhisperX production pipeline can be used, afterall. A modified version of production WhisperX could emit timestamp tokens at ghost regions without paying the full compute cost of the new, custom pipeline (3min vs 9.5 min)</li>
+  <li>The custom pipeline was also tested at beam-1, and it hallucinated text in the regions spanning Friedberg and Gerstner. The failures manifest as localized repetition and confabulation. With manual review, missing content is recoverable - which is especially valuable, as Brad Gerstner's ghost was never recoverable - under any settings.</li>
+
 </ol>
 <details class="accordion-block">
   <summary><span>Reference Whisper Hallucination Trace (Optional)</span></summary>
