@@ -487,8 +487,11 @@
         <p><strong>NeMo answers who spoke</strong> — <em>by majority vote</em> and only within the boundaries WhisperX created. This preserves the structure of the transcript whole. Direct experience showed that applying NeMo's RTTM boundaries directly produced highly fragmented transcripts that required unreasonable effort to repair.</p>
       </div>
 
-      <p class="lead">
-        <strong>The first generation of HITL tooling was built in late 2025.</strong> The workflow: map <code>SPEAKER_ID</code>'s to names using host using <a href="clownfish.html" class="inline-tag">Clownfish↗</a>. Then, the transcript text is read and potential AI error examples are surfaced for review (ex: ellipses, non-terminating sentences, lowercase continuations).
+        <p class="lead">
+        <strong>The first generation of HITL tooling was built in late 2025.</strong>
+        The workflow begins by mapping diarization-generated <code>SPEAKER_ID</code>s to host identities using
+        <a href="https://www.youtube.com/watch?v=UPnnOCWqiAw" class="inline-tag">Clownfish↗</a>.
+        The transcript is then analyzed for potential AI errors, such as ellipses, non-terminating sentences, and lowercase continuations.
       </p>
 
       <div class="video-grid">
