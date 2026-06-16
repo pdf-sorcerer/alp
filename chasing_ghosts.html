@@ -645,7 +645,7 @@
   </div>
 
   <div class="beam-margin">
-    <code>WhisperX-wrapper: Whisper-large-v3</code>
+    <code>Custom-wrapper: Whisper-large-v3</code>
     <code>PyTorch decoder</code>
     <code>beam=5</code>
     <code>wav2vec</code>
@@ -658,9 +658,8 @@
 Three things came out of this:
 </p>
 <ol class="body-list">
-  <li>The new transcription pipeline was roughly 3× more GPU-compute expensive — 9.5 minutes versus 3 — but had a unique upside: it hallucinated text in the ghost regions, and that hallucination pattern is itself a signal. Where VAD asserts speech but the decoder fails, the failure manifests as localized repetition and confabulation rather than silence. That fingerprint is recoverable.</li>
-  <li>As is the case with Brad Gerstner at t=~27s: the decoder never transcribed his utterance across any configuration. But the hallucination cluster around that timestamp marks the region. Manual review can act on a marked region. It cannot act on silence.</li>
-  <li>The most actionable finding: the production pipeline's speed is recoverable. A modified version could emit timestamp tokens at ghost regions without paying the full compute cost — fast transcription that still flags where something was missed.</li>
+  <li>The PWW pipeline was roughly 3× more GPU-compute expensive — 9.5 minutes versus 3 at beam=5. Howver, I also tested beam=1: it hallucinated text in the regions spanning Friedberg and Gerstner, and the hallucination pattern is detectable with heuristics. Unlike my production pipeline, here VAD asserts speech but the decoder fails. The failures manifest as localized repetition and confabulation. With manual review, missing content is entirely recoverable.</li>
+  <li>The most actionable finding: the production pipeline's speed is recoverable. A modified version of production WhisperX could emit timestamp tokens at ghost regions without paying the full compute cost — fast transcription that still flags where something was missed.</li>
 </ol>
 <details class="accordion-block">
   <summary><span>Reference Whisper Hallucination Trace (Optional)</span></summary>
