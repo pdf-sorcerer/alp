@@ -525,11 +525,11 @@
         <strong>Returning to HITL in 2026</strong>, I'm experimenting with a complementary second layer: word-level acoustics. 
         
       <p class="lead">
-        Word-level acoustics add another safety net: a rescue path: NeMo's diarization is applied word by word within each segment, flagging words that are acoustically inconsistent with the attributed speaker for review and repair. 
+        Word-level acoustics soft-apply NeMo's diarization to each word within each segment, flagging words that are acoustically inconsistent with the attributed speaker_id for review and repair. 
       </p>
 
       <p class="lead">
-The upside is improved transcript fidelity and resolution into word-level atomics. The tradeoff is that creates even more work. Every newly visible error becomes a candidate for review. The challenge is no longer finding problems, but whether they can be corrected upstream through settings or left for human review and repair. 
+The upside is improved transcript fidelity and resolution into word-level atomics. The tradeoff is that creates additional work and mental overhead. Still, I'm excited about this development and being a bit more hands-on with NeMo's settings. 
       </p>
 
     </div>
