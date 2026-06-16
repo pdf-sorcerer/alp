@@ -483,12 +483,12 @@
       </p>
 
       <div class="arch-callout">
-        <p><strong>WhisperX is canonical.</strong> It is the authority on <em>what</em> was said and <em>when</em> it was said.</p>
-        <p><strong>NeMo answers who spoke</strong> — by majority vote, and only within the boundaries WhisperX created. This preserves the structure of the transcript whole. Direct experience showed that applying NeMo's RTTM boundaries directly produced highly fragmented transcripts that required unreasonable effort to repair.</p>
+        <p><strong>WhisperX timestamps are canonical.</strong> ASR is the sole authority on <em>what</em> was said and <em>when</em> it was said.</p>
+        <p><strong>NeMo answers who spoke</strong> — <em>by majority vote</em> and only within the boundaries WhisperX created. This preserves the structure of the transcript whole. Direct experience showed that applying NeMo's RTTM boundaries directly produced highly fragmented transcripts that required unreasonable effort to repair.</p>
       </div>
 
       <p class="lead">
-        The first generation of HITL tooling was built in late 2025. The workflow: map each <code>SPEAKER_ID</code> to a named host using supporting audio clips <a href="clownfish.html" class="inline-tag">Clownfish↗</a>, and then built on top of that heuristic detection across the transcript — searching for patterns that AI leaves behind when it operates beyond its confidence. Ellipses, non-terminating sentences, lowercase continuations. Those instances get routed for review and repair.
+        <strong>The first generation of HITL tooling was built in late 2025.</strong> The workflow: map <code>SPEAKER_ID</code>'s to names using host using <a href="clownfish.html" class="inline-tag">Clownfish↗</a>. Then, the transcript text is read and potential AI error examples are surfaced for review (ex: ellipses, non-terminating sentences, lowercase continuations).
       </p>
 
       <div class="video-grid">
