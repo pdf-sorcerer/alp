@@ -308,71 +308,7 @@
       So what began as a "move fast and MVP chatbot" project turned into a serious observability project for AI pipelines and the future of training data ingestion. Transcripts have been, by far, the most challenging and rewarding part of the project. My detailed nature and the pursuit of quality and ground-truth accuracy led to a series of increasingly specialized tools.
     </p>
 
-    <div class="story-to-bullets"></div>
-
-    <div class="bullet-list" style="margin-top: 0;">
-
-      <div class="bullet-item">
-        <div class="bullet-accent"></div>
-        <div class="bullet-body">
-          <div class="bullet-label">Data Quality · Model Quality</div>
-          <div class="bullet-heading">Own the outcome.</div>
-          <div class="bullet-copy">
-            Detailed review caught remarkably subtle data quality failure modes before they became model quality failures. Ghost Audio vanishing from transcripts without a fingerprint means the model learns the wrong relationships. Diagnosing it required reading the full pipeline — <code>VAD</code>, beam search, decoder behavior, embedding space — and designing a detection mechanism that could work at scale.
-          </div>
-          <div class="req-tag">Proactive: surface data quality failures before they become model quality failures</div>
-        </div>
-      </div>
-
-      <div class="bullet-item">
-        <div class="bullet-accent"></div>
-        <div class="bullet-body">
-          <div class="bullet-label">HITL · Tooling</div>
-          <div class="bullet-heading">Build tools you need to manage and solve the problems you have.</div>
-          <div class="bullet-copy">
-          Clownfish and Brody exist because no AI pipeline is fully trustworthy — especially dealing with classification of super-short speech utterances that most people drop!
-          </div>
-          <div class="req-tag">Augment your human operators: massive experience designing human-in-the-loop workflows</div>
-        </div>
-      </div>
-
-      <div class="bullet-item">
-        <div class="bullet-accent"></div>
-        <div class="bullet-body">
-          <div class="bullet-label">Tradeoffs · Hardware Constraints</div>
-          <div class="bullet-heading">Manage tradeoffs with consumer-grade hardware.</div>
-          <div class="bullet-copy">
-            A sliding memory window was chosen over full conversational context; zero-shot <code>F5-TTS</code> over richer TTS libraries, not because of system limits, but because heavier configurations took longer to generate at inference and ruined the vibe. 
-          </div>
-          <div class="req-tag">make pragmatic calls under real-world constraints</div>
-        </div>
-      </div>
-
-      <div class="bullet-item">
-        <div class="bullet-accent"></div>
-        <div class="bullet-body">
-          <div class="bullet-label">Persona · Reasoning</div>
-          <div class="bullet-heading">Persona fidelity requires more than a product spec.</div>
-          <div class="bullet-copy">
-            The argument pipeline extracts claim chains, rebuttals, and long-term positions — not quotes — because a model trained on style alone won't hold a position under pressure. Defining what "accurate" means before asking engineering to build toward it is the job.
-          </div>
-          <div class="req-tag">translate ambiguous product goals into engineering-ready definitions</div>
-        </div>
-      </div>
-
-      <div class="bullet-item">
-        <div class="bullet-accent"></div>
-        <div class="bullet-body">
-          <div class="bullet-label">Corpus · Infrastructure</div>
-          <div class="bullet-heading">The corpus is the product.</div>
-          <div class="bullet-copy">
-            560+ episodes, two pipelines, five heuristic repair patterns, Ghost Audio detection, ongoing ops. ALL-LLLM POD is cool, but the process is far more valuable. Knowing the difference — and being able to defend six months on transcription to a hiring committee — is product judgment.
-          </div>
-          <div class="req-tag">wear many hats · comfortable rolling up your sleeves</div>
-        </div>
-      </div>
-
-    </div>
+  
 
     <div class="footer">Mason Thompson · Berkeley, California</div>
   </main>
