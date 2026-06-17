@@ -675,12 +675,12 @@ The ground-truth (ghost path) lost by 5.75 percentage points to Friedberg's next
 A couple findings:
 </p>
 <ol class="body-list">
-  <li>Token timestamps (not word-level Wav2Vec timestamps) were sufficient to surface Friedberg's ghost in my production WhisperX pipeline. So, no PWW required which was great because compute cost was 3min vs. 9.5min.</li>
-  <li>The custom pipeline was also tested at beam-1, and it hallucinated text in the regions spanning Friedberg and Gerstner. The failures manifest as localized repetition and confabulation. With manual review, missing content is recoverable - which is especially valuable, as Brad Gerstner's ghost was never recoverable - under any settings.</li>
+  <li>Token timestamps (not to be confused with word-level Wav2Vec timestamps) were sufficient to surface Friedberg's ghost in my production WhisperX pipeline. So, no PWW required which was great because compute cost was 3min vs. 9.5min.</li>
+  <li>The custom pipeline was also tested at beam=1 and it hallucinated text in the regions spanning Friedberg and Gerstner. The failures manifest as localized repetition and confabulation. With manual review, missing content is recoverable - which is especially valuable, as Brad Gerstner's ghost was never recoverable.</li>
 
 </ol>
 <details class="accordion-block">
-  <summary><span>Reference Whisper Hallucination Trace (Optional)</span></summary>
+  <summary><span>PWW beam=1 Speech Hallucinations</span></summary>
 
   <h4 class="table-title">Reference Whisper large-v3 · Pyannote decoder · wav2vec2 · beam=1 · 9.5 min GPU compute</h4>
 <div class="transcript-table-wrap">
@@ -703,11 +703,13 @@ A couple findings:
   </tbody>
 </table>
   </div>
+  <br>
+  <p class="body">
+  The hallucinations above are a happy accident of the PWW pipeline's decoder. 
+</p>
 </details>
 
-<p class="body">
-  The hallucinations above are a happy accident of the PWW pipeline's decoder. The tradeoff: with timestamp tokens enabled, the production decoder can surface ghost utterances like Friedberg's "Oh, my god." without hallucinating surrounding content. The comparison below shows what that looks like in practice.
-</p>
+
 
 <div class="comparison-grid">
   <div class="comparison-card">
