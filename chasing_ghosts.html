@@ -672,10 +672,10 @@ The ground-truth (ghost path) lost by 5.75 percentage points to Friedberg's next
 
 
 <p class="body">
-Three things came out of this:
+A couple findings:
 </p>
 <ol class="body-list">
-  <li>The most actionable finding: My original WhisperX production pipeline can be used, afterall. A modified version of production WhisperX could emit timestamp tokens at ghost regions without paying the full compute cost of the new, custom pipeline (3min vs 9.5 min)</li>
+  <li>Token timestamps (not word-level Wav2Vec timestamps) were sufficient to surface Friedberg's ghost in my production WhisperX pipeline. So, no PWW required which was great because compute cost was 3min vs. 9.5min.</li>
   <li>The custom pipeline was also tested at beam-1, and it hallucinated text in the regions spanning Friedberg and Gerstner. The failures manifest as localized repetition and confabulation. With manual review, missing content is recoverable - which is especially valuable, as Brad Gerstner's ghost was never recoverable - under any settings.</li>
 
 </ol>
