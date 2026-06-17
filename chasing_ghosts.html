@@ -809,52 +809,17 @@ The ground-truth (ghost path) lost by 5.75 percentage points to Friedberg's next
 </div>
 
 <p class="body">
-  BERD-1 does not automatically trust the timestamp-token ON transcript. It creates a review queue.
-</p>
+The queue could be integrated into my existing tools, but at the moment I want more confidence that it's truly necessary because it does add sigificantly more manual review work. </p>
 
-<p class="body">
-  Each candidate can be accepted, rejected, or edited. Accepted repairs become canonical transcript edits.
-</p>
-
-<div class="comparison-grid">
-
-  <div class="comparison-card">
-    <h3>Candidate</h3>
-    <div class="transcript-box">
-      <p><code>926.899–934.605</code></p>
-      <p>Because most of the posts, at least, you know, that our team engages in on Twitter are for mostly business purposes.</p>
-
-      <br>
-
-      <p><code>935.265–935.545</code></p>
-      <p>Right.</p>
-    </div>
-  </div>
-
-  <div class="comparison-card">
-    <h3>Canonical Repair</h3>
-    <div class="transcript-box">
-      <p><code>926.899–935.545</code></p>
-      <p>
-        Because most of the posts, at least, you know, that our team engages in on Twitter are for mostly business purposes. Right.
-      </p>
-    </div>
-  </div>
-
-</div>
-
-<p class="body">
-  Using two WhisperX Beam=5 decodes with a timestamp-token toggle, Episode 136 was processed in approximately 6m11s, compared to approximately 11m52s for the original Reference Whisper + Pyannote workflow — a 48% reduction in runtime — while still surfacing candidate transcript repairs through decoder disagreement.
-</p>
 
 <p class="body">
   Ending this sidequest, for now:
 </p>
 
 <ul class="body-list">
-  <li>About 5–8 ghost audio segments surfaced with BERD-1...</li>
-  <li>The reference Whisper pipeline (PWW) remains valuable...</li>
-  <li>BERD-1 eliminates the need for a full-episode PyTorch Whisper sweep...</li>
+  <li>Friedberg's ghost was successfully re-acquired</li>
+  <li>About 5–8 ghost audio segments found using BERD-1 (variable depending on settings). Most were short disfluencies ('uh', 'ah', 'right').</li>
+  <li>The reference Whisper pipeline (PWW) may be valuable, as it appears to be capable of inducing local hallucinations over audio that could not be transcribed, typically something we often see when VAD is NOT used. </li>
 </ul>
   <div class="footer">
     <span>Mason Thompson · Berkeley, California</span>
