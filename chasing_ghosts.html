@@ -416,12 +416,13 @@
 <p class="lead"><em>Investigation into transcript omissions and decoder disagreement</em></p>
   <br>
 <p class="lead"> 
-  <strong>What</strong>: This page investigates why speech went untranscribed—a phenomenon I call <em>Ghost Audio</em>—and the effort to build tooling capable of finding and recovering these omissions across the entire 
+  <strong>What</strong>: This page investigates why speech went untranscribed—a phenomenon I call <em>Ghost Audio</em>—and the build-while-learning efforts to find and recover lost text.
   All-In Podcast episode corpus.</p> 
   
   <p class="lead"> 
-    <strong>Why</strong>: Ghost Audio quietly distorts dialogue flow, causal relationships, and conversational patterns that downstream models learn from.  Because the resulting transcripts often appear clean and complete, 
-    these omissions can persist undetected while subtly altering the historical record.</p><br>
+    <strong>Why</strong>: Ghost Audio distorts dialogue flow and conversational content that downstream models learn from.  Because the transcripts 
+    appear clean and complete, 
+    these omissions persist undetected while subtly altering the historical record.</p><br>
 
   <p class="lead">
   <strong>Impact</strong>: Episode 136 was used as the initial probe and tooling surfaced ~5-to-8 examples. The exact corpus-wide omission rate remains unknown. Even so, Ghost Audio has been given structure so it becomes something that can be surfaced and acted upon.
@@ -515,11 +516,11 @@
   </div>
 
   <p class="body">
-    In early 2026, I moved to Libsyn as the canonical source of truth for <i>All-In Podcast</i> episodes. Libsyn simplified the pipeline: full episodes without the short-form content commingled with <i>All-In Podcast</i> material across the two official YouTube channels. At time of writing, 2026-June: 383 Libsyn episodes · 2,230 official YouTube uploads (of which, I have processed 564).
+   I recently moved to Libsyn as the source of <i>All-In Podcast</i> episodes. Libsyn simplified thr pipeline, providing full episodes without other short-form content (shorts, clips) that gets commingled on their official YouTube channels.
   </p>
 
   <p class="body">
-  Libsyn was intended as a going-forward source change, but curiosity got the better of me. I ran Episode 136 through the pipeline. This episode is important for reasons I can't adequately explain here. Around <code>t≈20s</code>, Friedberg says a short phrase — <strong>"Oh, my God."</strong> — that was missing from the new Libsyn transcript and absent from my corpus. It did exist in a very early 2025 transcript run, back when the pipeline was still closer to "move fast and MVP by prompt-and-pray."
+  Libsyn was intended as a going-forward change for thr pipeline, but anyway. I ran Episode 136 through the pipeline. Around <code>t≈20s</code>, Friedberg says a short phrase — <strong>"Oh, my God."</strong> — that was missing from the new Libsyn transcript and absent from my corpus. It did exist in a very early 2025 transcript run, back when the pipeline was still closer to "move fast and MVP by prompt-and-pray."
 </p>
 
   <p class="body">
@@ -554,11 +555,9 @@
     </div>
   </div>
 
-  <br>
+  <br><br>
 
-  <p class="body">
-    I began calling this phenomenon <strong>Ghost Audio</strong> because Friedberg's speech is clearly audible, yet repeated attempts to reproduce it in the production pipeline ended the same way: extensive investigation, no transcript.
-  </p>
+
 
   <p class="body">
     Most transcript errors leave fingerprints: ellipses, broken segment boundaries, lowercase continuations, third-person self-references, suspicious speaker turns. Ghost Audio leaves nothing. Speaker turns are distorted, context is wrong, relationships between ideas collapse — and the transcript reads as if nothing is missing. At training time, downstream examples teach the wrong relationships between prompts and completions.
@@ -723,13 +722,13 @@ Three things came out of this:
   </div>
 </div>
 
+
+  <br><br>
 <p class="body">
   With timestamp tokens enabled, WhisperX recovered Friedberg's missing utterance.
 </p>
 
-<p class="body">
-  Timestamp tokens are not merely output metadata. They appear to participate in decoding itself. Working hypothesis: timestamp tokens introduce temporal structure that helps weak speech events survive beam-path selection.
-</p>
+
 
 <div class="section-heading">
   <h2>BERD-1</h2>
