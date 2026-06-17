@@ -790,30 +790,8 @@ Three things came out of this:
 </p>
 
 <p class="body">
-  PWW remains useful as an explanatory probe, but BERD-1 no longer requires a full-episode PyTorch Whisper sweep to identify candidate omissions. The detector is now production decoder disagreement itself.
-</p>
+Ending this sidequest, several lessons emerged. The reference Whisper pipeline (PWW) remains valuable as a diagnostic probe for speech windows where VAD indicates the presence of audio but WhisperX produces no transcript. BERD-1 eliminates the need for a full-episode PyTorch Whisper sweep when identifying candidate omissions, though it currently remains specialized to Friedberg ghost detection and does not generalize to Gerstner ghosts. Finally, the appearance of PWW-style hallucinations during manual review proved informative in its own right, often highlighting speech windows that warranted closer inspection despite not recovering the missing utterance itself.</p>
 
-  <div class="section-heading">
-    <h2>Limitations</h2>
-  </div>
-
-<p class="body">
-  BERD-1 is a forensic prototype that compares transcript disagreement. It can operate using either two production WhisperX Beam=5 transcripts (timestamp tokens on/off) or a production WhisperX transcript paired with a Reference Whisper transcript.
-</p>
-
-<p class="body">
-  The production-only workflow reduced GPU runtime by approximately 48% while still surfacing candidate transcript repairs for review. In Episode 136, BERD-1 identified 5 high-confidence ghost candidates using the default overlap threshold, expanding to 11 candidate repairs when the overlap threshold was reduced to zero. These reviews take seconds, and at corpus scale the additional human workload is both sustainable and justified.
-</p>
-
-<p class="body">
-  Even so, some ghost regions, like Brad Gerstner's utterance, remain resistant to transcription. They were never transcribed across decoder configurations. BERD-1 can only review content that appears in at least one decode path. Speech that fails to survive any decoding configuration remains invisible to the system.
-</p>
-
-<p class="body">
-  That's why the Reference Whisper option matters. The production-only workflow is faster and cheaper, but Reference Whisper introduces additional decoder divergence. While that divergence can manifest as localized hallucinations, it can also expose weak speech regions that never survive into production transcripts. In a forensic workflow, additional disagreement is often more valuable than transcript cleanliness.
-</p>
-
-  
 
   <div class="footer">
     <span>Mason Thompson · Berkeley, California</span>
