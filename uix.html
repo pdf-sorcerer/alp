@@ -11,176 +11,282 @@
 
   <style>
     :root {
-      --blue: #0A84FF;
-      --blue-dim: rgba(10,132,255,.10);
-      --bg: #fafafa;
-      --surface: #fff;
-      --border: #e5e5e5;
-      --text: #111;
-      --muted: #555;
-      --faint: #888;
+      --green: #0A84FF;
+      --green-dim: rgba(10, 132, 255, 0.12);
+      --bg: #f9f9f9;
+      --surface: #ffffff;
+      --border: #e4e4e4;
+      --code-bg: #0d1117;
+      --text: #1a1a1a;
+      --muted: #6b6b6b;
+      --faint: #8c8c8c;
       --nav-width: 220px;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: Inter, sans-serif;
+      font-family: 'Inter', sans-serif;
       background: var(--bg);
       color: var(--text);
+      display: flex;
       min-height: 100vh;
-      display: block;
+      overflow-x: hidden;
     }
 
     #shared-nav {
-      position: fixed;
-      inset: 0 auto 0 0;
+      position: sticky;
+      top: 0;
+      height: 100vh;
       width: var(--nav-width);
+      flex-shrink: 0;
       background: var(--surface);
       border-right: 1px solid var(--border);
-      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      padding: 32px 0;
+      overflow-y: auto;
     }
+
+    .nav-logo {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--green);
+      padding: 0 24px 28px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-section-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--faint);
+      padding: 18px 24px 8px;
+    }
+
+    .nav-item {
+      display: block;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 7px 24px;
+      border-left: 2px solid transparent;
+      transition: color 0.15s, border-color 0.15s, background 0.15s;
+    }
+
+    .nav-item:hover { color: var(--text); background: var(--bg); border-left-color: var(--border); }
+    .nav-item.active { color: var(--green); border-left-color: var(--green); background: var(--green-dim); }
 
     main {
-      margin-left: var(--nav-width);
-      padding: 48px 28px 72px;
-      max-width: 1120px;
+      flex: 1;
+      padding: 56px 64px 120px;
+      max-width: 860px;
+      min-width: 0;
     }
 
-    .page-eyebrow, .surface-eyebrow {
-      font-family: "IBM Plex Mono", monospace;
+
+
+    .page-eyebrow {
+      font-family: 'IBM Plex Mono', monospace;
       font-size: 10px;
-      font-weight: 700;
-      letter-spacing: .12em;
+      font-weight: 600;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--blue);
+      color: var(--green);
+      margin-bottom: 12px;
     }
 
     h1 {
-      font-size: 36px;
-      line-height: 1;
-      letter-spacing: -.04em;
-      margin: 16px 0 18px;
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 14px;
     }
 
     .lead {
-      max-width: 760px;
       font-size: 14px;
       line-height: 1.75;
-      color: #333;
-      margin-bottom: 38px;
+      color: #3a3a3a;
+      max-width: 720px;
+      margin-bottom: 52px;
     }
 
-    .case-grid {
+    .lead strong { font-weight: 600; color: var(--text); }
+
+    .inline-tag {
+      display: inline-block;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.9em;
+      color: var(--green);
+      background: var(--green-dim);
+      padding: 2px 5px;
+      border-radius: 3px;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .inline-tag:hover { background: rgba(10, 132, 255, 0.20); }
+
+    .surface-stack {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      border-top: 1px solid var(--border);
-      border-left: 1px solid var(--border);
+      gap: 24px;
     }
 
-    .case-panel {
-      min-height: 430px;
-      border-right: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
+    .surface-panel {
       background: var(--surface);
-      padding: 28px 24px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 18px;
+    }
+
+    .surface-grid {
       display: grid;
-      grid-template-columns: 190px 1fr;
-      gap: 22px;
-      align-items: center;
+      grid-template-columns: 0.85fr 1.15fr;
+      gap: 24px;
+      align-items: stretch;
     }
 
-    .case-panel.full {
-      grid-column: 1 / -1;
-      grid-template-columns: 210px 1fr;
+    .surface-copy {
+      align-self: center;
     }
 
-    .case-panel.compact {
-      min-height: 360px;
-      grid-template-columns: 150px 1fr;
+    .surface-eyebrow {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--faint);
+      margin-bottom: 10px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
     }
 
-    .surface-title {
+    .surface-copy h2 {
       font-size: 18px;
-      font-weight: 700;
-      margin: 12px 0 12px;
-      letter-spacing: -.02em;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+      margin-bottom: 10px;
     }
 
-    .surface-desc {
+    .surface-copy p {
       font-size: 13px;
       line-height: 1.65;
-      color: #333;
+      color: var(--muted);
     }
 
-    .shot {
+    .surface-media {
+      display: grid;
+      justify-items: center;
+      align-items: start;
+      gap: 16px;
+    }
+
+    .surface-media.two {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .surface-media.three {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .surface-media.four {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .phone-shot {
       width: 100%;
-      max-height: 390px;
-      object-fit: contain;
+      max-width: 180px;
       display: block;
-      justify-self: center;
+      border-radius: 4px;
     }
 
-    .shot.wide {
-      max-height: 300px;
+    .phone-shot.small { max-width: 145px; }
+    .phone-shot.wide { max-width: 420px; }
+
+    .media-item {
+      width: 100%;
+      text-align: center;
     }
 
-    .shots-3 {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
-      align-items: end;
+    .media-caption {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 10px;
+      text-align: center;
     }
 
-    .shots-2 {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 18px;
-      align-items: end;
+    .media-caption span {
+      display: block;
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0;
+      text-transform: none;
+      color: var(--faint);
+      margin-top: 3px;
     }
 
     .footer {
-      margin-top: 64px;
-      font-family: "IBM Plex Mono", monospace;
+      margin-top: 72px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      font-family: 'IBM Plex Mono', monospace;
       font-size: 10px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
       color: var(--faint);
-      letter-spacing: .06em;
     }
 
-    @media (max-width: 900px) {
-      #shared-nav { display: none !important; }
+    @media (max-width: 768px) {
+      #shared-nav {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        height: 100vh !important;
+        width: 260px !important;
+        z-index: 10001 !important;
+        transform: translateX(-100%) !important;
+        transition: transform 0.25s ease !important;
+        overflow-y: auto !important;
+        box-shadow: 2px 0 12px rgba(0,0,0,0.12) !important;
+        flex-shrink: 0 !important;
+      }
+
+      #shared-nav.open { transform: translateX(0) !important; }
 
       main {
-        margin-left: 0;
-        padding: 42px 18px 64px;
-        max-width: none;
-      }
-
-      h1 { font-size: 34px; }
-
-      .case-grid {
-        display: block;
-        border-left: 1px solid var(--border);
-      }
-
-      .case-panel,
-      .case-panel.full,
-      .case-panel.compact {
-        grid-template-columns: 1fr;
-        min-height: auto;
-        padding: 26px 20px;
-      }
-
-      .shots-3,
-      .shots-2 {
-        grid-template-columns: 1fr;
-      }
-
-      .shot,
-      .shot.wide {
-        max-height: none;
+        padding: 64px 20px 80px;
         width: 100%;
+        max-width: 100%;
       }
+
+      .site-banner img { height: 110px; }
+
+      .surface-grid {
+        grid-template-columns: 1fr;
+        gap: 22px;
+      }
+
+      .surface-media.two,
+      .surface-media.three,
+      .surface-media.four {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .phone-shot { max-width: 150px; }
+      .phone-shot.wide { max-width: 100%; }
     }
   </style>
 </head>
@@ -189,107 +295,141 @@
   <nav id="shared-nav"></nav>
 
   <main>
+    <div class="site-banner">
+      <img src="all-llm-pod-wide.png" alt="ALL-LLLM POD iOS app interface">
+    </div>
+
+    <p class="banner-caption">SwiftUI client · FaceTime-style interface · Local AI runtime control surface</p>
     <p class="page-eyebrow">iOS Client</p>
     <h1>App UI</h1>
 
     <p class="lead">
-      A <strong>SwiftUI iOS app</strong> with a FaceTime-style interface. The phone is not the model host — it is the control surface for a distributed local AI system. Audio capture, streamed TTS playback, transcript display, persona animation, runtime controls, and observability live on-device; inference, ASR, diarization, and TTS generation run across Mac and PC infrastructure.
+      A <strong>SwiftUI iOS app</strong> with a FaceTime-style interface. The phone is not the model host —
+      it is the control surface for a distributed local AI system. Audio capture, streamed TTS playback,
+      transcript display, persona animation, runtime controls, and observability live on-device; inference,
+      ASR, diarization, and TTS generation run across Mac and PC infrastructure.
     </p>
 
-    <div class="case-grid">
+    <div class="surface-stack">
 
-      <section class="case-panel">
-        <div>
-          <p class="surface-eyebrow">Surface 01</p>
-          <h2 class="surface-title">Persona Roster</h2>
-          <p class="surface-desc">
-            The messages list is the home screen. Each persona has a satirical avatar and a live preview of their most recent response. The original Besties — Sacks, Chamath, Friedberg, and JCal — are joined by Elon Musk, Jensen Huang, Mark Zuckerberg, Alex Karp, and Marc Andreessen.
-          </p>
-        </div>
-        <img class="shot" src="IMG_4544.PNG" alt="Persona roster showing chatbot personas">
-      </section>
+      <section class="surface-panel">
+        <div class="surface-grid">
+          <div class="surface-copy">
+            <div class="surface-eyebrow">Surface 01</div>
+            <h2>Persona Roster</h2>
+            <p>
+              The messages list is the home screen. Each persona has a satirical avatar and a live preview
+              of their most recent response.
+            </p>
+          </div>
 
-      <section class="case-panel">
-        <div>
-          <p class="surface-eyebrow">Surface 02</p>
-          <h2 class="surface-title">1:1 Live Chat</h2>
-          <p class="surface-desc">
-            FaceTime-style chat with any persona. Runtime telemetry is surfaced inline, including token counts, generation speed, prompt size, model selection, and response timing. Conversations support streamed text and streamed speech playback.
-          </p>
-        </div>
-        <img class="shot" src="IMG_4854.png" alt="One-to-one live chat">
-      </section>
-
-      <section class="case-panel full">
-        <div>
-          <p class="surface-eyebrow">Surface 03</p>
-          <h2 class="surface-title">Multi-Persona Modes</h2>
-          <p class="surface-desc">
-            A second product surface for multi-persona interactions: group call setup, episode reenactment, and Mirror Episode. The same interface can configure participants, replay transcript-backed episodes, or run synthetic roundtable discussions from queued topics.
-          </p>
-        </div>
-
-        <div class="shots-3">
-          <img class="shot" src="IMG_4860.png" alt="Group call setup">
-          <img class="shot" src="IMG_4861.png" alt="Episode reenactment">
-          <img class="shot" src="IMG_4495.PNG" alt="Mirror Episode">
+          <div class="surface-media">
+            <div class="media-item">
+              <img class="phone-shot" src="IMG_4544.PNG" alt="Persona roster showing chatbot personas">
+              <div class="media-caption">Persona roster<span>Message previews and persona state</span></div>
+            </div>
+          </div>
         </div>
       </section>
 
-      <section class="case-panel full">
-        <div>
-          <p class="surface-eyebrow">Surface 04</p>
-          <h2 class="surface-title">Mr. Potato Head</h2>
-          <p class="surface-desc">
-            Every persona is built from interchangeable parts. Backgrounds, bodies, faces, mouths, eyes, clothing, and accessories can be mixed and matched to create or modify a character without rebuilding the whole avatar.
-          </p>
-        </div>
+      <section class="surface-panel">
+        <div class="surface-grid">
+          <div class="surface-copy">
+            <div class="surface-eyebrow">Surface 02</div>
+            <h2>1:1 Live Chat</h2>
+            <p>
+              FaceTime-style chat with any persona. Runtime telemetry is surfaced inline, including token counts,
+              generation speed, prompt size, model selection, and response timing.
+            </p>
+          </div>
 
-        <img class="shot wide" src="IMG_POTATO_HEAD.png" alt="Character workflow with interchangeable persona parts">
+          <div class="surface-media">
+            <div class="media-item">
+              <img class="phone-shot" src="IMG_4854.png" alt="FaceTime-style one-to-one chat">
+              <div class="media-caption">Live chat<span>Streaming text and speech playback</span></div>
+            </div>
+          </div>
+        </div>
       </section>
 
-      <section class="case-panel compact">
-        <div>
-          <p class="surface-eyebrow">Surface 05</p>
-          <h2 class="surface-title">Request Log</h2>
-          <p class="surface-desc">
-            Logs. Every request records ASR latency, LLM generation time, TTFA, chunk counts, playback status, and service health.
-          </p>
+      <section class="surface-panel">
+        <div class="surface-grid">
+          <div class="surface-copy">
+            <div class="surface-eyebrow">Surface 03</div>
+            <h2>Multi-Persona Modes</h2>
+            <p>
+              Group calls, transcript-backed episode reenactment, and synthetic roundtables from queued topics.
+              The same surface configures participants, replay mode, and turn structure.
+            </p>
+          </div>
+
+          <div class="surface-media three">
+            <div class="media-item">
+              <img class="phone-shot small" src="IMG_4859.png" alt="Group call setup">
+              <div class="media-caption">Live call</div>
+            </div>
+            <div class="media-item">
+              <img class="phone-shot small" src="IMG_4860.png" alt="Episode browser">
+              <div class="media-caption">Reenactment</div>
+            </div>
+            <div class="media-item">
+              <img class="phone-shot small" src="IMG_4495.PNG" alt="Mirror episode">
+              <div class="media-caption">Mirror episode</div>
+            </div>
+          </div>
         </div>
-        <img class="shot" src="IMG_4855.png" alt="Request log">
       </section>
 
-      <section class="case-panel compact">
-        <div>
-          <p class="surface-eyebrow">Surface 06</p>
-          <h2 class="surface-title">Motion Controls</h2>
-          <p class="surface-desc">
-            Motion DNA can be tuned directly from the phone. Body motion, head motion, speed, and intensity are adjustable across South Park, Subtle, Natural, and Realistic rendering modes.
-          </p>
+      <section class="surface-panel">
+        <div class="surface-grid">
+          <div class="surface-copy">
+            <div class="surface-eyebrow">Surface 04</div>
+            <h2>Persona Builder</h2>
+            <p>
+              Every persona is built from interchangeable parts. Mix, match, and customize visual components
+              to create or modify a character.
+            </p>
+          </div>
+
+          <div class="surface-media">
+            <div class="media-item">
+              <img class="phone-shot wide" src="potato-head.png" alt="Persona builder">
+              <div class="media-caption">Character assembly<span>Interchangeable visual components</span></div>
+            </div>
+          </div>
         </div>
-        <img class="shot" src="IMG_4856.png" alt="Motion controls">
       </section>
 
-      <section class="case-panel compact">
-        <div>
-          <p class="surface-eyebrow">Surface 07</p>
-          <h2 class="surface-title">Model Parameters</h2>
-          <p class="surface-desc">
-            Full runtime configurability from the phone. Controls include model selection, ASR backend, TTS engine, temperature, token limits, sampling parameters, memory controls, and retrieval settings.
-          </p>
-        </div>
-        <img class="shot" src="IMG_4858.png" alt="Model parameters">
-      </section>
+      <section class="surface-panel">
+        <div class="surface-grid">
+          <div class="surface-copy">
+            <div class="surface-eyebrow">Surface 05</div>
+            <h2>Runtime Controls</h2>
+            <p>
+              Logs, motion tuning, model parameters, and platform control expose the runtime as an inspectable
+              system rather than a black-box chatbot.
+            </p>
+          </div>
 
-      <section class="case-panel compact">
-        <div>
-          <p class="surface-eyebrow">Surface 08</p>
-          <h2 class="surface-title">Platform Control</h2>
-          <p class="surface-desc">
-            The phone can inspect and control the distributed runtime: Mac inference, PC gateway services, WhisperX ASR, NeMo diarization, GPU allocation, process state, reload actions, and health checks.
-          </p>
+          <div class="surface-media four">
+            <div class="media-item">
+              <img class="phone-shot small" src="IMG_4855.png" alt="Request log">
+              <div class="media-caption">Logs</div>
+            </div>
+            <div class="media-item">
+              <img class="phone-shot small" src="IMG_4856.png" alt="Motion controls">
+              <div class="media-caption">Motion</div>
+            </div>
+            <div class="media-item">
+              <img class="phone-shot small" src="IMG_4861.png" alt="Model parameters">
+              <div class="media-caption">Params</div>
+            </div>
+            <div class="media-item">
+              <img class="phone-shot small" src="IMG_4857.png" alt="Platform control">
+              <div class="media-caption">Platform</div>
+            </div>
+          </div>
         </div>
-        <img class="shot" src="IMG_4857.png" alt="Platform control">
       </section>
 
     </div>
