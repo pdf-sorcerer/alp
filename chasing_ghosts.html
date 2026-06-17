@@ -416,16 +416,15 @@
 <p class="lead"><em>Investigation into transcript omissions and decoder disagreement</em></p>
   <br>
 <p class="lead"> 
-  <strong>What</strong>: This page investigates why speech went untranscribed—a phenomenon I call <em>Ghost Audio</em>—and the build-while-learning efforts to find and recover lost text.
+  <strong>What</strong>: This page investigates why speech went untranscribed by the WhisperX pipeline — a phenomenon I call Ghost Audio, because the audio is clearly there but the transcript text isn't.
   All-In Podcast episode corpus.</p> 
   
   <p class="lead"> 
-    <strong>Why</strong>: Ghost Audio distorts dialogue flow and conversational content that downstream models learn from.  Because the transcripts 
-    appear clean and complete, 
-    these omissions persist undetected while subtly altering the historical record.</p><br>
-
+    <strong>Why</strong>: Ghost Audio distorts dialogue and conversational content that downstream models learn from. 
+    Because the transcripts appear clean and complete, omissions will persist unless they're manually reviewed and downstream models will learn from corrupted data.</p>
+  
   <p class="lead">
-  <strong>Impact</strong>: Episode 136 was used as the initial probe and tooling surfaced ~5-to-8 examples. The exact corpus-wide omission rate remains unknown. Even so, Ghost Audio has been given structure so it becomes something that can be surfaced and acted upon.
+  <strong>Findings</strong>: A probe of Episode 136 {this page} surfaced ~5-to-8 examples of Ghost Audio. The exact corpus-wide omission rate remains unknown, still Ghost Audio has been given structure so it becomes something that can be surfaced and acted upon.
   </p>      
 
                                                                         
@@ -516,16 +515,20 @@
   </div>
 
   <p class="body">
-   I recently moved to Libsyn as the source of <i>All-In Podcast</i> episodes. Libsyn simplified thr pipeline, providing full episodes without other short-form content (shorts, clips) that gets commingled on their official YouTube channels.
+    In early 2026, I moved to Libsyn as the canonical source for All-In Podcast episodes — full episodes with consistent naming structure, without the shorts and c…In early 2026, I moved to Libsyn as the canonical source for All-In Podcast episodes — 
+    full episodes with consistent naming structure, without the shorts and clips commingled across their official YouTube channels.
   </p>
 
   <p class="body">
-  Libsyn was intended as a going-forward change for thr pipeline, but anyway. I ran Episode 136 through the pipeline. Around <code>t≈20s</code>, Friedberg says a short phrase — <strong>"Oh, my God."</strong> — that was missing from the new Libsyn transcript and absent from my corpus. It did exist in a very early 2025 transcript run, back when the pipeline was still closer to "move fast and MVP by prompt-and-pray."
+  Libsyn was intended as a going-forward change, but I ran a handful of older episodes through as a spot check. 
+  In Episode 136, around t≈20s, Friedberg says "Oh, my God." — a short phrase missing from the new Libsyn transcript and absent 
+  from Friedberg's training data -- but NOT absent from an original episode transcript created from a much, much earlier versin of pipeline.
+
 </p>
 
   <p class="body">
-    Moments later, guest Brad Gerstner says the exact same phrase. His line is missing from every transcript. I only know he said it because I was watching the video while investigating Friedberg's omission.
-  </p>
+   Moments after Friedberg, guest Brad Gerstner says the exact same phrase. His line is missing from every transcript. I only know Gerstner spoke because
+    I happened to be watching the video while investigating Friedberg's omission — it left no trace anywhere else. </p>
 
   <div class="video-block">
     <video controls>
@@ -582,17 +585,18 @@
   </div>
 
   <p class="body">
-    An adjacent transcription pipeline was built using reference PyTorch Whisper because my WhisperX production runtime uses a CTranslate2 decoder, which does not expose logits. Cross-attention weights, filtered to audio-aligned heads, showed non-zero attention in both ghost regions. The attention paid to those regions was not large, but it was not zero: both encoder and decoder activity appeared around the omitted timestamps.
+Built a parallel PWW pipeline (Pyannote + reference Whisper + Wav2vec) to access cross-attention weights unavailable in the CTranslate2 production runtime — co…Built a parallel PWW pipeline (Pyannote + reference Whisper + Wav2vec) to access cross-attention weights unavailable in the CTranslate2 production runtime — confirmed weak but non-zero encoder and decoder activity in both ghost regions, 
+    localizing the failure to decode-stage suppression rather than encoder dropout.
   </p>
 
   <div class="img-block">
     <img src="attention_both_ghosts.png" alt="Whisper cross-attention filtered to audio-aligned heads" />
-    <p class="img-caption">Whisper cross-attention filtered to audio-aligned heads. Attention spike at Friedberg's ghost region (t≈21s). Lower but present activity at Gerstner's (t≈28s). The decoder was looking at both timestamps.</p>
+    <p class="img-caption">Whisper cross-attention filtered to audio-aligned heads. Attention activity at Friedberg's ghost region (t≈21s). Lower but present activity at Gerstner's (t≈28s).</p>
   </div>
 
   <p class="body">
-    A separate line of investigation projected the speaker embeddings onto a manifold to visualize how the ghost segments were being geometrically interpreted. Friedberg's ghost regions did not cluster with Friedberg's confirmed speech. They fell inside Chamath's cluster. The audio was short enough and overlapped enough to be misclassified to the wrong speaker, which helps explain why speaker attribution and transcription both became fragile.
-  </p>
+    1:11 PMClaude responded: Projected speaker embeddings onto a manifold — Friedberg's ghost segments clustered within Chamath's embedding space, explaining downstream speaker_ID misclass…Projected speaker embeddings onto a manifold — Friedberg's ghost segments clustered within Chamath's embedding space, explaining downstream speaker_ID misclassification.
+ </p>
 
 </details>
 <div class="section-heading">
@@ -600,16 +604,15 @@
 </div>
 
 <p class="body">
-  The cross-attention graph showed that the decoder was looking at the ghost regions. The next question was whether the missing words were impossible, or whether they existed in a losing decode path.
+The cross-attention graph showed the decoder was weakly attending to the ghost regions, so the next question was what it 
+  was actually considering there. I started learning about beam search and how competing decode paths might explain the gap.
 </p>
 
 <p class="body">
-  Rather than treating Whisper as a black box, I built an adjacent PyTorch-based reference Whisper pipeline that exposes decoder probabilities directly.
+I built a separate PWW pipeline (Pyannote + reference Whisper + Wav2vec) to expose decoder probabilities directly. At timestamp anchor <|18.98|>, 
+  two paths opened up: Friedberg saying <em>"Oh, my god."</em> lost by 5.75 percentage points to <em>"He's not even here"</em> — his next line. The decoder skipped Friedberg's "Oh, my god" ranking what he said next as higher. 
 </p>
 
-<p class="body">
-  This adjacent pipeline ("PWW") showed that Friedberg's missing line was considered. It showed the timestamp anchor <code>&lt;|18.98|&gt;</code> and from that, two viable paths existed: one matched the audio. The other skipped ahead.  The losing path, which mapped the audio ("Oh, my god") lost by 5.75 percentage points. The winning path, "He's not even here.", is real: but it is early; it's Friedberg's <em>next</em> line. The decoder skipped his actual utterance, locked onto the following line, and scored it higher than the thing he said first.
-</p>
 
 <div class="beam-fork" aria-label="Beam fork diagram">
   <div class="beam-root"><code>&lt;|18.98|&gt;</code></div>
