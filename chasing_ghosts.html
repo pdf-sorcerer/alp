@@ -196,6 +196,18 @@
       margin-top: 8px;
       text-transform: uppercase;
     }
+      ul.decoder-list {
+        max-width: 760px;
+        margin: 18px 0 22px;
+        padding-left: 1.25rem;
+        font-size: 16px;
+        line-height: 1.7;
+        color: #333;
+      }
+      
+      ul.decoder-list li {
+        margin: 0;
+      }
 
     .callout {
       max-width: 760px;
@@ -609,8 +621,10 @@ The cross-attention graph showed the decoder was weakly attending to the ghost r
 <p class="body">
 I built a separate PWW pipeline (Pyannote + reference Whisper + Wav2vec) to expose decoder probabilities directly. At timestamp anchor <|18.98|>, 
   hundreds of paths opened up, but only two mattered: 
-  <li> ghost path: <em>"Oh, my god."</em></li>
-  <li> winner path: <em>"He's not even here"</em></li>
+<ul class="decoder-list">
+  <li>ghost path: <em>"Oh, my god."</em></li>
+  <li>winner path: <em>"He's not even here"</em></li>
+</ul>
   <br>
   
 The ground-truth (ghost path) lost by 5.75 percentage points to Friedberg's next spoken words. In other words, the decoder skipped Friedberg's "Oh, my god" ranking it lower than what he said later.
