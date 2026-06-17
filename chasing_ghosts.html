@@ -316,7 +316,32 @@
       color: var(--text);
       white-space: nowrap;
     }
+.nested-accordion {
+  margin-top: 14px;
+  margin-bottom: 0;
+}
 
+.body-list .accordion-block {
+  max-width: none;
+  width: 100%;
+}
+
+.body-list .comparison-grid {
+  max-width: none;
+  margin: 16px;
+}
+
+.body-list .table-title {
+  margin: 16px 16px 12px;
+}
+
+.body-list .transcript-table-wrap {
+  margin: 0 16px 16px;
+}
+
+.body-list .accordion-block > .body {
+  margin: 0 16px 18px;
+}
 
 
     .body-list {
@@ -670,78 +695,81 @@ The ground-truth (ghost path) lost by 5.75 percentage points to Friedberg's next
 </div>
 
 
-
 <p class="body">
-A couple findings:
+  A couple findings:
 </p>
+
 <ol class="body-list">
-  <li>Token timestamps (not to be confused with word-level Wav2Vec timestamps) were sufficient to surface Friedberg's ghost in my production WhisperX pipeline. So, no PWW required which was great because compute cost was 3min vs. 9.5min.</li>
-  <li>The custom pipeline was also tested at beam=1 and it hallucinated text in the regions spanning Friedberg and Gerstner. The failures manifest as localized repetition and confabulation. With manual review, missing content is recoverable - which is especially valuable, as Brad Gerstner's ghost was never recoverable.</li>
+  <li>
+    Token timestamps (not to be confused with word-level Wav2Vec timestamps) were sufficient to surface Friedberg's ghost in my production WhisperX pipeline. So, no PWW required which was great because compute cost was 3min vs. 9.5min.
 
-</ol>
-<details class="accordion-block">
-  <summary><span>PWW beam=1 Speech Hallucinations</span></summary>
+    <details class="accordion-block nested-accordion">
+      <summary><span>Production WHX beam=5 timestamp tokens</span></summary>
 
-  <h4 class="table-title">Reference Whisper large-v3 · Pyannote decoder · wav2vec2 · beam=1 · 9.5 min GPU compute</h4>
-<div class="transcript-table-wrap">
-<table class="transcript-table">
-  <thead>
-    <tr><th>start</th><th>end</th><th>text</th><th>flag</th></tr>
-  </thead>
-  <tbody>
-    <tr><td>18.863</td><td>19.897</td><td>And the fattest, that's the dumbest.</td><td></td></tr>
-    <tr><td>20.850</td><td>21.499</td><td>Oh, my god.</td><td></td></tr>
-    <tr class="hl-repeat"><td>22.046</td><td>23.100</td><td>Oh, my god.</td><td>⚠ localized repetition</td></tr>
-    <tr class="hl-halluc"><td>23.444</td><td>25.020</td><td>I'm bullying when you're bullying.</td><td>⚠ localized hallucination</td></tr>
-    <tr><td>25.386</td><td>26.063</td><td>He's not even here.</td><td></td></tr>
-    <tr><td>26.125</td><td>26.638</td><td>You can't do that.</td><td></td></tr>
-    <tr><td>26.803</td><td>27.032</td><td>It's awful.</td><td></td></tr>
-    <tr class="hl-halluc"><td>27.364</td><td>28.902</td><td>I'm bullying when you're bullying.</td><td>⚠ localized hallucination</td></tr>
-    <tr><td>29.024</td><td>29.702</td><td>That's just bullying.</td><td></td></tr>
-    <tr><td>29.723</td><td>30.077</td><td>It's awful.</td><td></td></tr>
-    <tr class="hl-halluc"><td>30.243</td><td>30.942</td><td>I'm bullying when you're bullying.</td><td>⚠ localized hallucination</td></tr>
-  </tbody>
-</table>
-  </div>
-  <br>
-  <p class="body">
-  The hallucinations above are a happy accident of the PWW pipeline's decoder. 
-</p>
-</details>
+      <div class="comparison-grid">
+        <div class="comparison-card">
+          <h3>Production Whx beam=5, Timestamp Tokens OFF</h3>
+          <div class="transcript-box">
+            <p><strong>18.873–19.914</strong></p>
+            <p>And the fattest, that's the dumbest.</p>
+            <br><br>
+            <p><strong>25.317–26.097</strong></p>
+            <p>He's not even here.</p>
+          </div>
+        </div>
 
+        <div class="comparison-card">
+          <h3>Production Whx beam=5, Timestamp Tokens ON</h3>
+          <div class="transcript-box">
+            <p><strong>18.873–19.914</strong></p>
+            <p>And the fattest, that's the dumbest.</p>
+            <p class="ghost-line">
+              <strong>20.834–21.495</strong><br>
+              Oh, my god.
+            </p>
+            <p><strong>25.317–26.097</strong></p>
+            <p>He's not even here.</p>
+          </div>
+        </div>
+      </div>
+    </details>
+  </li>
 
+  <li>
+    The custom pipeline was also tested at beam=1 and it hallucinated text in the regions spanning Friedberg and Gerstner. The failures manifest as localized repetition and confabulation. With manual review, missing content is recoverable - which is especially valuable, as Brad Gerstner's ghost was never recoverable.
 
-<div class="comparison-grid">
-  <div class="comparison-card">
-    <h3>Production Whx beam=5, Timestamp Tokens OFF</h3>
-    <div class="transcript-box">
-      <p><strong>18.873–19.914</strong></p>
-      <p>And the fattest, that's the dumbest.</p>
-      <br><br>
-      <p><strong>25.317–26.097</strong></p>
-      <p>He's not even here.</p>
-    </div>
-  </div>
-  <div class="comparison-card">
-    <h3>Production Whx beam=5, Timestamp Tokens ON</h3>
-    <div class="transcript-box">
-      <p><strong>18.873–19.914</strong></p>
-      <p>And the fattest, that's the dumbest.</p>
-      <p class="ghost-line">
-        <strong>20.834–21.495</strong><br>
-        Oh, my god.
+    <details class="accordion-block nested-accordion">
+      <summary><span>PWW beam=1 Speech Hallucinations</span></summary>
+
+      <h4 class="table-title">Reference Whisper large-v3 · Pyannote decoder · wav2vec2 · beam=1 · 9.5 min GPU compute</h4>
+
+      <div class="transcript-table-wrap">
+        <table class="transcript-table">
+          <thead>
+            <tr><th>start</th><th>end</th><th>text</th><th>flag</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>18.863</td><td>19.897</td><td>And the fattest, that's the dumbest.</td><td></td></tr>
+            <tr><td>20.850</td><td>21.499</td><td>Oh, my god.</td><td></td></tr>
+            <tr class="hl-repeat"><td>22.046</td><td>23.100</td><td>Oh, my god.</td><td>⚠ localized repetition</td></tr>
+            <tr class="hl-halluc"><td>23.444</td><td>25.020</td><td>I'm bullying when you're bullying.</td><td>⚠ localized hallucination</td></tr>
+            <tr><td>25.386</td><td>26.063</td><td>He's not even here.</td><td></td></tr>
+            <tr><td>26.125</td><td>26.638</td><td>You can't do that.</td><td></td></tr>
+            <tr><td>26.803</td><td>27.032</td><td>It's awful.</td><td></td></tr>
+            <tr class="hl-halluc"><td>27.364</td><td>28.902</td><td>I'm bullying when you're bullying.</td><td>⚠ localized hallucination</td></tr>
+            <tr><td>29.024</td><td>29.702</td><td>That's just bullying.</td><td></td></tr>
+            <tr><td>29.723</td><td>30.077</td><td>It's awful.</td><td></td></tr>
+            <tr class="hl-halluc"><td>30.243</td><td>30.942</td><td>I'm bullying when you're bullying.</td><td>⚠ localized hallucination</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="body">
+        The hallucinations above are a happy accident of the PWW pipeline's decoder.
       </p>
-      <p><strong>25.317–26.097</strong></p>
-      <p>He's not even here.</p>
-    </div>
-  </div>
-</div>
-
-
-  <br><br>
-<p class="body">
-  With timestamp tokens enabled, WhisperX recovered Friedberg's missing utterance.
-</p>
+    </details>
+  </li>
+</ol>
 
 
 
@@ -804,11 +832,14 @@ A couple findings:
 </p>
 
 <p class="body">
-Ending this sidequest, for now: 
-  <li>About 5-8 ghost audio segments surfaced with BERD-1 and most are recovered disfluencies (ahh, yeah, uh) not catastrophic - that's like, half a percent difference in average segments per episode.
-  <li>The reference Whisper pipeline (PWW) remains valuable as a diagnostic probe for speech windows where VAD indicates the presence of audio but WhisperX produces no text -- valuable for Gerstner-type ghosts </li>
-  <li>BERD-1 eliminates the need for a full-episode PyTorch Whisper sweep when identifying candidate omissions, though it currently remains specialized to Friedberg ghost detection and does not generalize to Gerstner ghosts. 
+  Ending this sidequest, for now:
+</p>
 
+<ul class="body-list">
+  <li>About 5–8 ghost audio segments surfaced with BERD-1...</li>
+  <li>The reference Whisper pipeline (PWW) remains valuable...</li>
+  <li>BERD-1 eliminates the need for a full-episode PyTorch Whisper sweep...</li>
+</ul>
   <div class="footer">
     <span>Mason Thompson · Berkeley, California</span>
     <a href="architecture.html">&larr; Architecture</a>
