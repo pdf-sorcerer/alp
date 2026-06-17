@@ -305,6 +305,15 @@
       The app's Hosts settings tab exposes a per-service control surface with load, reload, and unload actions. The mlx card routes directly to the Mac controller — the PC is not in that path. All other services route through the PC controller. Both controllers are polled every 4 seconds; state persists across sheet open/close so the last known status is always visible.
     </p>
 
+    <p class="body">
+      <strong>SlopNozzle</strong><br>
+      Initial remote orchestration worked for a POC, but it was fragile. A Qwen model update changed the model identifier exposed by oMLX, which broke remote startup and health checks until it was fixed.
+    </p>
+
+    <p class="body">
+      Instead of chasing individual failures, I built SlopNozzle: a lightweight macOS menu bar utility that monitors controller health, model availability, logs, and runtime status. Its purpose is straightforward: wake the Mac remotely, load the model, restart services if needed, and immediately show what is broken.
+    </p>
+
     <div class="section-heading">
       <h2>Bottlenecks</h2>
     </div>
