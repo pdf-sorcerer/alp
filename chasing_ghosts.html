@@ -584,8 +584,7 @@
   </div>
 
   <p class="body">
-Built a parallel PWW pipeline (Pyannote + reference Whisper + Wav2vec) to access cross-attention weights unavailable in the CTranslate2 production runtime — co…Built a parallel PWW pipeline (Pyannote + reference Whisper + Wav2vec) to access cross-attention weights unavailable in the CTranslate2 production runtime — confirmed weak but non-zero encoder and decoder activity in both ghost regions, 
-    localizing the failure to decode-stage suppression rather than encoder dropout.
+    Built a parallel PWW pipeline (Pyannote + reference Whisper + Wav2vec) to access cross-attention weights unavailable in the CTranslate2 decoder (my production pipeline) — confirmed weak but non-zero activity in both ghost regions, 
   </p>
 
   <div class="img-block">
@@ -594,7 +593,7 @@ Built a parallel PWW pipeline (Pyannote + reference Whisper + Wav2vec) to access
   </div>
 
   <p class="body">
-    1:11 PMClaude responded: Projected speaker embeddings onto a manifold — Friedberg's ghost segments clustered within Chamath's embedding space, explaining downstream speaker_ID misclass…Projected speaker embeddings onto a manifold — Friedberg's ghost segments clustered within Chamath's embedding space, explaining downstream speaker_ID misclassification.
+Projected speaker embeddings onto a manifold — Friedberg's ghost segments clustered within Chamath's embedding space, explaining downstream speaker_ID misclassification (not covered here, maybe tbd).
  </p>
 
 </details>
@@ -695,7 +694,7 @@ Three things came out of this:
 </details>
 
 <p class="body">
-  The hallucinations above are a byproduct of the reference pipeline's decoder configuration — not a property of the audio. The production pipeline avoids them entirely. The tradeoff: with timestamp tokens enabled, the production decoder can surface ghost utterances like Friedberg's "Oh, my god." without hallucinating surrounding content. The comparison below shows what that looks like in practice.
+  The hallucinations above are a happy accident of the PWW pipeline's decoder. The tradeoff: with timestamp tokens enabled, the production decoder can surface ghost utterances like Friedberg's "Oh, my god." without hallucinating surrounding content. The comparison below shows what that looks like in practice.
 </p>
 
 <div class="comparison-grid">
@@ -791,8 +790,10 @@ Three things came out of this:
 </p>
 
 <p class="body">
-Ending this sidequest, several lessons emerged. The reference Whisper pipeline (PWW) remains valuable as a diagnostic probe for speech windows where VAD indicates the presence of audio but WhisperX produces no transcript. BERD-1 eliminates the need for a full-episode PyTorch Whisper sweep when identifying candidate omissions, though it currently remains specialized to Friedberg ghost detection and does not generalize to Gerstner ghosts. Finally, the appearance of PWW-style hallucinations during manual review proved informative in its own right, often highlighting speech windows that warranted closer inspection despite not recovering the missing utterance itself.</p>
-
+Ending this sidequest, for now: 
+  <li>About 5-8 ghost audio segments surfaced with BERD-1 and most are recovered disfluencies (ahh, yeah, uh) not catastrophic - that's like, half a percent difference in average segments per episode.
+  <li>The reference Whisper pipeline (PWW) remains valuable as a diagnostic probe for speech windows where VAD indicates the presence of audio but WhisperX produces no text -- valuable for Gerstner-type ghosts </li>
+  <li>BERD-1 eliminates the need for a full-episode PyTorch Whisper sweep when identifying candidate omissions, though it currently remains specialized to Friedberg ghost detection and does not generalize to Gerstner ghosts. 
 
   <div class="footer">
     <span>Mason Thompson · Berkeley, California</span>
