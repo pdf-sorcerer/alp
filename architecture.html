@@ -314,24 +314,7 @@
       Instead of chasing individual failures, I built SlopNozzle: a lightweight macOS menu bar utility that monitors controller health, model availability, logs, and runtime status. Its purpose is straightforward: wake the Mac remotely, load the model, restart services if needed, and immediately show what is broken.
     </p>
 
-    <div class="section-heading">
-      <h2>Bottlenecks</h2>
-    </div>
-
-    <p class="body">
-      <strong>Queue pressure</strong><br>
-      Inference and TTS are serialized. One user at a time works fine. Each additional user adds queue depth and wait time. This is the most obvious constraint on the system.
-    </p>
-
-    <p class="body">
-      <strong>Timing</strong><br>
-      The pipeline is ASR → inference → TTS → playback → UI animation. That's a long chain. Small delays at any step compound. Keeping transcript state, audio, and animation synchronized is the main coordination problem, and it lives on the Windows server.
-    </p>
-
-    <p class="body">
-      <strong>Model residency</strong><br>
-      Keeping Qwen3 loaded avoids cold-start delays, but it holds memory permanently. The tradeoffs are memory pressure, what happens if the runtime crashes, and how prompt cache invalidation is handled when context changes.
-    </p>
+  
 
     <div class="footer">
       <span>Mason Thompson · Berkeley, California</span>
