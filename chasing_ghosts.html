@@ -343,6 +343,16 @@
   margin: 0 16px 18px;
 }
 
+.accordion-block .beam-fork {
+  margin: 16px;
+  max-width: none;
+}
+
+.nested-beam {
+  width: auto;
+  padding: 18px;
+}
+
 
     .body-list {
       max-width: 760px;
@@ -637,19 +647,24 @@ The cross-attention graph showed the decoder was weakly attending to the ghost r
 </p>
 
 <p class="body">
-I built a separate PWW pipeline (Pyannote + reference Whisper + Wav2vec) to expose decoder probabilities directly. At timestamp anchor <|18.98|>, 
-  hundreds of paths opened up, but only two mattered: 
+I built a separate PWW pipeline (Pyannote + reference Whisper + Wav2vec) to expose decoder probabilities directly. At timestamp anchor &lt;|18.98|&gt;, 
+  hundreds of paths opened up, but only two mattered:
+</p>
+
 <ul class="decoder-list">
   <li>ghost path: <em>"Oh, my god."</em></li>
   <li>winner path: <em>"He's not even here"</em></li>
 </ul>
-  <br>
+
 <p class="body">
 The ground-truth (ghost path) lost by 5.75 percentage points to Friedberg's next spoken words. In other words, the decoder skipped Friedberg's "Oh, my god" ranking it lower than what he said later.
 </p>
 
 
-<div class="beam-fork" aria-label="Beam fork diagram">
+<details class="accordion-block">
+  <summary><span>PWW Decoder Fork Probabilities</span></summary>
+
+  <div class="beam-fork nested-beam" aria-label="Beam fork diagram">
   <div class="beam-root"><code>&lt;|18.98|&gt;</code></div>
   <div class="beam-probe"><code>PWW</code> PROBE</div>
 
@@ -693,6 +708,7 @@ The ground-truth (ghost path) lost by 5.75 percentage points to Friedberg's next
     <code>wav2vec</code>
   </div>
 </div>
+</details>
 
 
 <p class="body">
