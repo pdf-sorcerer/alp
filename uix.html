@@ -86,7 +86,6 @@
     main {
       flex: 1;
       padding: 56px 64px 120px;
-      max-width: 860px;
       min-width: 0;
     }
 
@@ -149,6 +148,12 @@
       grid-template-columns: 0.85fr 1.15fr;
       gap: 24px;
       align-items: stretch;
+    }
+
+    @media (min-width: 1200px) {
+      .surface-grid {
+        grid-template-columns: 1fr 2fr;
+      }
     }
 
     .surface-copy {
