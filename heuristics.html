@@ -193,6 +193,74 @@
       color: var(--green);
     }
 
+
+    .video-accordions {
+      max-width: 680px;
+      margin: 0 0 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .video-accordion {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .video-accordion summary {
+      cursor: pointer;
+      list-style: none;
+      padding: 12px 14px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      transition: background 0.15s ease;
+    }
+
+    .video-accordion summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .video-accordion summary::after {
+      content: "▼";
+      font-size: 10px;
+      color: var(--faint);
+      transition: transform 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .video-accordion[open] summary::after {
+      transform: rotate(180deg);
+    }
+
+    .video-accordion summary:hover {
+      background: var(--bg);
+    }
+
+    .video-accordion[open] summary {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .video-note {
+      padding: 12px 14px 0;
+      font-size: 13px;
+      line-height: 1.65;
+      color: var(--muted);
+    }
+
+    .video-accordion .video-container {
+      margin: 12px 14px 14px;
+    }
+
     .intro-note {
       max-width: 680px;
       margin: 0 0 52px;
@@ -515,43 +583,38 @@
         The transcript is then analyzed for transcription artifacts, such as ellipses, non-terminating sentences, and lowercase continuations; telltale signs the model was operating outside its confidence. 
       </p>
 
-<div class="video-grid">
+<div class="video-accordions">
 
-  <button
-    class="video-cell"
-    type="button"
-    onclick="openVideoLightbox('ep50.mp4','Episode 50 · HITL Review')">
+  <details class="video-accordion">
+    <summary>Episode 75 · HITL Review</summary>
+    <p class="video-note">Human-in-the-loop transcript auditing workflow from late 2025.</p>
 
-    <div class="video-thumb">
-      <span class="play-icon">▶</span>
-      <span class="video-name">ep75</span>
+    <div class="video-container">
+      <video controls preload="metadata" class="demo-video">
+        <source src="ep50.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
     </div>
+  </details>
 
-    <div class="video-label">
-      Episode 75 · HITL Review
+  <details class="video-accordion">
+    <summary>Episode 113 · HITL Review</summary>
+    <p class="video-note">Human-in-the-loop transcript auditing workflow from late 2025.</p>
+
+    <div class="video-container">
+      <video controls preload="metadata" class="demo-video">
+        <source src="ep113.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
     </div>
-  </button>
-
-  <button
-    class="video-cell"
-    type="button"
-    onclick="openVideoLightbox('ep113.mp4','Episode 113 · HITL Review')">
-
-    <div class="video-thumb">
-      <span class="play-icon">▶</span>
-      <span class="video-name">ep113</span>
-    </div>
-
-    <div class="video-label">
-      Episode 113 · HITL Review
-    </div>
-  </button>
+  </details>
 
 </div>
 
       <p class="lead">
-        <strong>Returning to HITL in 2026</strong>, I'm experimenting with a complementary second layer: word-level acoustics. 
-        
+        <strong>Returning to HITL in 2026</strong>, I'm experimenting with a complementary second layer: word-level acoustics.
+      </p>
+
       <p class="lead">
         Word-level acoustics soft-apply NeMo's diarization to each word within each segment, flagging words that are acoustically inconsistent with the attributed speaker_id for review and repair. 
       </p>
