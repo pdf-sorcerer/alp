@@ -12,15 +12,14 @@
   <style>
     :root {
       --green: #0A84FF;
-      --green-dim: rgba(10, 132, 255, 0.12);
+      --green-dim: rgba(10, 132, 255, 0.10);
       --bg: #f9f9f9;
       --surface: #ffffff;
       --border: #e4e4e4;
-      --code-bg: #0d1117;
       --text: #1a1a1a;
       --muted: #6b6b6b;
       --faint: #8c8c8c;
-      --nav-width: 220px;
+      --nav-width: 160px;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -31,9 +30,9 @@
       color: var(--text);
       display: flex;
       min-height: 100vh;
-      overflow-x: hidden;
     }
 
+    /* ── Nav ── */
     #shared-nav {
       position: sticky;
       top: 0;
@@ -44,38 +43,38 @@
       border-right: 1px solid var(--border);
       display: flex;
       flex-direction: column;
-      padding: 32px 0;
+      padding: 28px 0;
       overflow-y: auto;
     }
 
     .nav-logo {
       font-family: 'IBM Plex Mono', monospace;
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 600;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       color: var(--green);
-      padding: 0 24px 28px;
+      padding: 0 20px 22px;
       border-bottom: 1px solid var(--border);
     }
 
     .nav-section-label {
       font-family: 'IBM Plex Mono', monospace;
-      font-size: 10px;
+      font-size: 9px;
       font-weight: 600;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--faint);
-      padding: 18px 24px 8px;
+      padding: 16px 20px 6px;
     }
 
     .nav-item {
       display: block;
       font-family: 'IBM Plex Mono', monospace;
-      font-size: 11px;
+      font-size: 10px;
       color: var(--muted);
       text-decoration: none;
-      padding: 7px 24px;
+      padding: 6px 20px;
       border-left: 2px solid transparent;
       transition: color 0.15s, border-color 0.15s, background 0.15s;
     }
@@ -83,11 +82,11 @@
     .nav-item:hover { color: var(--text); background: var(--bg); border-left-color: var(--border); }
     .nav-item.active { color: var(--green); border-left-color: var(--green); background: var(--green-dim); }
 
+    /* ── Main ── */
     main {
       flex: 1;
-      padding: 56px 64px 120px;
+      padding: 48px 52px 100px;
       min-width: 0;
-      /* no max-width — fills the monitor */
     }
 
     .page-eyebrow {
@@ -97,148 +96,141 @@
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--green);
-      margin-bottom: 12px;
+      margin-bottom: 8px;
     }
 
     h1 {
-      font-size: 28px;
+      font-size: 32px;
       font-weight: 700;
       letter-spacing: -0.02em;
-      line-height: 1.2;
-      margin-bottom: 14px;
+      line-height: 1.15;
+      margin-bottom: 12px;
     }
 
     .lead {
-      font-size: 14px;
-      line-height: 1.75;
+      font-size: 13px;
+      line-height: 1.7;
       color: #3a3a3a;
-      max-width: 820px;
-      margin-bottom: 52px;
+      max-width: 780px;
+      margin-bottom: 40px;
     }
 
-    .lead strong { font-weight: 600; color: var(--text); }
-
-    .inline-tag {
-      display: inline-block;
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.9em;
-      color: var(--green);
-      background: var(--green-dim);
-      padding: 2px 5px;
-      border-radius: 3px;
-      text-decoration: none;
-      white-space: nowrap;
-    }
-
-    .inline-tag:hover { background: rgba(10, 132, 255, 0.20); }
-
+    /* ── Surface stack ── */
     .surface-stack {
-      display: grid;
-      gap: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
     }
 
-    /* ── Surface panel ── */
+    /* A "row" can hold 1 or 2 surface panels side by side */
+    .surface-row {
+      display: grid;
+      gap: 16px;
+    }
+    .surface-row.cols-1 { grid-template-columns: 1fr; }
+    .surface-row.cols-2 { grid-template-columns: 1fr 1fr; }
+    .surface-row.cols-3 { grid-template-columns: repeat(3, 1fr); }
+
+    /* ── Panel ── */
     .surface-panel {
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 28px 32px;
-    }
-
-    /* Horizontal layout: copy left (~280px fixed), media fills the rest */
-    .surface-grid {
-      display: grid;
-      grid-template-columns: 280px 1fr;
-      gap: 40px;
-      align-items: center;
-    }
-
-    .surface-copy {
-      align-self: center;
-    }
-
-    .surface-eyebrow {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--faint);
-      margin-bottom: 10px;
-      padding-bottom: 8px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .surface-copy h2 {
-      font-size: 18px;
-      line-height: 1.25;
-      letter-spacing: -0.01em;
-      margin-bottom: 10px;
-    }
-
-    .surface-copy p {
-      font-size: 13px;
-      line-height: 1.65;
-      color: var(--muted);
-    }
-
-    /* Media grid: evenly distributed, images grow to fill available width */
-    .surface-media {
+      border-radius: 6px;
+      padding: 24px 28px;
       display: flex;
-      align-items: flex-start;
+      flex-direction: column;
       gap: 20px;
     }
 
-    .surface-media .media-item {
+    /* Inside each panel: copy block on top, media below (horizontal within media) */
+    .panel-copy {}
+
+    .surface-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 6px;
+    }
+
+    .panel-copy h2 {
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+
+    .panel-copy p {
+      font-size: 12.5px;
+      line-height: 1.6;
+      color: var(--muted);
+    }
+
+    /* Media row: images side by side, evenly spaced */
+    .panel-media {
+      display: flex;
+      gap: 16px;
+      align-items: flex-end;
+    }
+
+    .media-item {
       flex: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
+      min-width: 0;
     }
 
-    /* Phone shots fill their flex cell but cap at a reasonable size */
     .phone-shot,
     .video-shot {
       width: 100%;
-      max-width: 200px;
+      max-width: 220px;
       display: block;
       border-radius: 4px;
       cursor: zoom-in;
     }
 
-    /* Surface 04 video — same size as phone shots */
-    .video-block {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .video-block .video-shot {
-      width: 100%;
-      max-width: 200px;
-    }
+    .video-shot { background: #000; max-width: 180px; }
 
     .media-caption {
       font-family: 'IBM Plex Mono', monospace;
-      font-size: 10px;
+      font-size: 9px;
       font-weight: 600;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.10em;
       text-transform: uppercase;
       color: var(--muted);
-      margin-top: 10px;
+      margin-top: 8px;
       text-align: center;
     }
 
     .media-caption span {
       display: block;
       font-family: 'Inter', sans-serif;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 400;
       letter-spacing: 0;
       text-transform: none;
       color: var(--faint);
-      margin-top: 3px;
+      margin-top: 2px;
+    }
+
+    /* Wide panels: copy left, media right */
+    .panel-wide {
+      flex-direction: row;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .panel-wide .panel-copy {
+      flex: 0 0 220px;
+    }
+
+    .panel-wide .panel-media {
+      flex: 1;
+      align-items: flex-end;
     }
 
     /* Modal */
@@ -248,41 +240,33 @@
       display: none;
       align-items: center;
       justify-content: center;
-      background: rgba(0, 0, 0, 0.88);
+      background: rgba(0,0,0,0.88);
       z-index: 99999;
       padding: 28px;
     }
-
     .media-modal.active { display: flex; }
-
-    .media-modal img,
-    .media-modal video {
+    .media-modal img, .media-modal video {
       max-width: 92vw;
       max-height: 88vh;
       border-radius: 6px;
       background: #000;
       box-shadow: 0 18px 64px rgba(0,0,0,0.45);
     }
-
     .media-modal-close {
       position: absolute;
-      top: 18px;
-      right: 26px;
-      border: 0;
-      background: transparent;
-      color: #fff;
-      font-size: 38px;
-      line-height: 1;
-      cursor: pointer;
+      top: 18px; right: 26px;
+      border: 0; background: transparent;
+      color: #fff; font-size: 38px;
+      line-height: 1; cursor: pointer;
     }
 
     .footer {
-      margin-top: 72px;
-      padding-top: 24px;
+      margin-top: 64px;
+      padding-top: 20px;
       border-top: 1px solid var(--border);
       font-family: 'IBM Plex Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 0.06em;
+      font-size: 9px;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
       color: var(--faint);
     }
@@ -291,46 +275,26 @@
     @media (max-width: 768px) {
       #shared-nav {
         position: fixed !important;
-        top: 0 !important;
-        left: 0 !important;
-        height: 100vh !important;
-        width: 260px !important;
-        z-index: 10001 !important;
-        transform: translateX(-100%) !important;
-        transition: transform 0.25s ease !important;
-        overflow-y: auto !important;
-        box-shadow: 2px 0 12px rgba(0,0,0,0.12) !important;
-        flex-shrink: 0 !important;
+        top: 0; left: 0;
+        height: 100vh; width: 240px;
+        z-index: 10001;
+        transform: translateX(-100%);
+        transition: transform 0.25s ease;
+        box-shadow: 2px 0 12px rgba(0,0,0,0.12);
       }
+      #shared-nav.open { transform: translateX(0); }
 
-      #shared-nav.open { transform: translateX(0) !important; }
+      main { padding: 52px 18px 72px; }
 
-      main {
-        padding: 64px 20px 80px;
-        width: 100%;
-        max-width: 100%;
-      }
+      .surface-row.cols-2,
+      .surface-row.cols-3 { grid-template-columns: 1fr; }
 
-      .surface-grid {
-        grid-template-columns: 1fr;
-        gap: 22px;
-      }
+      .panel-wide { flex-direction: column; }
+      .panel-wide .panel-copy { flex: none; }
 
-      .surface-media {
-        flex-wrap: wrap;
-        justify-content: center;
-      }
-
-      .surface-media .media-item {
-        flex: 0 0 calc(50% - 10px);
-        max-width: calc(50% - 10px);
-      }
-
-      .phone-shot,
-      .video-shot { max-width: 150px; }
-
-      .video-block,
-      .video-block .video-shot { max-width: 150px; }
+      .panel-media { flex-wrap: wrap; justify-content: center; }
+      .media-item { flex: 0 0 calc(50% - 8px); max-width: calc(50% - 8px); }
+      .phone-shot, .video-shot { max-width: 140px; }
     }
   </style>
 </head>
@@ -341,7 +305,6 @@
   <main>
     <p class="page-eyebrow">iOS Client</p>
     <h1>App UI</h1>
-
     <p class="lead">
       A thin <strong>SwiftUI iOS app</strong> with an iMessage/FaceTime-style interface. Audio capture, streamed TTS playback,
       transcript display, persona animation, runtime controls, and observability live on-device; inference,
@@ -350,144 +313,141 @@
 
     <div class="surface-stack">
 
-      <section class="surface-panel">
-        <div class="surface-grid">
-          <div class="surface-copy">
-            <div class="surface-eyebrow">Surface 01</div>
-            <h2>Persona Roster</h2>
-            <p>
-              The messages list is the home screen. Each persona has a satirical avatar and a live preview
-              of their most recent response.
-            </p>
-          </div>
+      <!-- S01 + S02 side by side -->
+      <div class="surface-row cols-2">
 
-          <div class="surface-media">
+        <section class="surface-panel panel-wide">
+          <div class="panel-copy">
+            <div class="surface-label">Surface 01</div>
+            <h2>Persona Roster</h2>
+            <p>The messages list is the home screen. Each persona has a satirical avatar and a live preview of their most recent response.</p>
+          </div>
+          <div class="panel-media">
             <div class="media-item">
-              <img class="phone-shot" src="main.PNG" alt="Persona roster showing chatbot personas">
-              <div class="media-caption">Persona roster<span>Message previews and persona state</span></div>
+              <img class="phone-shot" src="main.PNG" alt="Persona roster">
+              <div class="media-caption">Persona Roster<span>Message previews and persona state</span></div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section class="surface-panel">
-        <div class="surface-grid">
-          <div class="surface-copy">
-            <div class="surface-eyebrow">Surface 02</div>
+        <section class="surface-panel panel-wide">
+          <div class="panel-copy">
+            <div class="surface-label">Surface 02</div>
             <h2>Text Message &amp; 1:1 Video Chat</h2>
-            <p>
-              Text and FaceTime-style video chat with streaming responses, speech playback, and persona animation.
-            </p>
+            <p>Text and FaceTime-style video chat with streaming responses, speech playback, and persona animation.</p>
           </div>
-
-          <div class="surface-media">
+          <div class="panel-media">
             <div class="media-item">
               <img class="phone-shot" src="IMG_4854.png" alt="Text message interface">
-              <div class="media-caption">Text Message<span>Streaming text and speech playback</span></div>
+              <div class="media-caption">Text Message<span>Streaming text and speech</span></div>
             </div>
-
             <div class="media-item">
-              <img class="phone-shot" src="jensen.PNG" alt="One-to-one video chat">
+              <img class="phone-shot" src="jensen.PNG" alt="1:1 video chat">
               <div class="media-caption">Video Chat<span>FaceTime-style persona call</span></div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section class="surface-panel">
-        <div class="surface-grid">
-          <div class="surface-copy">
-            <div class="surface-eyebrow">Surface 03</div>
+      </div>
+
+      <!-- S03 full width -->
+      <div class="surface-row cols-1">
+        <section class="surface-panel panel-wide">
+          <div class="panel-copy">
+            <div class="surface-label">Surface 03</div>
             <h2>Multi-Persona Modes</h2>
-            <p>
-              Group calls, transcript-backed episode reenactment, and synthetic roundtables from queued topics.
-              The same surface configures participants, replay mode, and turn structure.
-            </p>
+            <p>Group calls, transcript-backed episode reenactment, and synthetic roundtables from queued topics. The same surface configures participants, replay mode, and turn structure.</p>
           </div>
-
-          <div class="surface-media">
+          <div class="panel-media">
             <div class="media-item">
               <img class="phone-shot" src="IMG_4860.png" alt="Live Call">
               <div class="media-caption">Live Call</div>
             </div>
-
             <div class="media-item">
-              <img class="phone-shot" src="IMG_4861.png" alt="Episode browser">
+              <img class="phone-shot" src="IMG_4861.png" alt="Episode Reenactment">
               <div class="media-caption">Episode Reenactment</div>
             </div>
-
             <div class="media-item">
-              <img class="phone-shot" src="mirror_episode.png" alt="Mirror episode setup">
+              <img class="phone-shot" src="mirror_episode.png" alt="Mirror Episode Setup">
               <div class="media-caption">Mirror Episode<span>Setup</span></div>
             </div>
-
             <div class="media-item">
-              <img class="phone-shot" src="mirror_episode_run.PNG" alt="Mirror episode run">
+              <img class="phone-shot" src="mirror_episode_run.PNG" alt="Mirror Episode Run">
               <div class="media-caption">Mirror Episode<span>Run</span></div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
 
-      <section class="surface-panel">
-        <div class="surface-grid">
-          <div class="surface-copy">
-            <div class="surface-eyebrow">Surface 04</div>
+      <!-- S04 full width -->
+      <div class="surface-row cols-1">
+        <section class="surface-panel panel-wide">
+          <div class="panel-copy">
+            <div class="surface-label">Surface 04</div>
             <h2>Persona Builder</h2>
-            <p>
-              A short film documenting the persona assembly workflow: visual components, voice references,
-              behavioral profiles, and runtime configuration combined into deployable characters.
-            </p>
+            <p>A short film documenting the persona assembly workflow: visual components, voice references, behavioral profiles, and runtime configuration combined into deployable characters.</p>
           </div>
-
-          <div class="surface-media">
-            <div class="video-block">
+          <div class="panel-media">
+            <div class="media-item">
               <video class="video-shot" controls preload="metadata">
                 <source src="wardrobe.mp4" type="video/mp4">
               </video>
-              <div class="media-caption">
-                Persona Builder
-                <span>Assembly workflow film</span>
-              </div>
+              <div class="media-caption">Persona Builder<span>Assembly workflow film</span></div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
 
-      <section class="surface-panel">
-        <div class="surface-grid">
-          <div class="surface-copy">
-            <div class="surface-eyebrow">Surface 05</div>
+      <!-- S05 + S06 + S07 three-up -->
+      <div class="surface-row cols-3">
+
+        <section class="surface-panel">
+          <div class="panel-copy">
+            <div class="surface-label">Surface 05</div>
             <h2>Runtime Controls</h2>
-            <p>
-              Logs, motion tuning, model parameters, and platform control expose the runtime as an inspectable
-              system rather than a black-box chatbot.
-            </p>
+            <p>Inference logs with per-request latency, token counts, and TTFA.</p>
           </div>
-
-          <div class="surface-media">
+          <div class="panel-media">
             <div class="media-item">
-              <img class="phone-shot" src="IMG_4855.png" alt="Request log">
+              <img class="phone-shot" src="IMG_4855.png" alt="Inference Logs">
               <div class="media-caption">Inference Logs</div>
             </div>
+          </div>
+        </section>
 
+        <section class="surface-panel">
+          <div class="panel-copy">
+            <div class="surface-label">Surface 06</div>
+            <h2>Motion Controls</h2>
+            <p>Motion RNA tuning — speed, intensity, and rendering mode — adjusted live from the phone.</p>
+          </div>
+          <div class="panel-media">
             <div class="media-item">
-              <img class="phone-shot" src="IMG_4856.png" alt="Motion controls">
+              <img class="phone-shot" src="IMG_4856.png" alt="Motion Controls">
               <div class="media-caption">Motion RNA Controls</div>
             </div>
+          </div>
+        </section>
 
+        <section class="surface-panel">
+          <div class="panel-copy">
+            <div class="surface-label">Surface 07</div>
+            <h2>Model Parameters</h2>
+            <p>Model selection, temperature, token limits, and platform configuration exposed as runtime controls.</p>
+          </div>
+          <div class="panel-media">
             <div class="media-item">
               <img class="phone-shot" src="advanced.PNG" alt="Model Parameters">
               <div class="media-caption">Params</div>
             </div>
-
             <div class="media-item">
-              <img class="phone-shot" src="IMG_4858.png" alt="Remote Platforms">
+              <img class="phone-shot" src="IMG_4858.png" alt="Platform">
               <div class="media-caption">Platform</div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+
+      </div>
 
     </div>
 
@@ -495,9 +455,9 @@
   </main>
 
   <div id="media-modal" class="media-modal" aria-hidden="true">
-    <button class="media-modal-close" type="button" aria-label="Close expanded media">&times;</button>
-    <img id="modal-image" alt="Expanded media">
-    <video id="modal-video" controls></video>
+    <button class="media-modal-close" type="button" aria-label="Close">&times;</button>
+    <img id="modal-image" alt="Expanded media" style="display:none">
+    <video id="modal-video" controls style="display:none"></video>
   </div>
 
   <script>
@@ -519,24 +479,18 @@
       }
 
       document.querySelectorAll('.phone-shot, .video-shot').forEach((media) => {
-        media.addEventListener('click', (event) => {
-          event.preventDefault();
-          event.stopPropagation();
-
+        media.addEventListener('click', (e) => {
+          e.preventDefault(); e.stopPropagation();
           modal.classList.add('active');
           modal.setAttribute('aria-hidden', 'false');
-
           if (media.tagName.toLowerCase() === 'img') {
             modalVideo.style.display = 'none';
-            modalVideo.pause();
-            modalVideo.removeAttribute('src');
             modalImage.src = media.currentSrc || media.src;
-            modalImage.alt = media.alt || 'Expanded media';
+            modalImage.alt = media.alt || '';
             modalImage.style.display = 'block';
           } else {
             modalImage.style.display = 'none';
-            modalImage.removeAttribute('src');
-            modalVideo.src = media.currentSrc || media.querySelector('source')?.src || '';
+            modalVideo.src = media.querySelector('source')?.src || '';
             modalVideo.style.display = 'block';
             modalVideo.load();
           }
@@ -544,14 +498,8 @@
       });
 
       closeButton.addEventListener('click', closeModal);
-
-      modal.addEventListener('click', (event) => {
-        if (event.target === modal) closeModal();
-      });
-
-      document.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape' && modal.classList.contains('active')) closeModal();
-      });
+      modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
     })();
   </script>
 
