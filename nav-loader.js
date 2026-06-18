@@ -27,7 +27,6 @@
 
 <a href="https://pdf-sorcerer.github.io/alp/heuristics.html" class="nav-item" data-page="heuristics">• Transcript Forensics</a>
 <a href="https://pdf-sorcerer.github.io/alp/chasing_ghosts.html" class="nav-item" data-page="chasing-ghosts">• Chasing Ghosts</a>
-<a href="https://pdf-sorcerer.github.io/alp/endurance_sports.html" class="nav-item" data-page="endurance-sports">• Endurance Sports</a>`;
 
   const style = document.createElement('style');
   style.textContent = `
