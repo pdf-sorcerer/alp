@@ -23,6 +23,20 @@
       --nav-width: 220px;
     }
 
+        #shared-nav {
+      position: sticky;
+      top: 44px;
+      height: calc(100vh - 44px);
+      width: 220px;
+      flex-shrink: 0;
+      background: #ffffff;
+      border-right: 1px solid #e4e4e4;
+      display: flex;
+      flex-direction: column;
+      padding: 32px 0;
+      overflow-y: auto;
+    }
+
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     html {
