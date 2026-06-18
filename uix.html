@@ -86,8 +86,8 @@
     main {
       flex: 1;
       padding: 56px 64px 120px;
-      max-width: 860px;
       min-width: 0;
+      /* no max-width — fills the monitor */
     }
 
     .page-eyebrow {
@@ -112,7 +112,7 @@
       font-size: 14px;
       line-height: 1.75;
       color: #3a3a3a;
-      max-width: 720px;
+      max-width: 820px;
       margin-bottom: 52px;
     }
 
@@ -137,18 +137,20 @@
       gap: 24px;
     }
 
+    /* ── Surface panel ── */
     .surface-panel {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 4px;
-      padding: 18px;
+      padding: 28px 32px;
     }
 
+    /* Horizontal layout: copy left (~280px fixed), media fills the rest */
     .surface-grid {
       display: grid;
-      grid-template-columns: 0.85fr 1.15fr;
-      gap: 24px;
-      align-items: stretch;
+      grid-template-columns: 280px 1fr;
+      gap: 40px;
+      align-items: center;
     }
 
     .surface-copy {
@@ -180,58 +182,41 @@
       color: var(--muted);
     }
 
+    /* Media grid: evenly distributed, images grow to fill available width */
     .surface-media {
-      display: grid;
-      justify-items: center;
-      align-items: start;
-      gap: 16px;
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
     }
 
-    .surface-media.two {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+    .surface-media .media-item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
-    .surface-media.three {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-
-    .surface-media.four {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-    }
-
+    /* Phone shots fill their flex cell but cap at a reasonable size */
     .phone-shot,
     .video-shot {
       width: 100%;
-      max-width: 180px;
+      max-width: 200px;
       display: block;
       border-radius: 4px;
       cursor: zoom-in;
     }
 
-    .phone-shot.small { max-width: 145px; }
-    .phone-shot.wide,
-    .video-shot.wide { max-width: 420px; }
-
-    .video-shot {
-      background: #000;
-    }
-
-    .media-item {
-      width: 100%;
-      text-align: center;
-    }
-
+    /* Surface 04 video — same size as phone shots */
     .video-block {
-      width: 100%;
-      max-width: 420px;
-      margin: 0 auto;
-      text-align: center;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     .video-block .video-shot {
       width: 100%;
-      max-width: 420px;
-      margin: 0 auto;
+      max-width: 200px;
     }
 
     .media-caption {
@@ -256,6 +241,7 @@
       margin-top: 3px;
     }
 
+    /* Modal */
     .media-modal {
       position: fixed;
       inset: 0;
@@ -267,9 +253,7 @@
       padding: 28px;
     }
 
-    .media-modal.active {
-      display: flex;
-    }
+    .media-modal.active { display: flex; }
 
     .media-modal img,
     .media-modal video {
@@ -303,6 +287,7 @@
       color: var(--faint);
     }
 
+    /* ── Mobile ── */
     @media (max-width: 768px) {
       #shared-nav {
         position: fixed !important;
@@ -326,25 +311,26 @@
         max-width: 100%;
       }
 
-      .site-banner img { height: 110px; }
-
       .surface-grid {
         grid-template-columns: 1fr;
         gap: 22px;
       }
 
-      .surface-media.two,
-      .surface-media.three,
-      .surface-media.four {
-        grid-template-columns: 1fr 1fr;
+      .surface-media {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .surface-media .media-item {
+        flex: 0 0 calc(50% - 10px);
+        max-width: calc(50% - 10px);
       }
 
       .phone-shot,
       .video-shot { max-width: 150px; }
-      .phone-shot.wide,
-      .video-shot.wide,
+
       .video-block,
-      .video-block .video-shot { max-width: 100%; }
+      .video-block .video-shot { max-width: 150px; }
     }
   </style>
 </head>
@@ -394,7 +380,7 @@
             </p>
           </div>
 
-          <div class="surface-media two">
+          <div class="surface-media">
             <div class="media-item">
               <img class="phone-shot" src="IMG_4854.png" alt="Text message interface">
               <div class="media-caption">Text Message<span>Streaming text and speech playback</span></div>
@@ -419,24 +405,24 @@
             </p>
           </div>
 
-          <div class="surface-media four">
+          <div class="surface-media">
             <div class="media-item">
-              <img class="phone-shot small" src="IMG_4860.png" alt="Live Call">
+              <img class="phone-shot" src="IMG_4860.png" alt="Live Call">
               <div class="media-caption">Live Call</div>
             </div>
 
             <div class="media-item">
-              <img class="phone-shot small" src="IMG_4861.png" alt="Episode browser">
+              <img class="phone-shot" src="IMG_4861.png" alt="Episode browser">
               <div class="media-caption">Episode Reenactment</div>
             </div>
 
             <div class="media-item">
-              <img class="phone-shot small" src="mirror_episode.png" alt="Mirror episode setup">
+              <img class="phone-shot" src="mirror_episode.png" alt="Mirror episode setup">
               <div class="media-caption">Mirror Episode<span>Setup</span></div>
             </div>
 
             <div class="media-item">
-              <img class="phone-shot small" src="mirror_episode_run.PNG" alt="Mirror episode run">
+              <img class="phone-shot" src="mirror_episode_run.PNG" alt="Mirror episode run">
               <div class="media-caption">Mirror Episode<span>Run</span></div>
             </div>
           </div>
@@ -455,11 +441,10 @@
           </div>
 
           <div class="surface-media">
-            <div class="media-item video-block">
-              <video class="video-shot wide" controls preload="metadata">
+            <div class="video-block">
+              <video class="video-shot" controls preload="metadata">
                 <source src="wardrobe.mp4" type="video/mp4">
               </video>
-
               <div class="media-caption">
                 Persona Builder
                 <span>Assembly workflow film</span>
@@ -480,24 +465,24 @@
             </p>
           </div>
 
-          <div class="surface-media four">
+          <div class="surface-media">
             <div class="media-item">
-              <img class="phone-shot small" src="IMG_4855.png" alt="Request log">
+              <img class="phone-shot" src="IMG_4855.png" alt="Request log">
               <div class="media-caption">Inference Logs</div>
             </div>
 
             <div class="media-item">
-              <img class="phone-shot small" src="IMG_4856.png" alt="Motion controls">
+              <img class="phone-shot" src="IMG_4856.png" alt="Motion controls">
               <div class="media-caption">Motion RNA Controls</div>
             </div>
 
             <div class="media-item">
-              <img class="phone-shot small" src="advanced.PNG" alt="Model Parameters">
+              <img class="phone-shot" src="advanced.PNG" alt="Model Parameters">
               <div class="media-caption">Params</div>
             </div>
 
             <div class="media-item">
-              <img class="phone-shot small" src="IMG_4858.png" alt="Remote Platforms">
+              <img class="phone-shot" src="IMG_4858.png" alt="Remote Platforms">
               <div class="media-caption">Platform</div>
             </div>
           </div>
