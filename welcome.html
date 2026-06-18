@@ -268,7 +268,8 @@
       display: block;
     }
 
-    .trailer-card img {
+    .trailer-card img,
+    .trailer-card video {
       position: absolute;
       inset: 0;
       width: 100%;
@@ -351,7 +352,8 @@
       overflow: hidden;
     }
 
-    .video-thumb img {
+    .video-thumb img,
+    .video-thumb video {
       position: absolute;
       inset: 0;
       width: 100%;
@@ -534,11 +536,11 @@
 
     <div class="tabs-wrapper">
       <div class="tab-bar" role="tablist" aria-label="Overview media tabs">
-        <button id="btn-pipeline" class="tab-btn active" type="button" role="tab" aria-selected="true" aria-controls="tab-pipeline" onclick="switchTab('pipeline')">Pipeline</button>
-        <button id="btn-videos" class="tab-btn" type="button" role="tab" aria-selected="false" aria-controls="tab-videos" onclick="switchTab('videos')">Demo Videos</button>
+        <button id="btn-videos" class="tab-btn active" type="button" role="tab" aria-selected="true" aria-controls="tab-videos" onclick="switchTab('videos')">Demo Videos</button>
+        <button id="btn-pipeline" class="tab-btn" type="button" role="tab" aria-selected="false" aria-controls="tab-pipeline" onclick="switchTab('pipeline')">Pipeline</button>
       </div>
 
-      <div class="tab-panel" id="tab-pipeline" role="tabpanel" aria-labelledby="btn-pipeline">
+      <div class="tab-panel" id="tab-pipeline" role="tabpanel" aria-labelledby="btn-pipeline" style="display:none;">
         <pre class="pipeline-table">+----------------------+------------------+----------------------------+
 | STAGE                | TOOL             | FUNCTION                   |
 +----------------------+------------------+----------------------------+
@@ -581,7 +583,7 @@
 +----------------------+------------------+----------------------------+</pre>
       </div>
 
-      <div class="tab-panel" id="tab-videos" role="tabpanel" aria-labelledby="btn-videos" style="display:none;">
+      <div class="tab-panel" id="tab-videos" role="tabpanel" aria-labelledby="btn-videos">
         <div class="youtube-teaser">
           <div class="youtube-copy">
             <h2>ALL-LLLM POD</h2>
@@ -592,7 +594,7 @@
             class="trailer-card"
             type="button"
             onclick="openVideoLightbox('final_final_besties.mp4','ALL-LLLM POD Trailer')">
-            <img src="all-lllm-pod.png" alt="ALL-LLLM POD Trailer">
+            <video class="preview-video" src="final_final_besties.mp4#t=0.1" muted playsinline preload="metadata" aria-label="ALL-LLLM POD Trailer preview"></video>
             <span class="trailer-play">▶</span>
           </button>
         </div>
@@ -611,7 +613,7 @@
       type="button"
       onclick="openVideoLightbox('jcal_v0.mp4','Jason Calacanis')">
       <div class="video-thumb">
-        <img src="jcal_v0.png" alt="Jason Calacanis">
+        <video class="preview-video" src="jcal_v0.mp4#t=0.1" muted playsinline preload="metadata" aria-label="Jason Calacanis preview"></video>
         <span class="play-icon">▶</span>
         <span class="video-name">jcal_v0</span>
       </div>
@@ -623,7 +625,7 @@
       type="button"
       onclick="openVideoLightbox('friedbergv0.mp4','David Friedberg')">
       <div class="video-thumb">
-        <img src="friedbergv0.png" alt="David Friedberg">
+        <video class="preview-video" src="friedbergv0.mp4#t=0.1" muted playsinline preload="metadata" aria-label="David Friedberg preview"></video>
         <span class="play-icon">▶</span>
         <span class="video-name">friedbergv0</span>
       </div>
@@ -640,7 +642,7 @@
       type="button"
       onclick="openVideoLightbox('chamathv0.mp4','Chamath Palihapitiya')">
       <div class="video-thumb">
-        <img src="chamathv0.png" alt="Chamath Palihapitiya">
+        <video class="preview-video" src="chamathv0.mp4#t=0.1" muted playsinline preload="metadata" aria-label="Chamath Palihapitiya preview"></video>
         <span class="play-icon">▶</span>
         <span class="video-name">chamathv0</span>
       </div>
@@ -652,7 +654,7 @@
       type="button"
       onclick="openVideoLightbox('sacks_v0.mp4','David Sacks')">
       <div class="video-thumb">
-        <img src="sacks_v0.png" alt="David Sacks">
+        <video class="preview-video" src="sacks_v0.mp4#t=0.1" muted playsinline preload="metadata" aria-label="David Sacks preview"></video>
         <span class="play-icon">▶</span>
         <span class="video-name">sacks_v0</span>
       </div>
@@ -669,7 +671,7 @@
       type="button"
       onclick="openVideoLightbox('mz.mp4','Motion DNA Pipeline')">
       <div class="video-thumb">
-        <img src="mz.png" alt="Motion DNA Pipeline">
+        <video class="preview-video" src="mz.mp4#t=0.1" muted playsinline preload="metadata" aria-label="Motion DNA Pipeline preview"></video>
         <span class="play-icon">▶</span>
         <span class="video-name">mz</span>
       </div>
@@ -681,7 +683,7 @@
       type="button"
       onclick="openVideoLightbox('v0.mp4','Early Prototype')">
       <div class="video-thumb">
-        <img src="v0.png" alt="Early Prototype">
+        <video class="preview-video" src="v0.mp4#t=0.1" muted playsinline preload="metadata" aria-label="Early Prototype preview"></video>
         <span class="play-icon">▶</span>
         <span class="video-name">v0</span>
       </div>
@@ -758,6 +760,14 @@
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') closeVideoLightbox();
     });
+    document.querySelectorAll('.preview-video').forEach(function(video) {
+      video.addEventListener('loadedmetadata', function() {
+        if (video.currentTime < 0.05) {
+          try { video.currentTime = 0.1; } catch (e) {}
+        }
+      }, { once: true });
+    });
+
   </script>
 
   <script src="https://pdf-sorcerer.github.io/alp/nav-loader.js" data-page="welcome"></script>
