@@ -34,7 +34,6 @@
       overflow-x: hidden;
     }
 
-    /* ── DESKTOP NAV ── */
     #shared-nav {
       position: sticky;
       top: 0;
@@ -129,9 +128,22 @@
       margin-bottom: 12px;
     }
 
-    h1 { font-size: 28px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 14px; }
+    h1 {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 14px;
+    }
 
-    .lead { font-size: 14px; line-height: 1.75; color: #3a3a3a; max-width: 720px; margin-bottom: 52px; }
+    .lead {
+      font-size: 14px;
+      line-height: 1.75;
+      color: #3a3a3a;
+      max-width: 720px;
+      margin-bottom: 52px;
+    }
+
     .lead strong { font-weight: 600; color: var(--text); }
 
     .inline-tag {
@@ -145,6 +157,7 @@
       text-decoration: none;
       white-space: nowrap;
     }
+
     .inline-tag:hover { background: rgba(10, 132, 255, 0.20); }
 
     code {
@@ -182,6 +195,7 @@
       margin-bottom: -1px;
       transition: color 0.15s, border-color 0.15s;
     }
+
     .tab-btn:hover { color: var(--text); }
     .tab-btn.active { color: var(--green); border-bottom-color: var(--green); }
 
@@ -213,21 +227,99 @@
       border-radius: 4px;
     }
 
-    .youtube-copy h2 { font-size: 18px; line-height: 1.25; letter-spacing: -0.01em; margin-bottom: 10px; }
-    .youtube-copy p:not(.video-section-label) { font-size: 13px; line-height: 1.65; color: var(--muted); }
+    .youtube-copy {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border-top: 1px solid var(--border);
+      padding-top: 24px;
+    }
 
-    .youtube-frame {
+    .youtube-copy h2 {
+      font-size: 18px;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+      margin-bottom: 10px;
+    }
+
+    .youtube-copy p:not(.video-section-label) {
+      font-size: 13px;
+      line-height: 1.65;
+      color: var(--muted);
+    }
+
+    .trailer-card {
       position: relative;
       width: 100%;
       aspect-ratio: 16 / 9;
-      background: var(--code-bg);
+      display: block;
+      border: 0;
       border-radius: 4px;
       overflow: hidden;
+      background: var(--code-bg);
+      cursor: pointer;
+      padding: 0;
     }
-    .youtube-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 
-    .demo-video-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 24px; }
-    .video-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .trailer-card img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    .trailer-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.08);
+      transition: background 0.15s;
+    }
+
+    .trailer-card:hover::after {
+      background: rgba(0,0,0,0.18);
+    }
+
+    .trailer-play {
+      position: absolute;
+      inset: 0;
+      margin: auto;
+      width: 76px;
+      height: 54px;
+      border-radius: 14px;
+      background: #ff0000;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      line-height: 1;
+      padding-left: 4px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+      z-index: 2;
+      transition: transform 0.15s;
+    }
+
+    .trailer-card:hover .trailer-play {
+      transform: scale(1.04);
+    }
+
+    .supplementary-section {
+      margin-top: 36px;
+    }
+
+    .demo-video-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 24px;
+    }
+
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
 
     .video-section-label {
       font-family: 'IBM Plex Mono', monospace;
@@ -252,6 +344,7 @@
       transition: border-color 0.15s;
       width: 100%;
     }
+
     .video-cell:hover { border-color: var(--green); }
 
     .video-thumb {
@@ -263,49 +356,96 @@
       justify-content: center;
       position: relative;
     }
+
     .video-name {
-      position: absolute; bottom: 6px; left: 8px;
+      position: absolute;
+      bottom: 6px;
+      left: 8px;
       font-family: 'IBM Plex Mono', monospace;
-      font-size: 10px; font-weight: 600;
+      font-size: 10px;
+      font-weight: 600;
       color: rgba(255,255,255,0.5);
-      letter-spacing: 0.06em; text-transform: uppercase;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
     }
-    .play-icon { font-size: 28px; color: rgba(255,255,255,0.3); transition: color 0.15s; }
+
+    .play-icon {
+      font-size: 28px;
+      color: rgba(255,255,255,0.3);
+      transition: color 0.15s;
+    }
+
     .video-cell:hover .play-icon { color: var(--green); }
+
     .video-label {
       font-family: 'IBM Plex Mono', monospace;
-      font-size: 10px; font-weight: 600;
-      letter-spacing: 0.08em; text-transform: uppercase;
-      color: var(--muted); padding: 10px 14px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 10px 14px;
       border-top: 1px solid #1e1e1e;
     }
 
     .video-lightbox {
-      position: fixed; inset: 0;
+      position: fixed;
+      inset: 0;
       background: rgba(13,17,23,0.96);
-      display: none; align-items: center; justify-content: center;
-      z-index: 2000; cursor: zoom-out; padding: 32px;
-      flex-direction: column; gap: 16px;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      cursor: zoom-out;
+      padding: 32px;
+      flex-direction: column;
+      gap: 16px;
     }
+
     .video-lightbox.is-open { display: flex; }
-    .video-lightbox video { max-width: 100%; max-height: 80vh; border-radius: 4px; box-shadow: 0 8px 40px rgba(0,0,0,0.6); }
-    .video-lightbox-label { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.5); }
+
+    .video-lightbox video {
+      max-width: 100%;
+      max-height: 80vh;
+      border-radius: 4px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+    }
+
+    .video-lightbox-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+    }
+
     .video-lightbox-close {
-      position: absolute; top: 20px; right: 24px;
-      font-family: 'IBM Plex Mono', monospace; font-size: 11px;
-      letter-spacing: 0.1em; text-transform: uppercase;
-      color: rgba(255,255,255,0.7); background: transparent;
-      border: 1px solid rgba(255,255,255,0.25); border-radius: 3px;
-      padding: 6px 14px; cursor: pointer;
+      position: absolute;
+      top: 20px;
+      right: 24px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 3px;
+      padding: 6px 14px;
+      cursor: pointer;
     }
 
     .footer {
-      margin-top: 72px; padding-top: 24px; border-top: 1px solid var(--border);
-      font-family: 'IBM Plex Mono', monospace; font-size: 10px;
-      letter-spacing: 0.06em; text-transform: uppercase; color: var(--faint);
+      margin-top: 72px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--faint);
     }
 
-    /* ── MOBILE ── */
     @media (max-width: 768px) {
       #shared-nav {
         position: fixed !important;
@@ -320,6 +460,7 @@
         box-shadow: 2px 0 12px rgba(0,0,0,0.12) !important;
         flex-shrink: 0 !important;
       }
+
       #shared-nav.open { transform: translateX(0) !important; }
 
       main {
@@ -336,7 +477,9 @@
 
       .youtube-teaser,
       .demo-video-grid,
-      .video-grid { grid-template-columns: 1fr; }
+      .video-grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
@@ -358,7 +501,8 @@
       <br><br>
       Welcome to the number one <strong>ALL-LLLM POD</strong>: a technically serious generative AI system built around an intentionally unserious premise: conversational chatbot parodies of the <i>All-In Podcast</i> Besties.
       <br><br>
-The Besties are grounded in 530+ episodes, clips, and shorts from the official YouTube channels, reconstructed using an AI pipeline with custom Streamlit tooling.     <br><br>
+      The Besties are grounded in 530+ episodes, clips, and shorts from the official YouTube channels, reconstructed using an AI pipeline with custom Streamlit tooling.
+      <br><br>
       See the left navbar: Pages are the 'big picture' for the app. More detailed looks into helper apps and supporting workflows are in <a href="sidequests.html" class="inline-tag">Important Sidequests ↗</a>.
     </p>
 
@@ -414,17 +558,55 @@ The Besties are grounded in 530+ episodes, clips, and shorts from the official Y
       <div class="tab-panel" id="tab-videos" role="tabpanel" aria-labelledby="btn-videos" style="display:none;">
         <div class="youtube-teaser">
           <div class="youtube-copy">
-            <p class="video-section-label"></p>
             <h2>ALL-LLLM POD</h2>
             <p>Premise? Satirical. Pipeline? Real.</p>
           </div>
-          <div class="youtube-frame">
-            <iframe
-              src="https://www.youtube.com/embed/lSu89pR7ghg"
-              title="June 2026 Trailer"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen>
-            </iframe>
+
+          <button
+            class="trailer-card"
+            type="button"
+            onclick="openVideoLightbox('trailer.mp4','ALL-LLLM POD Trailer')">
+            <img src="trailer-thumb.png" alt="ALL-LLLM POD trailer thumbnail">
+            <span class="trailer-play">▶</span>
+          </button>
+        </div>
+
+        <div class="supplementary-section">
+          <p class="video-section-label">Supplementary Demos</p>
+
+          <div class="video-grid">
+            <button
+              class="video-cell"
+              type="button"
+              onclick="openVideoLightbox('v1_app.mp4','iOS App Walkthrough')">
+              <div class="video-thumb">
+                <span class="play-icon">▶</span>
+                <span class="video-name">v1_app</span>
+              </div>
+              <div class="video-label">iOS App Walkthrough</div>
+            </button>
+
+            <button
+              class="video-cell"
+              type="button"
+              onclick="openVideoLightbox('mz.mp4','Motion DNA Pipeline')">
+              <div class="video-thumb">
+                <span class="play-icon">▶</span>
+                <span class="video-name">mz</span>
+              </div>
+              <div class="video-label">Motion DNA Pipeline</div>
+            </button>
+
+            <button
+              class="video-cell"
+              type="button"
+              onclick="openVideoLightbox('v0.mp4','Early Prototype')">
+              <div class="video-thumb">
+                <span class="play-icon">▶</span>
+                <span class="video-name">v0</span>
+              </div>
+              <div class="video-label">Early Prototype</div>
+            </button>
           </div>
         </div>
       </div>
@@ -446,10 +628,13 @@ The Besties are grounded in 530+ episodes, clips, and shorts from the official Y
       const btnP     = document.getElementById('btn-pipeline');
       const btnV     = document.getElementById('btn-videos');
       const showP    = name === 'pipeline';
+
       pipeline.style.display = showP ? 'block' : 'none';
       videos.style.display   = showP ? 'none'  : 'block';
+
       btnP.classList.toggle('active', showP);
       btnV.classList.toggle('active', !showP);
+
       btnP.setAttribute('aria-selected', showP ? 'true' : 'false');
       btnV.setAttribute('aria-selected', showP ? 'false' : 'true');
     }
@@ -457,19 +642,33 @@ The Besties are grounded in 530+ episodes, clips, and shorts from the official Y
     function openVideoLightbox(src, label) {
       const lb  = document.getElementById('videoLightbox');
       const vid = document.getElementById('lightboxVideo');
+
       document.getElementById('lightboxVideoLabel').textContent = label;
       vid.src = src;
       lb.classList.add('is-open');
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = '';
+
       vid.play();
     }
 
     function closeVideoLightbox() {
       const vid = document.getElementById('lightboxVideo');
-      vid.pause(); vid.src = '';
+
+      vid.pause();
+      vid.src = '';
+
       document.getElementById('videoLightbox').classList.remove('is-open');
       document.body.style.overflow = '';
     }
+
+    document.getElementById('lightboxVideo').addEventListener('click', function(e) {
+      e.stopPropagation();
+    });
+
+    document.querySelector('.video-lightbox-close').addEventListener('click', function(e) {
+      e.stopPropagation();
+      closeVideoLightbox();
+    });
 
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') closeVideoLightbox();
