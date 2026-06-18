@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -128,22 +129,9 @@
       margin-bottom: 12px;
     }
 
-    h1 {
-      font-size: 28px;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      line-height: 1.2;
-      margin-bottom: 14px;
-    }
+    h1 { font-size: 28px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 14px; }
 
-    .lead {
-      font-size: 14px;
-      line-height: 1.75;
-      color: #3a3a3a;
-      max-width: 720px;
-      margin-bottom: 52px;
-    }
-
+    .lead { font-size: 14px; line-height: 1.75; color: #3a3a3a; max-width: 720px; margin-bottom: 52px; }
     .lead strong { font-weight: 600; color: var(--text); }
 
     .inline-tag {
@@ -227,44 +215,27 @@
       border-radius: 4px;
     }
 
-    .youtube-copy {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      border-top: 1px solid var(--border);
-      padding-top: 24px;
-    }
-
-    .youtube-copy h2 {
-      font-size: 18px;
-      line-height: 1.25;
-      letter-spacing: -0.01em;
-      margin-bottom: 10px;
-    }
-
-    .youtube-copy p:not(.video-section-label) {
-      font-size: 13px;
-      line-height: 1.65;
-      color: var(--muted);
-    }
+    .youtube-copy h2 { font-size: 18px; line-height: 1.25; letter-spacing: -0.01em; margin-bottom: 10px; }
+    .youtube-copy p:not(.video-section-label) { font-size: 13px; line-height: 1.65; color: var(--muted); }
 
     .trailer-card {
       position: relative;
       width: 100%;
       aspect-ratio: 16 / 9;
-      display: block;
       border: 0;
-      border-radius: 4px;
-      overflow: hidden;
-      background: var(--code-bg);
-      cursor: pointer;
       padding: 0;
+      cursor: pointer;
+      overflow: hidden;
+      border-radius: 4px;
+      background: var(--code-bg);
+      display: block;
     }
 
     .trailer-card img {
+      position: absolute;
+      inset: 0;
       width: 100%;
       height: 100%;
-      display: block;
       object-fit: cover;
     }
 
@@ -272,12 +243,12 @@
       content: "";
       position: absolute;
       inset: 0;
-      background: rgba(0,0,0,0.08);
+      background: rgba(0,0,0,0.18);
       transition: background 0.15s;
     }
 
     .trailer-card:hover::after {
-      background: rgba(0,0,0,0.18);
+      background: rgba(0,0,0,0.28);
     }
 
     .trailer-play {
@@ -295,8 +266,8 @@
       font-size: 28px;
       line-height: 1;
       padding-left: 4px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.35);
       z-index: 2;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.35);
       transition: transform 0.15s;
     }
 
@@ -308,18 +279,8 @@
       margin-top: 36px;
     }
 
-    .demo-video-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-      margin-top: 24px;
-    }
-
-    .video-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-    }
+    .demo-video-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 24px; }
+    .video-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
 
     .video-section-label {
       font-family: 'IBM Plex Mono', monospace;
@@ -355,6 +316,27 @@
       align-items: center;
       justify-content: center;
       position: relative;
+      overflow: hidden;
+    }
+
+    .video-thumb img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .video-thumb::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.18);
+      transition: background 0.15s;
+    }
+
+    .video-cell:hover .video-thumb::after {
+      background: rgba(0,0,0,0.28);
     }
 
     .video-name {
@@ -364,18 +346,24 @@
       font-family: 'IBM Plex Mono', monospace;
       font-size: 10px;
       font-weight: 600;
-      color: rgba(255,255,255,0.5);
+      color: rgba(255,255,255,0.65);
       letter-spacing: 0.06em;
       text-transform: uppercase;
+      z-index: 2;
     }
 
     .play-icon {
       font-size: 28px;
-      color: rgba(255,255,255,0.3);
-      transition: color 0.15s;
+      color: rgba(255,255,255,0.72);
+      transition: color 0.15s, transform 0.15s;
+      position: relative;
+      z-index: 2;
     }
 
-    .video-cell:hover .play-icon { color: var(--green); }
+    .video-cell:hover .play-icon {
+      color: var(--green);
+      transform: scale(1.05);
+    }
 
     .video-label {
       font-family: 'IBM Plex Mono', monospace;
@@ -477,9 +465,7 @@
 
       .youtube-teaser,
       .demo-video-grid,
-      .video-grid {
-        grid-template-columns: 1fr;
-      }
+      .video-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -565,8 +551,8 @@
           <button
             class="trailer-card"
             type="button"
-            onclick="openVideoLightbox('trailer.mp4','ALL-LLLM POD Trailer')">
-            <img src="trailer-thumb.png" alt="ALL-LLLM POD trailer thumbnail">
+            onclick="openVideoLightbox('all-lllm-pod.mp4','ALL-LLLM POD Trailer')">
+            <img src="all-lllm-pod.png" alt="ALL-LLLM POD Trailer">
             <span class="trailer-play">▶</span>
           </button>
         </div>
@@ -580,6 +566,7 @@
               type="button"
               onclick="openVideoLightbox('v1_app.mp4','iOS App Walkthrough')">
               <div class="video-thumb">
+                <img src="v1_app.png" alt="iOS App Walkthrough">
                 <span class="play-icon">▶</span>
                 <span class="video-name">v1_app</span>
               </div>
@@ -591,6 +578,7 @@
               type="button"
               onclick="openVideoLightbox('mz.mp4','Motion DNA Pipeline')">
               <div class="video-thumb">
+                <img src="mz.png" alt="Motion DNA Pipeline">
                 <span class="play-icon">▶</span>
                 <span class="video-name">mz</span>
               </div>
@@ -602,6 +590,7 @@
               type="button"
               onclick="openVideoLightbox('v0.mp4','Early Prototype')">
               <div class="video-thumb">
+                <img src="v0.png" alt="Early Prototype">
                 <span class="play-icon">▶</span>
                 <span class="video-name">v0</span>
               </div>
@@ -646,7 +635,7 @@
       document.getElementById('lightboxVideoLabel').textContent = label;
       vid.src = src;
       lb.classList.add('is-open');
-      document.body.style.overflow = '';
+      document.body.style.overflow = 'hidden';
 
       vid.play();
     }
@@ -678,3 +667,4 @@
   <script src="https://pdf-sorcerer.github.io/alp/nav-loader.js" data-page="welcome"></script>
 </body>
 </html>
+```
