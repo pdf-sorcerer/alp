@@ -118,20 +118,6 @@
 
     .lead strong { font-weight: 600; color: var(--text); }
 
-    .inline-tag {
-      display: inline-block;
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.9em;
-      color: var(--green);
-      background: var(--green-dim);
-      padding: 2px 5px;
-      border-radius: 3px;
-      text-decoration: none;
-      white-space: nowrap;
-    }
-
-    .inline-tag:hover { background: rgba(10, 132, 255, 0.20); }
-
     .surface-stack {
       display: grid;
       gap: 24px;
@@ -236,6 +222,17 @@
       margin-top: 3px;
     }
 
+    .video-block {
+      width: 100%;
+    }
+
+    .video-block video {
+      width: 100%;
+      max-width: 420px;
+      display: block;
+      border-radius: 4px;
+    }
+
     .footer {
       margin-top: 72px;
       padding-top: 24px;
@@ -270,8 +267,6 @@
         max-width: 100%;
       }
 
-      .site-banner img { height: 110px; }
-
       .surface-grid {
         grid-template-columns: 1fr;
         gap: 22px;
@@ -284,7 +279,8 @@
       }
 
       .phone-shot { max-width: 150px; }
-      .phone-shot.wide { max-width: 100%; }
+      .phone-shot.wide,
+      .video-block video { max-width: 100%; }
     }
   </style>
 </head>
@@ -328,23 +324,21 @@
         <div class="surface-grid">
           <div class="surface-copy">
             <div class="surface-eyebrow">Surface 02</div>
-            <h2>Text Message & 1:1 VideoChat</h2>
+            <h2>Text Message &amp; 1:1 Video Chat</h2>
             <p>
-              Text and FaceTime-style video chat. 
+              Text and FaceTime-style video chat with streaming responses, speech playback, and persona animation.
             </p>
           </div>
 
-          <div class="surface-media">
+          <div class="surface-media two">
             <div class="media-item">
-              <img class="phone-shot" src="IMG_4854.png" alt="FaceTime-style one-to-one chat">
+              <img class="phone-shot" src="IMG_4854.png" alt="Text message interface">
               <div class="media-caption">Text Message<span>Streaming text and speech playback</span></div>
             </div>
-          </div>
-        
-          <div class="surface-media">
+
             <div class="media-item">
-              <img class="phone-shot" src="jensen.PNG" alt="FaceTime-style one-to-one chat">
-              <div class="media-caption">Video Chat<span>Streaming text and speech playback</span></div>
+              <img class="phone-shot" src="jensen.PNG" alt="One-to-one video chat">
+              <div class="media-caption">Video Chat<span>FaceTime-style persona call</span></div>
             </div>
           </div>
         </div>
@@ -361,23 +355,25 @@
             </p>
           </div>
 
-          <div class="surface-media three">
-
+          <div class="surface-media four">
             <div class="media-item">
               <img class="phone-shot small" src="IMG_4860.png" alt="Live Call">
               <div class="media-caption">Live Call</div>
             </div>
+
             <div class="media-item">
               <img class="phone-shot small" src="IMG_4861.png" alt="Episode browser">
               <div class="media-caption">Episode Reenactment</div>
             </div>
+
             <div class="media-item">
-              <img class="phone-shot small" src="mirror_episode.png" alt="Mirror episode">
-              <div class="media-caption">Mirror episode (setup)</div>
+              <img class="phone-shot small" src="mirror_episode.png" alt="Mirror episode setup">
+              <div class="media-caption">Mirror Episode<span>Setup</span></div>
             </div>
-               <div class="media-item">
-              <img class="phone-shot small" src="mirror_episode_run.PNG" alt="Mirror episode">
-              <div class="media-caption">Mirror episode (run)</div>
+
+            <div class="media-item">
+              <img class="phone-shot small" src="mirror_episode_run.PNG" alt="Mirror episode run">
+              <div class="media-caption">Mirror Episode<span>Run</span></div>
             </div>
           </div>
         </div>
@@ -389,21 +385,21 @@
             <div class="surface-eyebrow">Surface 04</div>
             <h2>Persona Builder</h2>
             <p>
-              Every persona is built from parts in this ... workflow. It gets the job done.
-               <div class="video-block">
-    <video controls preload="metadata">
-      <source src="wardrobe.mp4" type="video/mp4">
-    </video>
-
-    <div class="video-caption">
-      SOURCE VIDEO · THE EMPIRE STRIKES BACK (1980)
+              A short film documenting the persona assembly workflow: visual components, voice references,
+              behavioral profiles, and runtime configuration combined into deployable characters.
             </p>
           </div>
 
           <div class="surface-media">
-            <div class="media-item">
-              <img class="phone-shot wide" src="potato-head.png" alt="Persona builder">
-              <div class="media-caption">Character assembly<span>Interchangeable visual components</span></div>
+            <div class="media-item video-block">
+              <video controls preload="metadata">
+                <source src="wardrobe.mp4" type="video/mp4">
+              </video>
+
+              <div class="media-caption">
+                Persona Builder
+                <span>Assembly workflow film</span>
+              </div>
             </div>
           </div>
         </div>
@@ -425,14 +421,17 @@
               <img class="phone-shot small" src="IMG_4855.png" alt="Request log">
               <div class="media-caption">Inference Logs</div>
             </div>
+
             <div class="media-item">
               <img class="phone-shot small" src="IMG_4856.png" alt="Motion controls">
-              <div class="media-caption">Motion RNA controls</div>
+              <div class="media-caption">Motion RNA Controls</div>
             </div>
+
             <div class="media-item">
               <img class="phone-shot small" src="advanced.PNG" alt="Model Parameters">
               <div class="media-caption">Params</div>
             </div>
+
             <div class="media-item">
               <img class="phone-shot small" src="IMG_4858.png" alt="Remote Platforms">
               <div class="media-caption">Platform</div>
