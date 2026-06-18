@@ -154,28 +154,22 @@
     .video-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
-      max-width: 680px;
-      margin: 0 0 28px;
+      gap: 16px;
+      max-width: 900px;
+      margin: 0 0 36px;
     }
 
     .video-card {
-      display: block;
-      text-decoration: none;
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 3px;
       overflow: hidden;
-      transition: all .15s ease;
     }
 
-    .video-card:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(0,0,0,.06);
+    .video-card-caption {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
     }
-
-    .video-card img { display: block; width: 100%; height: auto; }
-    .video-card-caption { padding: 10px 12px; }
 
     .video-card-title {
       font-family: 'IBM Plex Mono', monospace;
@@ -193,72 +187,14 @@
       color: var(--green);
     }
 
-
-    .video-accordions {
-      max-width: 680px;
-      margin: 0 0 28px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
+    .video-card .video-container {
+      margin: 0;
+      border: 0;
+      border-radius: 0;
     }
 
-    .video-accordion {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 3px;
-      overflow: hidden;
-    }
-
-    .video-accordion summary {
-      cursor: pointer;
-      list-style: none;
-      padding: 12px 14px;
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--text);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      transition: background 0.15s ease;
-    }
-
-    .video-accordion summary::-webkit-details-marker {
-      display: none;
-    }
-
-    .video-accordion summary::after {
-      content: "▼";
-      font-size: 10px;
-      color: var(--faint);
-      transition: transform 0.2s ease;
-      flex-shrink: 0;
-    }
-
-    .video-accordion[open] summary::after {
-      transform: rotate(180deg);
-    }
-
-    .video-accordion summary:hover {
-      background: var(--bg);
-    }
-
-    .video-accordion[open] summary {
-      border-bottom: 1px solid var(--border);
-    }
-
-    .video-note {
-      padding: 12px 14px 0;
-      font-size: 13px;
-      line-height: 1.65;
-      color: var(--muted);
-    }
-
-    .video-accordion .video-container {
-      margin: 12px 14px 14px;
+    .video-card .demo-video {
+      max-height: none;
     }
 
     .intro-note {
@@ -583,11 +519,13 @@
         The transcript is then analyzed for transcription artifacts, such as ellipses, non-terminating sentences, and lowercase continuations; telltale signs the model was operating outside its confidence. 
       </p>
 
-<div class="video-accordions">
+<div class="video-grid">
 
-  <details class="video-accordion">
-    <summary>Episode 75 · HITL Review</summary>
-    <p class="video-note">Human-in-the-loop transcript auditing workflow from late 2025.</p>
+  <div class="video-card">
+    <div class="video-card-caption">
+      <div class="video-card-title">Episode 75 · HITL Review</div>
+      <div class="video-card-subtitle">Human-in-the-loop transcript auditing</div>
+    </div>
 
     <div class="video-container">
       <video controls preload="metadata" class="demo-video">
@@ -595,11 +533,13 @@
         Your browser does not support the video tag.
       </video>
     </div>
-  </details>
+  </div>
 
-  <details class="video-accordion">
-    <summary>Episode 113 · HITL Review</summary>
-    <p class="video-note">Human-in-the-loop transcript auditing workflow from late 2025.</p>
+  <div class="video-card">
+    <div class="video-card-caption">
+      <div class="video-card-title">Episode 113 · HITL Review</div>
+      <div class="video-card-subtitle">Human-in-the-loop transcript auditing</div>
+    </div>
 
     <div class="video-container">
       <video controls preload="metadata" class="demo-video">
@@ -607,7 +547,7 @@
         Your browser does not support the video tag.
       </video>
     </div>
-  </details>
+  </div>
 
 </div>
 
