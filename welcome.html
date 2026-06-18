@@ -133,6 +133,44 @@
     .lead { font-size: 14px; line-height: 1.75; color: #3a3a3a; max-width: 720px; margin-bottom: 52px; }
     .lead strong { font-weight: 600; color: var(--text); }
 
+    .stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin: -20px 0 52px;
+  max-width: 720px;
+}
+
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 18px;
+}
+
+.stat-num {
+  display: block;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--green);
+  margin-bottom: 6px;
+}
+
+.stat-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+@media (max-width: 768px) {
+  .stats-row {
+    grid-template-columns: 1fr;
+  }
+}
+
     .inline-tag {
       display: inline-block;
       font-family: 'IBM Plex Mono', monospace;
@@ -461,15 +499,36 @@
     <p class="page-eyebrow">Multi-Agent Local LLM System</p>
     <h1>ALL-LLLM POD</h1>
 
-    <p class="lead">
-      Hey, everybody!
-      <br><br>
-      Welcome to the number one <strong>ALL-LLLM POD</strong>: a technically serious generative AI system built around an intentionally unserious premise: conversational chatbot parodies of the <i>All-In Podcast</i> Besties.
-      <br><br>
-      The Besties are grounded in 530+ episodes, clips, and shorts from the official YouTube channels, reconstructed using an AI pipeline with custom Streamlit tooling.
-      <br><br>
-      See the left navbar: Pages are the 'big picture' for the app. More detailed looks into helper apps and supporting workflows are in <a href="sidequests.html" class="inline-tag">Important Sidequests ↗</a>.
-    </p>
+<p class="lead">
+  Hey, everybody!
+  <br><br>
+  Welcome to the number one <strong>ALL-LLLM POD</strong>: a technically serious generative AI system built around an intentionally unserious premise: conversational chatbot parodies of the <i>All-In Podcast</i> Besties.
+  <br><br>
+  <p class="lead">
+  The Besties' personas emerge from transcripts generated from 563 episodes, clips, and shorts from the official YouTube 
+    channels using an AI pipeline, custom Streamlit tooling, and a ridiculous amount of tinkering.</p>
+
+<div class="stats-row">
+  <div class="stat-card">
+    <span class="stat-num">563</span>
+    <span class="stat-label">Episodes</span>
+  </div>
+
+  <div class="stat-card">
+    <span class="stat-num">75k+</span>
+    <span class="stat-label">Transcript Segments</span>
+  </div>
+
+  <div class="stat-card">
+    <span class="stat-num">400+</span>
+    <span class="stat-label">Audio Hours</span>
+  </div>
+</div>
+
+<p class="lead">
+  See the left navbar: Pages are the 'big picture' for the app. More detailed looks into helper apps are in
+  <a href="sidequests.html" class="inline-tag">Important Sidequests ↗</a>.
+</p>
 
     <div class="tabs-wrapper">
       <div class="tab-bar" role="tablist" aria-label="Overview media tabs">
@@ -524,7 +583,7 @@
         <div class="youtube-teaser">
           <div class="youtube-copy">
             <h2>ALL-LLLM POD</h2>
-            <p>Premise? Satirical. Pipeline? Real.</p>
+            <p>Technically serious AI. Intentionally unserious premise.</p>
           </div>
 
           <button
