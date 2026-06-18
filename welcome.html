@@ -246,9 +246,7 @@
       transition: background 0.15s;
     }
 
-    .trailer-card:hover::after {
-      background: rgba(0,0,0,0.28);
-    }
+    .trailer-card:hover::after { background: rgba(0,0,0,0.28); }
 
     .trailer-play {
       position: absolute;
@@ -270,13 +268,9 @@
       transition: transform 0.15s;
     }
 
-    .trailer-card:hover .trailer-play {
-      transform: scale(1.04);
-    }
+    .trailer-card:hover .trailer-play { transform: scale(1.04); }
 
-    .supplementary-section {
-      margin-top: 36px;
-    }
+    .supplementary-section { margin-top: 36px; }
 
     .demo-video-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 24px; }
     .video-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
@@ -334,9 +328,7 @@
       transition: background 0.15s;
     }
 
-    .video-cell:hover .video-thumb::after {
-      background: rgba(0,0,0,0.28);
-    }
+    .video-cell:hover .video-thumb::after { background: rgba(0,0,0,0.28); }
 
     .video-name {
       position: absolute;
@@ -359,10 +351,7 @@
       z-index: 2;
     }
 
-    .video-cell:hover .play-icon {
-      color: var(--green);
-      transform: scale(1.05);
-    }
+    .video-cell:hover .play-icon { color: var(--green); transform: scale(1.05); }
 
     .video-label {
       font-family: 'IBM Plex Mono', monospace;
@@ -447,21 +436,12 @@
         box-shadow: 2px 0 12px rgba(0,0,0,0.12) !important;
         flex-shrink: 0 !important;
       }
-
       #shared-nav.open { transform: translateX(0) !important; }
-
-      main {
-        padding: 64px 20px 80px;
-        width: 100%;
-        max-width: 100%;
-      }
-
+      main { padding: 64px 20px 80px; width: 100%; max-width: 100%; }
       .site-banner img { height: 110px; }
-
       .tabs-wrapper { overflow: hidden; }
       .tab-panel { overflow-x: auto; }
       .pipeline-table { font-size: 9px; padding: 16px; }
-
       .youtube-teaser,
       .demo-video-grid,
       .video-grid { grid-template-columns: 1fr; }
@@ -563,7 +543,7 @@
             <button
               class="video-cell"
               type="button"
-              onclick="openVideoLightbox('v1_app.mp4',v1 group chat)">
+              onclick="openVideoLightbox('v1_app.mp4','v1 group chat')">
               <div class="video-thumb">
                 <img src="v1_app.png" alt="v1">
                 <span class="play-icon">▶</span>
@@ -575,7 +555,7 @@
             <button
               class="video-cell"
               type="button"
-              onclick="openVideoLightbox('mz.mp4','Mark Zuckerberg)">
+              onclick="openVideoLightbox('mz.mp4','Mark Zuckerberg')">
               <div class="video-thumb">
                 <img src="mz.png" alt="Motion DNA">
                 <span class="play-icon">▶</span>
@@ -666,4 +646,3 @@
   <script src="https://pdf-sorcerer.github.io/alp/nav-loader.js" data-page="welcome"></script>
 </body>
 </html>
-```
