@@ -118,6 +118,20 @@
 
     .lead strong { font-weight: 600; color: var(--text); }
 
+    .inline-tag {
+      display: inline-block;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.9em;
+      color: var(--green);
+      background: var(--green-dim);
+      padding: 2px 5px;
+      border-radius: 3px;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .inline-tag:hover { background: rgba(10, 132, 255, 0.20); }
+
     .surface-stack {
       display: grid;
       gap: 24px;
@@ -185,19 +199,39 @@
       grid-template-columns: repeat(4, minmax(0, 1fr));
     }
 
-    .phone-shot {
+    .phone-shot,
+    .video-shot {
       width: 100%;
       max-width: 180px;
       display: block;
       border-radius: 4px;
+      cursor: zoom-in;
     }
 
     .phone-shot.small { max-width: 145px; }
-    .phone-shot.wide { max-width: 420px; }
+    .phone-shot.wide,
+    .video-shot.wide { max-width: 420px; }
+
+    .video-shot {
+      background: #000;
+    }
 
     .media-item {
       width: 100%;
       text-align: center;
+    }
+
+    .video-block {
+      width: 100%;
+      max-width: 420px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .video-block .video-shot {
+      width: 100%;
+      max-width: 420px;
+      margin: 0 auto;
     }
 
     .media-caption {
@@ -222,15 +256,40 @@
       margin-top: 3px;
     }
 
-    .video-block {
-      width: 100%;
+    .media-modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.88);
+      z-index: 99999;
+      padding: 28px;
     }
 
-    .video-block video {
-      width: 100%;
-      max-width: 420px;
-      display: block;
-      border-radius: 4px;
+    .media-modal.active {
+      display: flex;
+    }
+
+    .media-modal img,
+    .media-modal video {
+      max-width: 92vw;
+      max-height: 88vh;
+      border-radius: 6px;
+      background: #000;
+      box-shadow: 0 18px 64px rgba(0,0,0,0.45);
+    }
+
+    .media-modal-close {
+      position: absolute;
+      top: 18px;
+      right: 26px;
+      border: 0;
+      background: transparent;
+      color: #fff;
+      font-size: 38px;
+      line-height: 1;
+      cursor: pointer;
     }
 
     .footer {
@@ -267,6 +326,8 @@
         max-width: 100%;
       }
 
+      .site-banner img { height: 110px; }
+
       .surface-grid {
         grid-template-columns: 1fr;
         gap: 22px;
@@ -278,9 +339,12 @@
         grid-template-columns: 1fr 1fr;
       }
 
-      .phone-shot { max-width: 150px; }
+      .phone-shot,
+      .video-shot { max-width: 150px; }
       .phone-shot.wide,
-      .video-block video { max-width: 100%; }
+      .video-shot.wide,
+      .video-block,
+      .video-block .video-shot { max-width: 100%; }
     }
   </style>
 </head>
@@ -392,7 +456,7 @@
 
           <div class="surface-media">
             <div class="media-item video-block">
-              <video controls preload="metadata">
+              <video class="video-shot wide" controls preload="metadata">
                 <source src="wardrobe.mp4" type="video/mp4">
               </video>
 
@@ -444,6 +508,67 @@
 
     <div class="footer">Mason Thompson · Berkeley, California</div>
   </main>
+
+  <div id="media-modal" class="media-modal" aria-hidden="true">
+    <button class="media-modal-close" type="button" aria-label="Close expanded media">&times;</button>
+    <img id="modal-image" alt="Expanded media">
+    <video id="modal-video" controls></video>
+  </div>
+
+  <script>
+    (function () {
+      const modal = document.getElementById('media-modal');
+      const modalImage = document.getElementById('modal-image');
+      const modalVideo = document.getElementById('modal-video');
+      const closeButton = document.querySelector('.media-modal-close');
+
+      function closeModal() {
+        modal.classList.remove('active');
+        modal.setAttribute('aria-hidden', 'true');
+        modalImage.removeAttribute('src');
+        modalImage.style.display = 'none';
+        modalVideo.pause();
+        modalVideo.removeAttribute('src');
+        modalVideo.load();
+        modalVideo.style.display = 'none';
+      }
+
+      document.querySelectorAll('.phone-shot, .video-shot').forEach((media) => {
+        media.addEventListener('click', (event) => {
+          event.preventDefault();
+          event.stopPropagation();
+
+          modal.classList.add('active');
+          modal.setAttribute('aria-hidden', 'false');
+
+          if (media.tagName.toLowerCase() === 'img') {
+            modalVideo.style.display = 'none';
+            modalVideo.pause();
+            modalVideo.removeAttribute('src');
+            modalImage.src = media.currentSrc || media.src;
+            modalImage.alt = media.alt || 'Expanded media';
+            modalImage.style.display = 'block';
+          } else {
+            modalImage.style.display = 'none';
+            modalImage.removeAttribute('src');
+            modalVideo.src = media.currentSrc || media.querySelector('source')?.src || '';
+            modalVideo.style.display = 'block';
+            modalVideo.load();
+          }
+        });
+      });
+
+      closeButton.addEventListener('click', closeModal);
+
+      modal.addEventListener('click', (event) => {
+        if (event.target === modal) closeModal();
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && modal.classList.contains('active')) closeModal();
+      });
+    })();
+  </script>
 
   <script src="https://pdf-sorcerer.github.io/alp/nav-loader.js" data-page="uix"></script>
 </body>
