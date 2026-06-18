@@ -312,6 +312,7 @@
 
     .demo-video-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 24px; }
     .video-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .video-column { display: flex; flex-direction: column; gap: 16px; }
 
     .video-section-label {
       font-family: 'IBM Plex Mono', monospace;
@@ -483,6 +484,7 @@
       .youtube-teaser,
       .demo-video-grid,
       .video-grid { grid-template-columns: 1fr; }
+      .video-column { display: contents; }
     }
   </style>
 </head>
@@ -601,21 +603,66 @@
 
 <div class="video-grid">
 
-  <!-- LEFT -->
-  <button
-    class="video-cell"
-    type="button"
-    onclick="openVideoLightbox('v1_app.mp4','iOS App Walkthrough')">
-    <div class="video-thumb">
-      <img src="v1_app.png" alt="iOS App Walkthrough">
-      <span class="play-icon">▶</span>
-      <span class="video-name">v1_app</span>
-    </div>
-    <div class="video-label">iOS App Walkthrough</div>
-  </button>
+  <!-- COLUMN 1 -->
+  <div class="video-column">
 
-  <!-- MIDDLE COLUMN -->
-  <div class="video-stack">
+    <button
+      class="video-cell"
+      type="button"
+      onclick="openVideoLightbox('jcal_v0.mp4','Jason Calacanis')">
+      <div class="video-thumb">
+        <img src="jcal_v0.png" alt="Jason Calacanis">
+        <span class="play-icon">▶</span>
+        <span class="video-name">jcal_v0</span>
+      </div>
+      <div class="video-label">Jason Calacanis</div>
+    </button>
+
+    <button
+      class="video-cell"
+      type="button"
+      onclick="openVideoLightbox('friedbergv0.mp4','David Friedberg')">
+      <div class="video-thumb">
+        <img src="friedbergv0.png" alt="David Friedberg">
+        <span class="play-icon">▶</span>
+        <span class="video-name">friedbergv0</span>
+      </div>
+      <div class="video-label">David Friedberg</div>
+    </button>
+
+  </div>
+
+  <!-- COLUMN 2 -->
+  <div class="video-column">
+
+    <button
+      class="video-cell"
+      type="button"
+      onclick="openVideoLightbox('chamathv0.mp4','Chamath Palihapitiya')">
+      <div class="video-thumb">
+        <img src="chamathv0.png" alt="Chamath Palihapitiya">
+        <span class="play-icon">▶</span>
+        <span class="video-name">chamathv0</span>
+      </div>
+      <div class="video-label">Chamath Palihapitiya</div>
+    </button>
+
+    <button
+      class="video-cell"
+      type="button"
+      onclick="openVideoLightbox('sacks_v0.mp4','David Sacks')">
+      <div class="video-thumb">
+        <img src="sacks_v0.png" alt="David Sacks">
+        <span class="play-icon">▶</span>
+        <span class="video-name">sacks_v0</span>
+      </div>
+      <div class="video-label">David Sacks</div>
+    </button>
+
+  </div>
+
+  <!-- COLUMN 3 -->
+  <div class="video-column">
 
     <button
       class="video-cell"
@@ -632,29 +679,16 @@
     <button
       class="video-cell"
       type="button"
-      onclick="openVideoLightbox('zuck.mp4','Mark Zuckerberg')">
+      onclick="openVideoLightbox('v0.mp4','Early Prototype')">
       <div class="video-thumb">
-        <img src="mz.png" alt="Mark Zuckerberg">
+        <img src="v0.png" alt="Early Prototype">
         <span class="play-icon">▶</span>
-        <span class="video-name">zuck</span>
+        <span class="video-name">v0</span>
       </div>
-      <div class="video-label">Mark Zuckerberg</div>
+      <div class="video-label">Early Prototype</div>
     </button>
 
   </div>
-
-  <!-- RIGHT -->
-  <button
-    class="video-cell"
-    type="button"
-    onclick="openVideoLightbox('v0.mp4','Early Prototype')">
-    <div class="video-thumb">
-      <img src="v0.png" alt="Early Prototype">
-      <span class="play-icon">▶</span>
-      <span class="video-name">v0</span>
-    </div>
-    <div class="video-label">Early Prototype</div>
-  </button>
 
 </div>
 
