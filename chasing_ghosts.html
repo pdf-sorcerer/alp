@@ -462,19 +462,28 @@
 <h1>Ghost Audio</h1>
 <p class="lead"><em>An investigation into transcript text omissions</em></p>
   <br>
-<p class="lead"> 
-  <strong>What</strong>: This page investigates why speech went untranscribed by the WhisperX pipeline — a phenomenon I call Ghost Audio, because the audio is clearly there but the transcript text isn't.
-  All-In Podcast episode corpus.</p> 
-  
-  <p class="lead"> 
-    <strong>Why</strong>: Ghost Audio distorts dialogue and conversational content that downstream models learn from. 
-    Because the transcripts appear clean and complete, omissions will persist unless they're manually reviewed and downstream models will learn from corrupted data.</p>
-  
-  <p class="lead">
-  <strong>Findings</strong>: A probe of Episode 136 {this page} surfaced ~5-to-8 examples of Ghost Audio. The exact corpus-wide omission rate remains unknown, still Ghost Audio has been given structure so it becomes something that can be surfaced and acted upon.
-  </p>      
+<p class="lead">
+  This page investigates a transcript failure mode I call <strong>Ghost Audio</strong>:
+  speech that is clearly present in the audio, but missing from the transcript.
+</p>
 
-                                                                        
+<p class="lead">
+  Ghost Audio is easy to miss because the transcripts otherwise appear to be whole and complete. But they're not. Missing segments of speech quietly distort dialogue and context,
+  and taint the training data with incomplete thoughts.
+</p>
+
+<p class="lead">
+  While auditing Episode 136 of the All-In Podcast, I discovered two instances
+  of Ghost Audio occurring seconds apart. That investigation led to new
+  tooling, a decoder-level analysis, and a workflow for surfacing similar
+  omissions elsewhere in the corpus. 
+  
+</p>
+
+
+<p class="lead">
+  At the time of writing (2026-06-17), the corpus-wide impact remains unknown. If I had to guess, it's minor, which makes quantifying it a bit of a P3. Even so, this turned out to be a banger of an investigation and entirely worthwhile because Ghost Audio has been made material; it can be surfaced and acted upon.
+</p>                                                                     
   <details class="accordion-block">
     <summary><span>Why Omissions Matter: Featuring <em>The Empire Strikes Back (1980)</em></span></summary>
 
