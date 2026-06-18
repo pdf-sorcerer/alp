@@ -505,30 +505,49 @@
 
       <div class="arch-callout">
         <p><strong>WhisperX timestamps are canonical.</strong> ASR is the sole authority on <em>what</em> was said and <em>when</em> it was said.</p>
-        <p><strong>NeMo answers who spoke</strong> — <em>by majority vote</em> and only within the boundaries WhisperX created. This preserves the structure of the transcript whole. Direct experience showed that applying NeMo's RTTM boundaries directly produced highly fragmented transcripts that required unreasonable effort to repair.</p>
+        <p><strong>NeMo answers who spoke</strong> — <em>by majority vote</em> and only within the boundaries WhisperX created. This preserves the transcript's original structure, and otherwise hard-applying NeMo's RTTM boundaries created highly fragmented transcripts that required unreasonable effort to repair.</p>
       </div>
 
         <p class="lead">
         <strong>The first generation of HITL tooling was built in late 2025.</strong>
-        The workflow begins by mapping diarization-generated <code>SPEAKER_ID</code>s to host identities using
+        The workflow begins by mapping diarization-generated <code>SPEAKER_IDs</code> to host identities using
         <a href="https://www.youtube.com/watch?v=UPnnOCWqiAw" class="inline-tag">Clownfish↗</a>.
-        The transcript is then analyzed for potential AI errors, such as ellipses, non-terminating sentences, and lowercase continuations.
+        The transcript is then analyzed for transcription artifacts, such as ellipses, non-terminating sentences, and lowercase continuations; telltale signs the model was operating outside its confidence. 
       </p>
 
-      <div class="video-grid">
-        <a class="video-card" href="https://www.loom.com/share/443f64dbf9454aa68695001f63df8200" target="_blank">
-          <div class="video-card-caption">
-            <div class="video-card-title">Episode 75 · HITL Review</div>
-            <div class="video-card-subtitle">Human-in-the-loop transcript auditing ↗</div>
-          </div>
-        </a>
-        <a class="video-card" href="https://www.loom.com/share/ada43b6769704b3ca42daf99594ef73a" target="_blank">
-          <div class="video-card-caption">
-            <div class="video-card-title">Episode 113 · HITL Review</div>
-            <div class="video-card-subtitle">Human-in-the-loop transcript auditing ↗</div>
-          </div>
-        </a>
-      </div>
+<div class="video-grid">
+
+  <button
+    class="video-cell"
+    type="button"
+    onclick="openVideoLightbox('ep50.mp4','Episode 50 · HITL Review')">
+
+    <div class="video-thumb">
+      <span class="play-icon">▶</span>
+      <span class="video-name">ep75</span>
+    </div>
+
+    <div class="video-label">
+      Episode 75 · HITL Review
+    </div>
+  </button>
+
+  <button
+    class="video-cell"
+    type="button"
+    onclick="openVideoLightbox('ep113.mp4','Episode 113 · HITL Review')">
+
+    <div class="video-thumb">
+      <span class="play-icon">▶</span>
+      <span class="video-name">ep113</span>
+    </div>
+
+    <div class="video-label">
+      Episode 113 · HITL Review
+    </div>
+  </button>
+
+</div>
 
       <p class="lead">
         <strong>Returning to HITL in 2026</strong>, I'm experimenting with a complementary second layer: word-level acoustics. 
