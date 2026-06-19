@@ -15,8 +15,9 @@
     document.body.insertBefore(banner, document.body.firstChild);
   }
 
-  const NAV_HTML = `
+ const NAV_HTML = `
 <div class="nav-logo">ALL-LLLM POD</div>
+
 <div class="nav-section-label">Pages</div>
 <a href="https://pdf-sorcerer.github.io/alp/welcome.html" class="nav-item" data-page="welcome">1. Welcome</a>
 <a href="https://pdf-sorcerer.github.io/alp/architecture.html" class="nav-item" data-page="architecture">2. Architecture</a>
@@ -24,9 +25,11 @@
 <a href="https://pdf-sorcerer.github.io/alp/about.html" class="nav-item" data-page="about">4. About</a>
 
 <div class="nav-section-label">Side Quests</div>
-
 <a href="https://pdf-sorcerer.github.io/alp/heuristics.html" class="nav-item" data-page="heuristics">• Transcript Forensics</a>
-<a href="https://pdf-sorcerer.github.io/alp/chasing_ghosts.html" class="nav-item" data-page="chasing-ghosts">• Chasing Ghosts</a>`;
+<a href="https://pdf-sorcerer.github.io/alp/chasing_ghosts.html" class="nav-item" data-page="chasing-ghosts">• Chasing Ghosts</a>
+
+<div class="nav-section-label">Personal</div>
+<a href="https://pdf-sorcerer.github.io/alp/plan.html" class="nav-item" data-page="plan">.Plan</a>`;
 
   const style = document.createElement('style');
   style.textContent = `
