@@ -1,31 +1,204 @@
-<p class="page-eyebrow">project status</p>
-<h1>Mason's .plan</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mason's .plan | ALL-LLLM POD</title>
 
-<p class="lead">
-Last updated: <strong>2026-06-18</strong>
-</p>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<h3 class="section-title">Project</h3>
+  <style>
+    :root {
+      --green: #0A84FF;
+      --green-dim: rgba(10, 132, 255, 0.12);
+      --bg: #f9f9f9;
+      --surface: #ffffff;
+      --border: #e4e4e4;
+      --code-bg: #0d1117;
+      --text: #1a1a1a;
+      --muted: #6b6b6b;
+      --faint: #8c8c8c;
+      --nav-width: 220px;
+    }
 
-<p class="lead">
-<strong>ALL-LLLM POD</strong><br>
-MLP
-</p>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-<h3 class="section-title">Notes</h3>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
 
-<ul class="body-list">
-  <li>Website complete</li>
-  <li>1 month on Qwen3-30B MoE</li>
-  <li>System prompts reduced</li>
-  <li>Transcripts → memories / embeddings / discourse events</li>
-  <li>Online RAG: mixed results</li>
-  <li>Tweet scraper working</li>
-</ul>
+    #shared-nav {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      width: var(--nav-width);
+      flex-shrink: 0;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      padding: 32px 0;
+      overflow-y: auto;
+    }
 
-<h3 class="section-title">Todo</h3>
+    main {
+      flex: 1;
+      padding: 56px 64px 120px;
+      max-width: 860px;
+      min-width: 0;
+    }
 
-<ul class="body-list">
-  <li>Persona convergence</li>
-  <li>Stand up business_idiot for local code gen</li>
-</ul>
+    .page-eyebrow {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 14px;
+    }
+
+    h2 {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin: 42px 0 14px;
+    }
+
+    .lead {
+      font-size: 14px;
+      line-height: 1.75;
+      color: #3a3a3a;
+      max-width: 720px;
+      margin-bottom: 24px;
+    }
+
+    .lead strong { font-weight: 600; color: var(--text); }
+
+    .body-list {
+      max-width: 720px;
+      margin: 0 0 30px 18px;
+      padding-left: 18px;
+      color: #3a3a3a;
+      font-size: 14px;
+      line-height: 1.75;
+    }
+
+    .body-list li { padding-left: 4px; margin-bottom: 6px; }
+
+    .plan-card {
+      max-width: 720px;
+      margin: 28px 0 38px;
+      padding: 22px 24px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+    }
+
+    .plan-kicker {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--faint);
+      margin-bottom: 8px;
+    }
+
+    .plan-status {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 13px;
+      line-height: 1.7;
+      color: var(--text);
+    }
+
+    .plan-status strong { color: var(--green); }
+
+    .footer {
+      margin-top: 72px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--faint);
+    }
+
+    @media (max-width: 768px) {
+      #shared-nav {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        height: 100vh !important;
+        width: 260px !important;
+        z-index: 10001 !important;
+        transform: translateX(-100%) !important;
+        transition: transform 0.25s ease !important;
+        overflow-y: auto !important;
+        box-shadow: 2px 0 12px rgba(0,0,0,0.12) !important;
+        flex-shrink: 0 !important;
+      }
+
+      #shared-nav.open { transform: translateX(0) !important; }
+      main { padding: 64px 20px 80px; width: 100%; max-width: 100%; }
+    }
+  </style>
+</head>
+
+<body>
+  <nav id="shared-nav"></nav>
+
+  <main>
+    <p class="page-eyebrow">project status</p>
+    <h1>Mason's .plan</h1>
+
+    <p class="lead">
+      Last updated: <strong>2026-06-18</strong>
+    </p>
+
+    <div class="plan-card">
+      <p class="plan-kicker">Project</p>
+      <p class="plan-status">
+        <strong>ALL-LLLM POD</strong><br>
+        STATUS: MLP
+      </p>
+    </div>
+
+    <h2>Notes</h2>
+    <ul class="body-list">
+      <li>Website complete</li>
+      <li>1 month on Qwen3-30B MoE</li>
+      <li>System prompts reduced</li>
+      <li>Transcripts → memories / embeddings / discourse events</li>
+      <li>Online RAG: mixed results</li>
+      <li>Tweet scraper working</li>
+    </ul>
+
+    <h2>Todo</h2>
+    <ul class="body-list">
+      <li>Persona convergence</li>
+      <li>Stand up business_idiot for local code gen</li>
+    </ul>
+
+    <div class="footer">Mason Thompson · Berkeley, California</div>
+  </main>
+
+  <script src="https://pdf-sorcerer.github.io/alp/nav-loader.js" data-page="plan" data-title="Mason's .plan"></script>
+</body>
+</html>
