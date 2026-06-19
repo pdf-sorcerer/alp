@@ -76,16 +76,21 @@
       margin-bottom: 48px;
     }
     .profile-photo {
-      width: 148px;
-      min-width: 148px;
-      align-self: stretch;
-      border-radius: 6px;
-      object-fit: contain;
-      object-position: center top;
-      border: 1px solid var(--border);
-      flex-shrink: 0;
-      display: block;
-    }
+    width: 148px;
+    min-width: 148px;
+
+    align-self: flex-start;
+
+    border-radius: 6px;
+    object-fit: cover;
+    object-position: center top;
+
+    border: 1px solid var(--border);
+    flex-shrink: 0;
+    display: block;
+
+    height: auto;
+}
     .profile-bio { display: flex; flex-direction: column; gap: 14px; flex: 1; min-width: 0; }
 
     .lead {
@@ -188,8 +193,15 @@
       }
       #shared-nav.open { transform: translateX(0) !important; }
       main { padding: 64px 20px 80px; width: 100%; max-width: 100%; }
-      .profile-row { grid-template-columns: 1fr; }
-      .profile-photo { width: 100px; height: 100px; }
+      .profile-row {
+          flex-direction: column;
+          align-items: flex-start;
+      }
+      
+      .profile-photo {
+          width: 148px;
+          height: auto;
+      }
       .things-grid { grid-template-columns: repeat(2, 1fr); }
       .modal-overlay { padding: 12px; }
       .resume-iframe { min-height: 60vh; }
