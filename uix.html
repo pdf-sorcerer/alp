@@ -30,9 +30,9 @@
       color: var(--text);
       display: flex;
       min-height: 100vh;
+      overflow-x: hidden;
     }
 
-    /* ── Nav ── */
     #shared-nav {
       position: sticky;
       top: 0;
@@ -47,42 +47,6 @@
       overflow-y: auto;
     }
 
-    .nav-logo {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--green);
-      padding: 0 20px 22px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .nav-section-label {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 9px;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--faint);
-      padding: 16px 20px 6px;
-    }
-
-    .nav-item {
-      display: block;
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 10px;
-      color: var(--muted);
-      text-decoration: none;
-      padding: 6px 20px;
-      border-left: 2px solid transparent;
-      transition: color 0.15s, border-color 0.15s, background 0.15s;
-    }
-
-    .nav-item:hover { color: var(--text); background: var(--bg); border-left-color: var(--border); }
-    .nav-item.active { color: var(--green); border-left-color: var(--green); background: var(--green-dim); }
-
-    /* ── Main ── */
     main {
       flex: 1;
       padding: 48px 52px 100px;
@@ -115,23 +79,21 @@
       margin-bottom: 40px;
     }
 
-    /* ── Surface stack ── */
     .surface-stack {
       display: flex;
       flex-direction: column;
       gap: 16px;
     }
 
-    /* A "row" can hold 1 or 2 surface panels side by side */
     .surface-row {
       display: grid;
       gap: 16px;
     }
+
     .surface-row.cols-1 { grid-template-columns: 1fr; }
     .surface-row.cols-2 { grid-template-columns: 1fr 1fr; }
     .surface-row.cols-3 { grid-template-columns: repeat(3, 1fr); }
 
-    /* ── Panel ── */
     .surface-panel {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -140,10 +102,8 @@
       display: flex;
       flex-direction: column;
       gap: 20px;
+      min-width: 0;
     }
-
-    /* Inside each panel: copy block on top, media below (horizontal within media) */
-    .panel-copy {}
 
     .surface-label {
       font-family: 'IBM Plex Mono', monospace;
@@ -169,7 +129,11 @@
       color: var(--muted);
     }
 
-    /* Media row: swipeable/keyable carousel per surface */
+    .panel-media-shell {
+      position: relative;
+      min-width: 0;
+    }
+
     .panel-media {
       position: relative;
       display: flex;
@@ -180,19 +144,17 @@
       scroll-snap-type: x mandatory;
       scroll-behavior: smooth;
       scrollbar-width: none;
-      padding: 0 34px 4px;
+      padding: 0 38px 4px;
+      min-width: 0;
     }
 
-    .panel-media::-webkit-scrollbar {
-      display: none;
-    }
+    .panel-media::-webkit-scrollbar { display: none; }
 
     .media-item {
       flex: 0 0 auto;
       display: flex;
       flex-direction: column;
       align-items: center;
-      min-width: 0;
       scroll-snap-align: center;
     }
 
@@ -213,50 +175,35 @@
       background: #000;
     }
 
+    .media-nav,
+    .modal-nav {
+      border: none;
+      border-radius: 999px;
+      background: var(--green);
+      color: #fff;
+      cursor: pointer;
+      z-index: 4;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 3px 10px rgba(10,132,255,0.30);
+      transition: background 0.15s ease, transform 0.15s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+
     .media-nav {
-  position: sticky;
-  top: 50%;
-  transform: translateY(-50%);
-  flex: 0 0 28px;
+      position: absolute;
+      top: 50%;
+      width: 34px;
+      height: 34px;
+      transform: translateY(-50%);
+    }
 
-  width: 28px;
-  height: 28px;
-
-  border: none;
-  border-radius: 999px;
-
-  background: var(--green);
-  color: #fff;
-
-  cursor: pointer;
-  z-index: 2;
-
-  font-size: 16px;
-  font-weight: 700;
-  line-height: 1;
-
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  box-shadow: 0 2px 6px rgba(10,132,255,0.25);
-
-  transition: background 0.15s ease;
-}
-
-.media-nav:hover {
-  background: #0074e8;
-}
-
-.media-nav.prev {
-  left: 0;
-  order: -1;
-}
-
-.media-nav.next {
-  right: 0;
-  order: 999;
-}
+    .media-nav.prev { left: 0; }
+    .media-nav.next { right: 0; }
 
     .media-caption {
       font-family: 'IBM Plex Mono', monospace;
@@ -280,7 +227,6 @@
       margin-top: 2px;
     }
 
-    /* Wide panels: copy left, media right */
     .panel-wide {
       flex-direction: row;
       align-items: center;
@@ -291,12 +237,10 @@
       flex: 0 0 220px;
     }
 
-    .panel-wide .panel-media {
+    .panel-wide .panel-media-shell {
       flex: 1;
-      align-items: flex-end;
     }
 
-    /* Modal */
     .media-modal {
       position: fixed;
       inset: 0;
@@ -305,22 +249,67 @@
       justify-content: center;
       background: rgba(0,0,0,0.88);
       z-index: 99999;
-      padding: 28px;
+      padding: 34px 58px;
     }
+
     .media-modal.active { display: flex; }
-    .media-modal img, .media-modal video {
+
+    .modal-stage {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      max-width: 1100px;
+      max-height: 88vh;
+    }
+
+    .media-modal img,
+    .media-modal video {
       max-width: 92vw;
       max-height: 88vh;
       border-radius: 6px;
       background: #000;
       box-shadow: 0 18px 64px rgba(0,0,0,0.45);
     }
+
     .media-modal-close {
       position: absolute;
-      top: 18px; right: 26px;
-      border: 0; background: transparent;
-      color: #fff; font-size: 38px;
-      line-height: 1; cursor: pointer;
+      top: 18px;
+      right: 26px;
+      border: 0;
+      background: transparent;
+      color: #fff;
+      font-size: 38px;
+      line-height: 1;
+      cursor: pointer;
+      z-index: 6;
+    }
+
+    .modal-nav {
+      position: absolute;
+      top: 50%;
+      width: 48px;
+      height: 48px;
+      transform: translateY(-50%);
+    }
+
+    .modal-nav.prev { left: 6px; }
+    .modal-nav.next { right: 6px; }
+    .modal-nav[hidden] { display: none; }
+
+    .modal-caption {
+      position: absolute;
+      left: 50%;
+      bottom: -30px;
+      transform: translateX(-50%);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.72);
+      white-space: nowrap;
     }
 
     .footer {
@@ -334,42 +323,80 @@
       color: var(--faint);
     }
 
-    /* ── Mobile ── */
     @media (max-width: 768px) {
       #shared-nav {
         position: fixed !important;
-        top: 0; left: 0;
-        height: 100vh; width: 240px;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 240px;
         z-index: 10001;
         transform: translateX(-100%);
         transition: transform 0.25s ease;
         box-shadow: 2px 0 12px rgba(0,0,0,0.12);
       }
+
       #shared-nav.open { transform: translateX(0); }
 
       main { padding: 52px 18px 72px; }
 
       .surface-row.cols-2,
-      .surface-row.cols-3 { grid-template-columns: 1fr; }
+      .surface-row.cols-3 {
+        grid-template-columns: 1fr;
+      }
 
-      .panel-wide { flex-direction: column; }
-      .panel-wide .panel-copy { flex: none; }
+      .panel-wide {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .panel-wide .panel-copy {
+        flex: none;
+      }
+
+      .surface-panel {
+        padding: 22px 20px;
+      }
 
       .panel-media {
         flex-wrap: nowrap;
         justify-content: flex-start;
-        padding: 0 32px 4px;
+        padding: 0 36px 4px;
       }
-      .media-item {
-        flex: 0 0 auto;
-        max-width: none;
-      }
+
       .phone-shot {
         max-width: 140px;
       }
+
       .video-shot {
         height: 300px;
         max-width: 170px;
+      }
+
+      .media-modal {
+        padding: 44px 20px 58px;
+      }
+
+      .media-modal img,
+      .media-modal video {
+        max-width: 86vw;
+        max-height: 78vh;
+      }
+
+      .modal-nav {
+        width: 48px;
+        height: 48px;
+        font-size: 22px;
+      }
+
+      .modal-nav.prev { left: 0; }
+      .modal-nav.next { right: 0; }
+
+      .modal-caption {
+        bottom: -34px;
+        max-width: 82vw;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
     }
   </style>
@@ -381,17 +408,17 @@
   <main>
     <p class="page-eyebrow">iOS Client</p>
     <h1>App UI</h1>
-<p class="lead">
-  A thin <strong>SwiftUI iOS app</strong> with an iMessage/FaceTime-style interface and Hacker News-inspired colorways (dark mode exists, but I'm in my light-mode era). 
-</p>
 
     <p class="lead">
- The app incorporates audio capture, streamed TTS playback over websocket, transcript display, rules-based persona animation, runtime controls, and observability live on-device; inference, ASR, diarization, and TTS generation run across Mac and PC.
-</p>
+      A thin <strong>SwiftUI iOS app</strong> with an iMessage/FaceTime-style interface and Hacker News-inspired colorways (dark mode exists, but I'm in my light-mode era).
+    </p>
+
+    <p class="lead">
+      The app incorporates audio capture, streamed TTS playback over websocket, transcript display, rules-based persona animation, runtime controls, and observability live on-device; inference, ASR, diarization, and TTS generation run across Mac and PC.
+    </p>
 
     <div class="surface-stack">
 
-      <!-- S01 + S02 side by side -->
       <div class="surface-row cols-2">
 
         <section class="surface-panel panel-wide">
@@ -400,10 +427,13 @@
             <h2>Persona Roster</h2>
             <p>No launch screen required. On load, users land directly in the Contacts view.</p>
           </div>
-          <div class="panel-media">
-            <div class="media-item">
-              <img class="phone-shot" src="main.PNG" alt="Persona roster">
-              <div class="media-caption">Contacts<span>On-load of app</span></div>
+
+          <div class="panel-media-shell">
+            <div class="panel-media">
+              <div class="media-item">
+                <img class="phone-shot" src="main.PNG" alt="Persona roster">
+                <div class="media-caption">Contacts<span>On-load of app</span></div>
+              </div>
             </div>
           </div>
         </section>
@@ -412,23 +442,26 @@
           <div class="panel-copy">
             <div class="surface-label">Surface 02</div>
             <h2>Text Message &amp; 1:1 Video Chat</h2>
-            <p>1:1 Text Message & FaceTime-style inference.</p>
+            <p>1:1 Text Message &amp; FaceTime-style inference.</p>
           </div>
-          <div class="panel-media">
-            <div class="media-item">
-              <img class="phone-shot" src="IMG_4854.png" alt="Text message interface">
-              <div class="media-caption">Text Message<span></span></div>
-            </div>
-            <div class="media-item">
-              <img class="phone-shot" src="jensen.PNG" alt="1:1 video chat">
-              <div class="media-caption">Video Chat<span></span></div>
+
+          <div class="panel-media-shell">
+            <div class="panel-media">
+              <div class="media-item">
+                <img class="phone-shot" src="IMG_4854.png" alt="Text message interface">
+                <div class="media-caption">Text Message</div>
+              </div>
+
+              <div class="media-item">
+                <img class="phone-shot" src="jensen.PNG" alt="1:1 video chat">
+                <div class="media-caption">Video Chat</div>
+              </div>
             </div>
           </div>
         </section>
 
       </div>
 
-      <!-- S03 full width -->
       <div class="surface-row cols-1">
         <section class="surface-panel panel-wide">
           <div class="panel-copy">
@@ -436,52 +469,54 @@
             <h2>Group Chat</h2>
             <p>Group calls, episode re-enactment, and Black Mirror episode generation.</p>
           </div>
-          <div class="panel-media">
-            <div class="media-item">
-              <img class="phone-shot" src="IMG_4860.png" alt="Live Call">
-              <div class="media-caption">Live Call</div>
-            </div>
-            <div class="media-item">
-              <img class="phone-shot" src="IMG_4861.png" alt="Episode Reenactment">
-              <div class="media-caption">Episode Reenactment</div>
-            </div>
-            <div class="media-item">
-              <img class="phone-shot" src="mirror_episode.png" alt="Mirror Episode Setup">
-              <div class="media-caption">Mirror Episode<span>Setup</span></div>
-            </div>
-            <div class="media-item">
-              <img class="phone-shot" src="mirror_episode_run.PNG" alt="Mirror Episode Run">
-              <div class="media-caption">Mirror Episode<span>Run</span></div>
+
+          <div class="panel-media-shell">
+            <div class="panel-media">
+              <div class="media-item">
+                <img class="phone-shot" src="IMG_4860.png" alt="Live Call">
+                <div class="media-caption">Live Call</div>
+              </div>
+
+              <div class="media-item">
+                <img class="phone-shot" src="IMG_4861.png" alt="Episode Reenactment">
+                <div class="media-caption">Episode Reenactment</div>
+              </div>
+
+              <div class="media-item">
+                <img class="phone-shot" src="mirror_episode.png" alt="Mirror Episode Setup">
+                <div class="media-caption">Mirror Episode<span>Setup</span></div>
+              </div>
+
+              <div class="media-item">
+                <img class="phone-shot" src="mirror_episode_run.PNG" alt="Mirror Episode Run">
+                <div class="media-caption">Mirror Episode<span>Run</span></div>
+              </div>
             </div>
           </div>
         </section>
       </div>
 
-<!-- S04 full width -->
-<div class="surface-row cols-1">
-  <section class="surface-panel panel-wide">
-    <div class="panel-copy">
-      <div class="surface-label">Surface 04</div>
-      <h2>Persona Builder</h2>
-      <p>MVP workflow that is good enough to get personas stood up and ready for video chat.</p>
-    </div>
+      <div class="surface-row cols-1">
+        <section class="surface-panel panel-wide">
+          <div class="panel-copy">
+            <div class="surface-label">Surface 04</div>
+            <h2>Persona Builder</h2>
+            <p>MVP workflow that is good enough to get personas stood up and ready for video chat.</p>
+          </div>
 
-    <div class="panel-media">
-      <div class="media-item">
-        <video class="video-shot" controls preload="metadata" playsinline>
-          <source src="wardrobe.mp4" type="video/mp4">
-        </video>
-        <div class="media-caption">
-          Persona Builder
-          <span>Assembly workflow film</span>
-        </div>
+          <div class="panel-media-shell">
+            <div class="panel-media">
+              <div class="media-item">
+                <video class="video-shot" controls preload="metadata" playsinline>
+                  <source src="wardrobe.mp4" type="video/mp4">
+                </video>
+                <div class="media-caption">Persona Builder<span>Assembly workflow film</span></div>
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
-    </div>
 
-  </section>
-</div>
-
-      <!-- S05 + S06 + S07 three-up -->
       <div class="surface-row cols-3">
 
         <section class="surface-panel">
@@ -490,10 +525,13 @@
             <h2>Runtime Controls</h2>
             <p>Inference logs with per-request latency, token counts, and TTFA.</p>
           </div>
-          <div class="panel-media">
-            <div class="media-item">
-              <img class="phone-shot" src="IMG_4855.png" alt="Inference Logs">
-              <div class="media-caption">Inference Logs</div>
+
+          <div class="panel-media-shell">
+            <div class="panel-media">
+              <div class="media-item">
+                <img class="phone-shot" src="IMG_4855.png" alt="Inference Logs">
+                <div class="media-caption">Inference Logs</div>
+              </div>
             </div>
           </div>
         </section>
@@ -502,12 +540,15 @@
           <div class="panel-copy">
             <div class="surface-label">Surface 06</div>
             <h2>Motion Controls</h2>
-            <p>Motion tuning — superseded by rules-based Motion RNA, which takes hots body movement and facial cues directly from video.</p>
+            <p>Motion tuning — superseded by rules-based Motion RNA, which takes host body movement and facial cues directly from video.</p>
           </div>
-          <div class="panel-media">
-            <div class="media-item">
-              <img class="phone-shot" src="IMG_4856.png" alt="Motion Controls">
-              <div class="media-caption">Motion RNA Controls</div>
+
+          <div class="panel-media-shell">
+            <div class="panel-media">
+              <div class="media-item">
+                <img class="phone-shot" src="IMG_4856.png" alt="Motion Controls">
+                <div class="media-caption">Motion RNA Controls</div>
+              </div>
             </div>
           </div>
         </section>
@@ -518,18 +559,23 @@
             <h2>Model Parameters</h2>
             <p>Model selection, temperature, token limits, and platform configuration exposed as runtime controls.</p>
           </div>
-          <div class="panel-media">
-           <div class="media-item">
-              <img class="phone-shot" src="settings.PNG" alt="LLLM Settings">
-              <div class="media-caption">Params</div>
-            </div>
-            <div class="media-item">
-              <img class="phone-shot" src="advanced.PNG" alt="Advanced Settings">
-              <div class="media-caption">Params</div>
-            </div>
-            <div class="media-item">
-              <img class="phone-shot" src="IMG_4858.png" alt="Platform">
-              <div class="media-caption">Platform</div>
+
+          <div class="panel-media-shell">
+            <div class="panel-media">
+              <div class="media-item">
+                <img class="phone-shot" src="settings.PNG" alt="LLLM Settings">
+                <div class="media-caption">Params</div>
+              </div>
+
+              <div class="media-item">
+                <img class="phone-shot" src="advanced.PNG" alt="Advanced Settings">
+                <div class="media-caption">Params</div>
+              </div>
+
+              <div class="media-item">
+                <img class="phone-shot" src="IMG_4858.png" alt="Platform">
+                <div class="media-caption">Platform</div>
+              </div>
             </div>
           </div>
         </section>
@@ -543,8 +589,14 @@
 
   <div id="media-modal" class="media-modal" aria-hidden="true">
     <button class="media-modal-close" type="button" aria-label="Close">&times;</button>
-    <img id="modal-image" alt="Expanded media" style="display:none">
-    <video id="modal-video" controls style="display:none"></video>
+
+    <div class="modal-stage">
+      <button class="modal-nav prev" type="button" aria-label="Previous media">&#10094;</button>
+      <img id="modal-image" alt="Expanded media" style="display:none">
+      <video id="modal-video" controls playsinline style="display:none"></video>
+      <button class="modal-nav next" type="button" aria-label="Next media">&#10095;</button>
+      <div id="modal-caption" class="modal-caption"></div>
+    </div>
   </div>
 
   <script>
@@ -552,16 +604,34 @@
       const modal = document.getElementById('media-modal');
       const modalImage = document.getElementById('modal-image');
       const modalVideo = document.getElementById('modal-video');
+      const modalCaption = document.getElementById('modal-caption');
       const closeButton = document.querySelector('.media-modal-close');
+      const modalPrev = document.querySelector('.modal-nav.prev');
+      const modalNext = document.querySelector('.modal-nav.next');
+
+      let activeGroup = [];
+      let activeIndex = 0;
+
+      function getMediaSource(media) {
+        if (media.tagName.toLowerCase() === 'img') {
+          return media.currentSrc || media.src;
+        }
+
+        return media.querySelector('source')?.src || media.currentSrc || media.src;
+      }
+
+      function getCaption(media) {
+        const item = media.closest('.media-item');
+        const caption = item ? item.querySelector('.media-caption') : null;
+        return caption ? caption.textContent.replace(/\s+/g, ' ').trim() : (media.alt || '');
+      }
 
       function setupSurfaceCarousels() {
         document.querySelectorAll('.panel-media').forEach((track) => {
           const items = Array.from(track.querySelectorAll('.media-item'));
           if (items.length <= 1) return;
 
-          track.setAttribute('tabindex', '0');
-          track.setAttribute('role', 'group');
-          track.setAttribute('aria-label', 'Swipeable media carousel');
+          const shell = track.closest('.panel-media-shell') || track.parentElement;
 
           const prev = document.createElement('button');
           prev.className = 'media-nav prev';
@@ -574,10 +644,11 @@
           next.type = 'button';
           next.setAttribute('aria-label', 'Next media');
           next.innerHTML = '&#10095;';
-          track.insertBefore(prev, track.firstChild);
-          track.appendChild(next);
 
-          function activeIndex() {
+          shell.appendChild(prev);
+          shell.appendChild(next);
+
+          function getActiveIndex() {
             const trackRect = track.getBoundingClientRect();
             const trackCenter = trackRect.left + trackRect.width / 2;
 
@@ -610,64 +681,116 @@
           prev.addEventListener('click', (event) => {
             event.preventDefault();
             event.stopPropagation();
-            scrollToIndex(activeIndex() - 1);
+            scrollToIndex(getActiveIndex() - 1);
           });
 
           next.addEventListener('click', (event) => {
             event.preventDefault();
             event.stopPropagation();
-            scrollToIndex(activeIndex() + 1);
-          });
-
-          track.addEventListener('keydown', (event) => {
-            if (event.key === 'ArrowLeft') {
-              event.preventDefault();
-              scrollToIndex(activeIndex() - 1);
-            }
-
-            if (event.key === 'ArrowRight') {
-              event.preventDefault();
-              scrollToIndex(activeIndex() + 1);
-            }
+            scrollToIndex(getActiveIndex() + 1);
           });
         });
       }
 
-      setupSurfaceCarousels();
+      function renderModal() {
+        const media = activeGroup[activeIndex];
+        if (!media) return;
 
-      function closeModal() {
-        modal.classList.remove('active');
-        modal.setAttribute('aria-hidden', 'true');
-        modalImage.removeAttribute('src');
-        modalImage.style.display = 'none';
+        const isImage = media.tagName.toLowerCase() === 'img';
+        const source = getMediaSource(media);
+
+        modalCaption.textContent = getCaption(media);
+        modalPrev.hidden = activeGroup.length <= 1;
+        modalNext.hidden = activeGroup.length <= 1;
+
         modalVideo.pause();
         modalVideo.removeAttribute('src');
         modalVideo.load();
         modalVideo.style.display = 'none';
+
+        modalImage.removeAttribute('src');
+        modalImage.style.display = 'none';
+
+        if (isImage) {
+          modalImage.src = source;
+          modalImage.alt = media.alt || '';
+          modalImage.style.display = 'block';
+        } else {
+          modalVideo.src = source;
+          modalVideo.style.display = 'block';
+          modalVideo.load();
+        }
       }
 
+      function openModal(media) {
+        const track = media.closest('.panel-media');
+        activeGroup = track ? Array.from(track.querySelectorAll('.phone-shot, .video-shot')) : [media];
+        activeIndex = Math.max(0, activeGroup.indexOf(media));
+
+        modal.classList.add('active');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        renderModal();
+      }
+
+      function closeModal() {
+        modal.classList.remove('active');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+
+        modalImage.removeAttribute('src');
+        modalImage.style.display = 'none';
+
+        modalVideo.pause();
+        modalVideo.removeAttribute('src');
+        modalVideo.load();
+        modalVideo.style.display = 'none';
+
+        activeGroup = [];
+        activeIndex = 0;
+      }
+
+      function stepModal(direction) {
+        if (activeGroup.length <= 1) return;
+        activeIndex = (activeIndex + direction + activeGroup.length) % activeGroup.length;
+        renderModal();
+      }
+
+      setupSurfaceCarousels();
+
       document.querySelectorAll('.phone-shot, .video-shot').forEach((media) => {
-        media.addEventListener('click', (e) => {
-          e.preventDefault(); e.stopPropagation();
-          modal.classList.add('active');
-          modal.setAttribute('aria-hidden', 'false');
-          if (media.tagName.toLowerCase() === 'img') {
-            modalVideo.style.display = 'none';
-            modalImage.src = media.currentSrc || media.src;
-            modalImage.alt = media.alt || '';
-            modalImage.style.display = 'block';
-          } else {
-            modalImage.style.display = 'none';
-            modalVideo.src = media.querySelector('source')?.src || '';
-            modalVideo.style.display = 'block';
-            modalVideo.load();
-          }
+        media.addEventListener('click', (event) => {
+          event.preventDefault();
+          event.stopPropagation();
+          openModal(media);
         });
       });
 
+      modalPrev.addEventListener('click', (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        stepModal(-1);
+      });
+
+      modalNext.addEventListener('click', (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        stepModal(1);
+      });
+
       closeButton.addEventListener('click', closeModal);
-      modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
-      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+      modal.addEventListener('click', (event) => {
+        if (event.target === modal) closeModal();
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (!modal.classList.contains('active')) return;
+
+        if (event.key === 'Escape') closeModal();
+        if (event.key === 'ArrowLeft') stepModal(-1);
+        if (event.key === 'ArrowRight') stepModal(1);
+      });
     })();
   </script>
 
