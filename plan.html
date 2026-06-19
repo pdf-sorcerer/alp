@@ -101,33 +101,18 @@
 
     .body-list li { padding-left: 4px; margin-bottom: 6px; }
 
-    .plan-card {
-      max-width: 720px;
-      margin: 28px 0 38px;
-      padding: 22px 24px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-    }
-
-    .plan-kicker {
+    .video-section-label {
       font-family: 'IBM Plex Mono', monospace;
       font-size: 10px;
       font-weight: 600;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--faint);
-      margin-bottom: 8px;
+      margin: 36px 0 10px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+      max-width: 720px;
     }
-
-    .plan-status {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 13px;
-      line-height: 1.7;
-      color: var(--text);
-    }
-
-    .plan-status strong { color: var(--green); }
 
     .footer {
       margin-top: 72px;
@@ -172,15 +157,14 @@
       Last updated: <strong>2026-06-18</strong>
     </p>
 
-    <div class="plan-card">
-      <p class="plan-kicker">Project</p>
-      <p class="plan-status">
-        <strong>ALL-LLLM POD</strong><br>
-        STATUS: MLP
-      </p>
-    </div>
+    <p class="video-section-label">Project</p>
 
-    <h2>Notes</h2>
+    <p class="lead">
+      <strong>ALL-LLLM POD</strong><br>
+      MLP
+    </p>
+
+    <p class="video-section-label">Notes</p>
     <ul class="body-list">
       <li>Website complete</li>
       <li>1 month on Qwen3-30B MoE</li>
@@ -190,7 +174,7 @@
       <li>Tweet scraper working</li>
     </ul>
 
-    <h2>Todo</h2>
+    <p class="video-section-label">Todo</p>
     <ul class="body-list">
       <li>Persona convergence</li>
       <li>Stand up business_idiot for local code gen</li>
