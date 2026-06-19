@@ -133,11 +133,42 @@
     .lead { font-size: 14px; line-height: 1.75; color: #3a3a3a; max-width: 720px; margin-bottom: 52px; }
     .lead strong { font-weight: 600; color: var(--text); }
 
+
+    .callout {
+      max-width: 720px;
+      margin: -12px 0 40px;
+      padding: 18px 20px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+    }
+
+    .callout-title {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 10px;
+    }
+
+    .callout-body {
+      font-size: 13px;
+      line-height: 1.75;
+      color: var(--muted);
+    }
+
+    .callout-body strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
     .stats-row {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 12px;
-  margin: -20px 0 52px;
+  margin: 0 0 52px;
   max-width: 720px;
 }
 
@@ -507,19 +538,22 @@
   Hey, everybody!
   <br><br>
   Welcome to the number one <strong>ALL-LLLM POD</strong>: a technically serious generative AI system built around an intentionally unserious premise: conversational chatbot parodies of the <i>All-In Podcast</i> Besties.
+</p>
 
 <p class="lead">
   The Besties' personas emerge from transcripts generated from over 563 episodes, clips, and shorts from the official YouTube channels using an AI pipeline, custom Streamlit tooling, and a ridiculous amount of curiosity and tinkering.
 </p>
 
-    <div class="callout">
+<div class="callout">
+  <div class="callout-title">What this actually is</div>
 
-  <strong>What this actually is</strong><br><br>
-
-
-
-This looks like a podcast chatbot project. But it's really a recursive discovery process. Every answer exposed new questions: transcript quality led to HITL tooling; HITL tooling led to Ghost Audio; Ghost Audio led to decoder analysis; decoder analysis led to new evaluation workflows.
-
+  <div class="callout-body">
+    This looks like a podcast chatbot project. But it's really a
+    <strong>recursive engineering discovery process</strong>.
+    Every answer exposed new questions: transcript quality led to HITL tooling;
+    HITL tooling led to Ghost Audio; Ghost Audio led to decoder analysis;
+    decoder analysis led to new evaluation workflows.
+  </div>
 </div>
 
 <div class="stats-row">
