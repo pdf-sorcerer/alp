@@ -184,14 +184,21 @@
       min-width: 0;
     }
 
-    .phone-shot,
-    .video-shot {
-      width: 100%;
-      max-width: 220px;
-      display: block;
-      border-radius: 4px;
-      cursor: zoom-in;
-    }
+      .phone-shot,
+      .video-shot {
+        width: 100%;
+        max-width: 220px;
+        display: block;
+        border-radius: 4px;
+        cursor: zoom-in;
+      }
+      
+      .video-shot {
+        max-width: 220px;
+        min-height: 390px;
+        object-fit: cover;
+        background: #000;
+      }
 
     .video-shot { background: #000; max-width: 180px; }
 
@@ -377,24 +384,29 @@
         </section>
       </div>
 
-      <!-- S04 full width -->
-      <div class="surface-row cols-1">
-        <section class="surface-panel panel-wide">
-          <div class="panel-copy">
-            <div class="surface-label">Surface 04</div>
-            <h2>Persona Builder</h2>
-            <p>MVP workflow that is good enough to get personas stood up and ready for video chat.</p>
-          </div>
-          <div class="panel-media">
-            <div class="media-item">
-              <video class="video-shot" controls preload="metadata">
-                <source src="wardrobe.mp4" type="video/mp4">
-              </video>
-              <div class="media-caption">Persona Builder<span>Assembly workflow film</span></div>
-            </div>
-          </div>
-        </section>
+<!-- S04 full width -->
+<div class="surface-row cols-1">
+  <section class="surface-panel panel-wide">
+    <div class="panel-copy">
+      <div class="surface-label">Surface 04</div>
+      <h2>Persona Builder</h2>
+      <p>MVP workflow that is good enough to get personas stood up and ready for video chat.</p>
+    </div>
+
+    <div class="panel-media">
+      <div class="media-item">
+        <video class="video-shot" controls preload="metadata" playsinline>
+          <source src="wardrobe.mp4" type="video/mp4">
+        </video>
+        <div class="media-caption">
+          Persona Builder
+          <span>Assembly workflow film</span>
+        </div>
       </div>
+    </div>
+
+  </section>
+</div>
 
       <!-- S05 + S06 + S07 three-up -->
       <div class="surface-row cols-3">
@@ -434,8 +446,12 @@
             <p>Model selection, temperature, token limits, and platform configuration exposed as runtime controls.</p>
           </div>
           <div class="panel-media">
+           <div class="media-item">
+              <img class="phone-shot" src="settings.PNG" alt="LLLM Settings">
+              <div class="media-caption">Params</div>
+            </div>
             <div class="media-item">
-              <img class="phone-shot" src="advanced.PNG" alt="Model Parameters">
+              <img class="phone-shot" src="advanced.PNG" alt="Advanced Settings">
               <div class="media-caption">Params</div>
             </div>
             <div class="media-item">
