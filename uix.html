@@ -169,38 +169,86 @@
       color: var(--muted);
     }
 
-    /* Media row: images side by side, evenly spaced */
+    /* Media row: swipeable/keyable carousel per surface */
     .panel-media {
+      position: relative;
       display: flex;
       gap: 16px;
       align-items: flex-end;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      scrollbar-width: none;
+      padding: 0 34px 4px;
+    }
+
+    .panel-media::-webkit-scrollbar {
+      display: none;
     }
 
     .media-item {
-      flex: 1;
+      flex: 0 0 auto;
       display: flex;
       flex-direction: column;
       align-items: center;
       min-width: 0;
+      scroll-snap-align: center;
     }
 
-      .phone-shot,
-      .video-shot {
-        width: 100%;
-        max-width: 220px;
-        display: block;
-        border-radius: 4px;
-        cursor: zoom-in;
-      }
-      
-      .video-shot {
-        max-width: 220px;
-        min-height: 390px;
-        object-fit: cover;
-        background: #000;
-      }
+    .phone-shot,
+    .video-shot {
+      width: 100%;
+      max-width: 220px;
+      display: block;
+      border-radius: 4px;
+      cursor: zoom-in;
+    }
 
-    .video-shot { background: #000; max-width: 180px; }
+    .video-shot {
+      width: auto;
+      height: 390px;
+      max-width: 220px;
+      object-fit: cover;
+      background: #000;
+    }
+
+    .media-nav {
+      position: sticky;
+      top: 50%;
+      transform: translateY(-50%);
+      flex: 0 0 26px;
+      width: 26px;
+      height: 26px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--surface);
+      color: var(--muted);
+      cursor: pointer;
+      z-index: 2;
+      font-size: 18px;
+      line-height: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.15s, border-color 0.15s, background 0.15s;
+    }
+
+    .media-nav:hover {
+      color: var(--green);
+      border-color: var(--green);
+      background: var(--green-dim);
+    }
+
+    .media-nav.prev {
+      left: 0;
+      order: -1;
+    }
+
+    .media-nav.next {
+      right: 0;
+      order: 999;
+    }
 
     .media-caption {
       font-family: 'IBM Plex Mono', monospace;
@@ -299,9 +347,22 @@
       .panel-wide { flex-direction: column; }
       .panel-wide .panel-copy { flex: none; }
 
-      .panel-media { flex-wrap: wrap; justify-content: center; }
-      .media-item { flex: 0 0 calc(50% - 8px); max-width: calc(50% - 8px); }
-      .phone-shot, .video-shot { max-width: 140px; }
+      .panel-media {
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        padding: 0 32px 4px;
+      }
+      .media-item {
+        flex: 0 0 auto;
+        max-width: none;
+      }
+      .phone-shot {
+        max-width: 140px;
+      }
+      .video-shot {
+        height: 300px;
+        max-width: 170px;
+      }
     }
   </style>
 </head>
@@ -480,6 +541,88 @@
       const modalImage = document.getElementById('modal-image');
       const modalVideo = document.getElementById('modal-video');
       const closeButton = document.querySelector('.media-modal-close');
+
+      function setupSurfaceCarousels() {
+        document.querySelectorAll('.panel-media').forEach((track) => {
+          const items = Array.from(track.querySelectorAll('.media-item'));
+          if (items.length <= 1) return;
+
+          track.setAttribute('tabindex', '0');
+          track.setAttribute('role', 'group');
+          track.setAttribute('aria-label', 'Swipeable media carousel');
+
+          const prev = document.createElement('button');
+          prev.className = 'media-nav prev';
+          prev.type = 'button';
+          prev.setAttribute('aria-label', 'Previous media');
+          prev.textContent = '‹';
+
+          const next = document.createElement('button');
+          next.className = 'media-nav next';
+          next.type = 'button';
+          next.setAttribute('aria-label', 'Next media');
+          next.textContent = '›';
+
+          track.insertBefore(prev, track.firstChild);
+          track.appendChild(next);
+
+          function activeIndex() {
+            const trackRect = track.getBoundingClientRect();
+            const trackCenter = trackRect.left + trackRect.width / 2;
+
+            let closestIndex = 0;
+            let closestDistance = Infinity;
+
+            items.forEach((item, index) => {
+              const itemRect = item.getBoundingClientRect();
+              const itemCenter = itemRect.left + itemRect.width / 2;
+              const distance = Math.abs(itemCenter - trackCenter);
+
+              if (distance < closestDistance) {
+                closestDistance = distance;
+                closestIndex = index;
+              }
+            });
+
+            return closestIndex;
+          }
+
+          function scrollToIndex(index) {
+            const boundedIndex = Math.max(0, Math.min(items.length - 1, index));
+            items[boundedIndex].scrollIntoView({
+              behavior: 'smooth',
+              block: 'nearest',
+              inline: 'center'
+            });
+          }
+
+          prev.addEventListener('click', (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            scrollToIndex(activeIndex() - 1);
+          });
+
+          next.addEventListener('click', (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            scrollToIndex(activeIndex() + 1);
+          });
+
+          track.addEventListener('keydown', (event) => {
+            if (event.key === 'ArrowLeft') {
+              event.preventDefault();
+              scrollToIndex(activeIndex() - 1);
+            }
+
+            if (event.key === 'ArrowRight') {
+              event.preventDefault();
+              scrollToIndex(activeIndex() + 1);
+            }
+          });
+        });
+      }
+
+      setupSurfaceCarousels();
 
       function closeModal() {
         modal.classList.remove('active');
