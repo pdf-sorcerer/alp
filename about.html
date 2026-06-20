@@ -308,46 +308,42 @@
     <div class="footer">Mason Thompson · Berkeley, California</div>
   </main>
 
-  <!-- Resume modal -->
-  <div id="resumeModal" class="modal-overlay" role="dialog" aria-modal="true" aria-label="Resume">
-    <div class="modal-box">
-      <div class="modal-header">
-        <span class="modal-title">Mason Thompson — Resume</span>
-        <div class="modal-actions">
-          <a class="modal-btn" id="downloadBtn" href="#" download="mason_thompson_resume.pdf">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            Download
-          </a>
-          <button class="modal-close" id="resumeClose" type="button" aria-label="Close">✕</button>
-        </div>
-      </div>
-      <div class="modal-body">
-        <iframe id="resumeFrame" src="" title="Mason Thompson Resume" class="resume-iframe"></iframe>
-      </div>
-    </div>
-  </div>
+<script>
+  const pdfSrc = "/alp/mason_thompson_june_2026.pdf";
 
-  <script>
-    const pdfSrc = "mason_thompson_june_2026.pdf";
+  const modal = document.getElementById('resumeModal');
+  const frame = document.getElementById('resumeFrame');
+  const dlBtn = document.getElementById('downloadBtn');
+  const resumeBtn = document.getElementById('resumeBtn');
+  const closeBtn = document.getElementById('resumeClose');
 
-    const modal = document.getElementById('resumeModal');
-    const frame = document.getElementById('resumeFrame');
-    const dlBtn = document.getElementById('downloadBtn');
-    const resumeBtn = document.getElementById('resumeBtn');
-    const closeBtn = document.getElementById('resumeClose');
-
+  function openModal() {
+    frame.src = pdfSrc + "#toolbar=0&navpanes=0";
     dlBtn.href = pdfSrc;
 
-    function openModal() {
-      if (!frame.src) frame.src = pdfSrc + "#toolbar=0&navpanes=0";
-      modal.classList.add('open');
-      document.body.style.overflow = 'hidden';
-    }
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
 
-    function closeModal() {
-      modal.classList.remove('open');
-      document.body.style.overflow = '';
+  function closeModal() {
+    modal.classList.remove('open');
+    frame.src = '';
+    document.body.style.overflow = '';
+  }
+
+  resumeBtn?.addEventListener('click', openModal);
+  closeBtn?.addEventListener('click', closeModal);
+
+  modal?.addEventListener('click', (e) => {
+    if (e.target === modal) closeModal();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('open')) {
+      closeModal();
     }
+  });
+</script>
 
     resumeBtn.addEventListener('click', openModal);
     closeBtn.addEventListener('click', closeModal);
