@@ -4,9 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>About | ALL-LLLM POD</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
   <style>
     :root {
       --green: #0A84FF;
@@ -19,7 +21,13 @@
       --faint: #8c8c8c;
       --nav-width: 220px;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
       font-family: 'Inter', sans-serif;
       background: var(--bg);
@@ -28,46 +36,110 @@
       min-height: 100vh;
       overflow-x: hidden;
     }
+
     #shared-nav {
-      position: sticky; top: 0; height: 100vh;
-      width: var(--nav-width); flex-shrink: 0;
-      background: var(--surface); border-right: 1px solid var(--border);
-      display: flex; flex-direction: column; padding: 32px 0; overflow-y: auto;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      width: var(--nav-width);
+      flex-shrink: 0;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      padding: 32px 0;
+      overflow-y: auto;
     }
+
     .nav-logo {
-      font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 600;
-      letter-spacing: 0.08em; text-transform: uppercase; color: var(--green);
-      padding: 0 24px 28px; border-bottom: 1px solid var(--border);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--green);
+      padding: 0 24px 28px;
+      border-bottom: 1px solid var(--border);
     }
+
     .nav-item {
-      display: block; font-family: 'IBM Plex Mono', monospace; font-size: 11px;
-      color: var(--muted); text-decoration: none; padding: 7px 24px;
+      display: block;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 7px 24px;
       border-left: 2px solid transparent;
       transition: color 0.15s, border-color 0.15s, background 0.15s;
     }
-    .nav-item:hover { color: var(--text); background: var(--bg); border-left-color: var(--border); }
-    .nav-item.active { color: var(--green); border-left-color: var(--green); background: var(--green-dim); }
 
-    main { flex: 1; padding: 56px 64px 120px; max-width: 860px; min-width: 0; }
+    .nav-item:hover {
+      color: var(--text);
+      background: var(--bg);
+      border-left-color: var(--border);
+    }
+
+    .nav-item.active {
+      color: var(--green);
+      border-left-color: var(--green);
+      background: var(--green-dim);
+    }
+
+    main {
+      flex: 1;
+      padding: 56px 64px 120px;
+      max-width: 860px;
+      min-width: 0;
+    }
 
     .page-eyebrow {
-      font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 600;
-      letter-spacing: 0.12em; text-transform: uppercase; color: var(--green); margin-bottom: 12px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 12px;
     }
-    h1 { font-size: 28px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 32px; }
 
-    /* Contact bar */
-    .contact-bar { display: flex; gap: 12px; margin-bottom: 36px; flex-wrap: wrap; }
+    h1 {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 32px;
+    }
+
+    .contact-bar {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 36px;
+      flex-wrap: wrap;
+    }
+
     .contact-btn {
-      display: inline-flex; align-items: center; gap: 8px;
-      font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 500;
-      color: var(--text); background: var(--surface); border: 1px solid var(--border);
-      border-radius: 4px; padding: 10px 16px; text-decoration: none; cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 10px 16px;
+      text-decoration: none;
+      cursor: pointer;
       transition: border-color 0.15s, color 0.15s, background 0.15s;
     }
-    .contact-btn:hover { border-color: var(--green); color: var(--green); background: var(--green-dim); }
 
-    /* Profile row: photo + bio */
+    .contact-btn:hover {
+      border-color: var(--green);
+      color: var(--green);
+      background: var(--green-dim);
+    }
+
     .profile-row {
       display: flex;
       flex-direction: row;
@@ -75,45 +147,65 @@
       align-items: flex-start;
       margin-bottom: 48px;
     }
+
     .profile-photo {
-    width: 148px;
-    min-width: 148px;
+      width: 148px;
+      min-width: 148px;
+      align-self: flex-start;
+      border-radius: 6px;
+      object-fit: cover;
+      object-position: center top;
+      border: 1px solid var(--border);
+      flex-shrink: 0;
+      display: block;
+      height: auto;
+    }
 
-    align-self: flex-start;
-
-    border-radius: 6px;
-    object-fit: cover;
-    object-position: center top;
-
-    border: 1px solid var(--border);
-    flex-shrink: 0;
-    display: block;
-
-    height: auto;
-}
-    .profile-bio { display: flex; flex-direction: column; gap: 14px; flex: 1; min-width: 0; }
+    .profile-bio {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      flex: 1;
+      min-width: 0;
+    }
 
     .lead {
-      font-size: 14px; line-height: 1.75; color: #3a3a3a; max-width: 720px;
+      font-size: 14px;
+      line-height: 1.75;
+      color: #3a3a3a;
+      max-width: 720px;
     }
 
-    /* Section divider */
     .section-break {
-      margin: 0 0 36px; display: flex; align-items: center; gap: 16px;
-    }
-    .section-break-line { flex: 1; height: 1px; background: var(--border); }
-    .section-break-label {
-      font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 600;
-      letter-spacing: 0.12em; text-transform: uppercase; color: var(--faint); white-space: nowrap;
+      margin: 0 0 36px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
     }
 
-    /* Other things */
+    .section-break-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .section-break-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--faint);
+      white-space: nowrap;
+    }
+
     .things-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 12px;
       margin-bottom: 52px;
     }
+
     .thing-card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -124,8 +216,16 @@
       gap: 10px;
       transition: border-color 0.15s;
     }
-    .thing-card:hover { border-color: var(--green); }
-    .thing-icon { font-size: 22px; line-height: 1; }
+
+    .thing-card:hover {
+      border-color: var(--green);
+    }
+
+    .thing-icon {
+      font-size: 22px;
+      line-height: 1;
+    }
+
     .thing-label {
       font-family: 'IBM Plex Mono', monospace;
       font-size: 11px;
@@ -134,99 +234,203 @@
       letter-spacing: 0.02em;
     }
 
-    /* Skills tags */
     .skills-lead {
-      font-size: 14px; line-height: 1.75; color: #3a3a3a; max-width: 720px; margin-bottom: 52px;
+      font-size: 14px;
+      line-height: 1.75;
+      color: #3a3a3a;
+      max-width: 720px;
+      margin-bottom: 52px;
     }
 
-    /* Modal */
     .modal-overlay {
-      display: none; position: fixed; inset: 0;
-      background: rgba(0,0,0,0.55); z-index: 9000;
-      align-items: center; justify-content: center; padding: 24px;
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.55);
+      z-index: 9000;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
     }
-    .modal-overlay.open { display: flex; }
+
+    .modal-overlay.open {
+      display: flex;
+    }
+
     .modal-box {
-      background: var(--surface); border-radius: 6px; border: 1px solid var(--border);
-      width: 100%; max-width: 780px; max-height: 90vh;
-      display: flex; flex-direction: column; overflow: hidden;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+      background: var(--surface);
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      width: 100%;
+      max-width: 780px;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
     }
+
     .modal-header {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 14px 20px; border-bottom: 1px solid var(--border); flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
     }
+
     .modal-title {
-      font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 600;
-      letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--faint);
     }
-    .modal-actions { display: flex; align-items: center; gap: 12px; }
+
+    .modal-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
     .modal-btn {
-      display: inline-flex; align-items: center; gap: 6px;
-      font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 500;
-      color: var(--green); background: var(--green-dim);
-      border: 1px solid rgba(10,132,255,0.25); border-radius: 3px; padding: 6px 12px;
-      text-decoration: none; cursor: pointer; transition: background 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--green);
+      background: var(--green-dim);
+      border: 1px solid rgba(10, 132, 255, 0.25);
+      border-radius: 3px;
+      padding: 6px 12px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.15s;
     }
-    .modal-btn:hover { background: rgba(10,132,255,0.22); }
+
+    .modal-btn:hover {
+      background: rgba(10, 132, 255, 0.22);
+    }
+
     .modal-close {
-      font-size: 14px; color: var(--muted); background: none; border: none;
-      cursor: pointer; padding: 4px 8px; border-radius: 3px;
+      font-size: 14px;
+      color: var(--muted);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px 8px;
+      border-radius: 3px;
       transition: background 0.15s, color 0.15s;
     }
-    .modal-close:hover { background: var(--bg); color: var(--text); }
-    .modal-body { flex: 1; overflow: hidden; min-height: 0; }
-    .resume-iframe { width: 100%; height: 100%; min-height: 70vh; border: none; display: block; }
+
+    .modal-close:hover {
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .modal-body {
+      flex: 1;
+      overflow: hidden;
+      min-height: 0;
+    }
+
+    .resume-iframe {
+      width: 100%;
+      height: 100%;
+      min-height: 70vh;
+      border: none;
+      display: block;
+    }
 
     .footer {
-      margin-top: 72px; padding-top: 24px; border-top: 1px solid var(--border);
-      font-family: 'IBM Plex Mono', monospace; font-size: 10px;
-      letter-spacing: 0.06em; text-transform: uppercase; color: var(--faint);
+      margin-top: 72px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--faint);
     }
 
     @media (max-width: 768px) {
       #shared-nav {
-        position: fixed !important; top: 0 !important; left: 0 !important;
-        height: 100vh !important; width: 260px !important; z-index: 10001 !important;
-        transform: translateX(-100%) !important; transition: transform 0.25s ease !important;
-        overflow-y: auto !important; box-shadow: 2px 0 12px rgba(0,0,0,0.12) !important;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        height: 100vh !important;
+        width: 260px !important;
+        z-index: 10001 !important;
+        transform: translateX(-100%) !important;
+        transition: transform 0.25s ease !important;
+        overflow-y: auto !important;
+        box-shadow: 2px 0 12px rgba(0, 0, 0, 0.12) !important;
       }
-      #shared-nav.open { transform: translateX(0) !important; }
-      main { padding: 64px 20px 80px; width: 100%; max-width: 100%; }
+
+      #shared-nav.open {
+        transform: translateX(0) !important;
+      }
+
+      main {
+        padding: 64px 20px 80px;
+        width: 100%;
+        max-width: 100%;
+      }
+
       .profile-row {
-          flex-direction: column;
-          align-items: flex-start;
+        flex-direction: column;
+        align-items: flex-start;
       }
-      
+
       .profile-photo {
-          width: 148px;
-          height: auto;
+        width: 148px;
+        height: auto;
       }
-      .things-grid { grid-template-columns: repeat(2, 1fr); }
-      .modal-overlay { padding: 12px; }
-      .resume-iframe { min-height: 60vh; }
+
+      .things-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .modal-overlay {
+        padding: 12px;
+      }
+
+      .resume-iframe {
+        min-height: 60vh;
+      }
     }
   </style>
 </head>
+
 <body>
   <nav id="shared-nav"></nav>
+
   <main>
     <p class="page-eyebrow">Project Background</p>
     <h1>About</h1>
 
-    <!-- Contact bar -->
     <div class="contact-bar">
-      <a class="contact-btn" href="https://www.linkedin.com/in/mmt510/" target="_blank">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+      <a class="contact-btn" href="https://www.linkedin.com/in/mmt510/" target="_blank" rel="noopener">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+          <rect x="2" y="9" width="4" height="12"/>
+          <circle cx="4" cy="4" r="2"/>
+        </svg>
         linkedin.com/in/mmt510
       </a>
+
       <button class="contact-btn" id="resumeBtn" type="button">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/>
+        </svg>
         Resume
       </button>
     </div>
 
-    <!-- Profile: photo + bio -->
     <div class="section-break">
       <div class="section-break-line"></div>
       <div class="section-break-label">Technical Product Manager</div>
@@ -235,24 +439,18 @@
 
     <div class="profile-row">
       <img class="profile-photo" src="assets/profile.jpg" alt="Mason Thompson">
+
       <div class="profile-bio">
-<p class="lead">
+        <p class="lead">
+          <strong>ALL-LLLM POD</strong> started as a simple idea: combine my interests in NLP, generative AI, and comedy into a single project. What began as an experiment in persona simulation quickly became a vehicle for understanding how modern AI systems are built, operated, evaluated, and debugged.
+        </p>
 
-  <strong>ALL-LLLM POD</strong> started as a simple idea: combine my interests in NLP, generative AI, and comedy into a single project. What began as an experiment in persona simulation quickly became a vehicle for understanding how modern AI systems are built, operated, evaluated, and debugged.
-
-</p>
-
-
-
-<p class="lead">
-
-  The tooling became the more interesting story. Transcript generation, speaker attribution, and HITL review workflows matter because frontier AI companies have already exhausted much of the low-hanging fruit for model training: freely available text has been scraped from the internet repeatedly. The next meaningful gains will almost certainly come from transforming audio and video into usable training data, and that process is far from trivial.
-
-</p>
-    </div>
+        <p class="lead">
+          The tooling became the more interesting story. Transcript generation, speaker attribution, and HITL review workflows matter because frontier AI companies have already exhausted much of the low-hanging fruit for model training: freely available text has been scraped from the internet repeatedly. The next meaningful gains will almost certainly come from transforming audio and video into usable training data, and that process is far from trivial.
+        </p>
+      </div>
     </div>
 
-    <!-- Skills -->
     <div class="section-break">
       <div class="section-break-line"></div>
       <div class="section-break-label">What This Project Demonstrates</div>
@@ -263,92 +461,113 @@
       Product Strategy • AI Systems • Human-in-the-Loop Workflows • Speech Recognition • Speaker Diarization • Training Data Quality • Distributed Inference • SwiftUI • Python • FastAPI • API Design • Workflow Automation • Observability • Data Infrastructure
     </p>
 
-    <!-- Other things -->
     <div class="section-break">
       <div class="section-break-line"></div>
       <div class="section-break-label">Other things I do</div>
       <div class="section-break-line"></div>
     </div>
 
-<div class="things-grid">
-  <div class="thing-card">
-    <div class="thing-icon">🚴</div>
-    <div class="thing-label">Cycling</div>
-  </div>
-  <div class="thing-card">
-    <div class="thing-icon">🏊</div>
-    <div class="thing-label">Swimming</div>
-  </div>
-  <div class="thing-card">
-    <div class="thing-icon">🥾</div>
-    <div class="thing-label">Hiking</div>
-  </div>
-  <div class="thing-card">
-    <div class="thing-icon">⌨️</div>
-    <div class="thing-label">Building keyboards</div>
-  </div>
-  <div class="thing-card">
-    <div class="thing-icon">⛺</div>
-    <div class="thing-label">Camping</div>
-  </div>
-  <div class="thing-card">
-    <div class="thing-icon">🏍️</div>
-    <div class="thing-label">Motorcycles</div>
-  </div>
-  <div class="thing-card">
-    <div class="thing-icon">🏃</div>
-    <div class="thing-label">Endurance sports</div>
-  </div>
-  <div class="thing-card">
-  <div class="thing-icon">🍺🍕</div>
-  <div class="thing-label">Beer + pizza</div>
-  </div>
-</div>
+    <div class="things-grid">
+      <div class="thing-card">
+        <div class="thing-icon">🚴</div>
+        <div class="thing-label">Cycling</div>
+      </div>
+
+      <div class="thing-card">
+        <div class="thing-icon">🏊</div>
+        <div class="thing-label">Swimming</div>
+      </div>
+
+      <div class="thing-card">
+        <div class="thing-icon">🥾</div>
+        <div class="thing-label">Hiking</div>
+      </div>
+
+      <div class="thing-card">
+        <div class="thing-icon">⌨️</div>
+        <div class="thing-label">Building keyboards</div>
+      </div>
+
+      <div class="thing-card">
+        <div class="thing-icon">⛺</div>
+        <div class="thing-label">Camping</div>
+      </div>
+
+      <div class="thing-card">
+        <div class="thing-icon">🏍️</div>
+        <div class="thing-label">Motorcycles</div>
+      </div>
+
+      <div class="thing-card">
+        <div class="thing-icon">🏃</div>
+        <div class="thing-label">Endurance sports</div>
+      </div>
+
+      <div class="thing-card">
+        <div class="thing-icon">🍺🍕</div>
+        <div class="thing-label">Beer + pizza</div>
+      </div>
+    </div>
 
     <div class="footer">Mason Thompson · Berkeley, California</div>
   </main>
 
-<script>
-  const pdfSrc = "/alp/mason_thompson_june_2026.pdf";
+  <div id="resumeModal" class="modal-overlay" role="dialog" aria-modal="true" aria-label="Resume">
+    <div class="modal-box">
+      <div class="modal-header">
+        <span class="modal-title">Mason Thompson — Resume</span>
 
-  const modal = document.getElementById('resumeModal');
-  const frame = document.getElementById('resumeFrame');
-  const dlBtn = document.getElementById('downloadBtn');
-  const resumeBtn = document.getElementById('resumeBtn');
-  const closeBtn = document.getElementById('resumeClose');
+        <div class="modal-actions">
+          <a class="modal-btn" id="downloadBtn" href="/alp/mason_thompson_june_2026.pdf" download="mason_thompson_june_2026.pdf">
+            Download
+          </a>
 
-  function openModal() {
-    frame.src = pdfSrc + "#toolbar=0&navpanes=0";
-    dlBtn.href = pdfSrc;
+          <button class="modal-close" id="resumeClose" type="button" aria-label="Close resume modal">
+            ✕
+          </button>
+        </div>
+      </div>
 
-    modal.classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
+      <div class="modal-body">
+        <iframe id="resumeFrame" class="resume-iframe" title="Mason Thompson Resume"></iframe>
+      </div>
+    </div>
+  </div>
 
-  function closeModal() {
-    modal.classList.remove('open');
-    frame.src = '';
-    document.body.style.overflow = '';
-  }
+  <script>
+    const pdfSrc = "/alp/mason_thompson_june_2026.pdf";
 
-  resumeBtn?.addEventListener('click', openModal);
-  closeBtn?.addEventListener('click', closeModal);
+    const modal = document.getElementById('resumeModal');
+    const frame = document.getElementById('resumeFrame');
+    const dlBtn = document.getElementById('downloadBtn');
+    const resumeBtn = document.getElementById('resumeBtn');
+    const closeBtn = document.getElementById('resumeClose');
 
-  modal?.addEventListener('click', (e) => {
-    if (e.target === modal) closeModal();
-  });
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modal.classList.contains('open')) {
-      closeModal();
+    function openModal() {
+      frame.src = pdfSrc + "#toolbar=0&navpanes=0";
+      dlBtn.href = pdfSrc;
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
     }
-  });
-</script>
+
+    function closeModal() {
+      modal.classList.remove('open');
+      frame.src = '';
+      document.body.style.overflow = '';
+    }
 
     resumeBtn.addEventListener('click', openModal);
     closeBtn.addEventListener('click', closeModal);
-    modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+    modal.addEventListener('click', function (event) {
+      if (event.target === modal) closeModal();
+    });
+
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && modal.classList.contains('open')) {
+        closeModal();
+      }
+    });
   </script>
 
   <script src="https://pdf-sorcerer.github.io/alp/nav-loader.js" data-page="about"></script>
