@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AI Agent War Story - Challenge Accepted</title>
+<style>
+  :root{
+    --forest:#144f38;
+    --forest-2:#1f6b4b;
+    --mint:#eaf7f1;
+    --mint-2:#79d6a4;
+    --ink:#173f32;
+    --muted:#596762;
+    --card:#ffffff;
+    --line:#dbe8e2;
+    --danger:#bd5b54;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;min-height:100%;background:#fff;color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}
+  .page{width:1088px;min-height:1360px;margin:0 auto;background:var(--mint);overflow:hidden;position:relative}
+  .hero{height:288px;padding:44px 56px 36px;background:linear-gradient(112deg,#124832 0%,#18563c 54%,#328760 100%);color:#fff;position:relative;overflow:hidden}
+  .hero::before{content:"";position:absolute;right:-24px;top:-72px;width:270px;height:270px;border-radius:50%;background:rgba(126,214,164,.17)}
+  .hero::after{content:"";position:absolute;right:118px;bottom:-122px;width:230px;height:230px;border-radius:50%;background:rgba(126,214,164,.12)}
+  .pill{display:inline-block;border:1px solid rgba(255,255,255,.24);background:rgba(255,255,255,.12);border-radius:999px;padding:8px 18px;font-weight:800;font-size:14px;letter-spacing:.16em;text-transform:uppercase;box-shadow:inset 0 0 0 1px rgba(255,255,255,.06)}
+  h1{font-family:Georgia,"Times New Roman",serif;font-weight:800;font-size:48px;line-height:1.04;letter-spacing:-.035em;margin:22px 0 12px;max-width:830px;text-wrap:balance}
+  h1 .accent{color:var(--mint-2)}
+  .subtitle{font-size:21px;line-height:1.25;max-width:890px;color:rgba(255,255,255,.84);margin:0}
+  .content{padding:48px 56px 0}
+  .wall{display:grid;grid-template-columns:56px 1fr;gap:18px;align-items:center;margin:0 0 36px}
+  .num{width:56px;height:56px;border-radius:14px;background:var(--forest-2);color:#fff;display:grid;place-items:center;font:800 29px Georgia,"Times New Roman",serif;box-shadow:0 1px 0 rgba(0,0,0,.08)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 24px;min-height:78px;box-shadow:0 1px 2px rgba(10,45,30,.04)}
+  .card h2{margin:0 0 6px;font-size:20px;line-height:1.15;font-weight:850;letter-spacing:-.02em;color:#173f32}
+  .badge{display:inline-block;margin-right:10px;vertical-align:2px;border-radius:999px;background:#fff2f2;color:var(--danger);font-size:12px;font-weight:900;letter-spacing:.07em;padding:3px 8px;text-transform:uppercase}
+  .card p{margin:0;font-size:16px;line-height:1.45;color:#2e3432}
+  strong{color:#25704f;font-weight:850}
+  .result{margin-top:42px;background:linear-gradient(105deg,#134b34,#24744f);border-radius:14px;min-height:124px;color:#fff;display:grid;grid-template-columns:92px 1fr;align-items:center;padding:22px 30px;position:relative;overflow:hidden}
+  .result::after{content:"";position:absolute;right:-6px;bottom:-14px;width:130px;height:130px;border-radius:50%;background:rgba(126,214,164,.16)}
+  .check{width:62px;height:62px;border-radius:50%;display:grid;place-items:center;background:var(--mint-2);color:var(--forest);font-size:42px;font-weight:900;z-index:1}
+  .result h3{font-family:Georgia,"Times New Roman",serif;font-size:28px;line-height:1;margin:0 0 10px;letter-spacing:-.03em;position:relative;z-index:1}
+  .result p{margin:0;color:rgba(255,255,255,.82);font-size:16px;line-height:1.35;position:relative;z-index:1}
+  .stats{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin:24px 0 0}
+  .stat{height:88px;background:#fff;border:1px solid var(--line);border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 1px 2px rgba(10,45,30,.04)}
+  .stat b{font:800 29px Georgia,"Times New Roman",serif;color:#26724f;line-height:1;margin-bottom:8px}
+  .stat span{font-size:12px;color:#5e6966;text-align:center}
+  .footer{height:60px;background:#124832;color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 56px;margin-top:0;font-size:14px;position:absolute;bottom:0;left:0;right:0}
+  .footer b{font-weight:900}.footer span{color:rgba(255,255,255,.7)}
+  .hashtags{border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.12);border-radius:999px;padding:6px 26px;color:rgba(255,255,255,.8);font-weight:800;font-size:12px}
+  @media(max-width:1100px){.page{width:100%;min-height:125vw}.hero{height:auto}.content{padding-bottom:80px}.footer{position:static}.wall{grid-template-columns:48px 1fr}.num{width:48px;height:48px}.stats{grid-template-columns:repeat(2,1fr)}h1{font-size:38px}}
+</style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <div class="pill">AI Agent War Story · Challenge Accepted</div>
+      <h1>"Make the PDF look <span class="accent">just like</span> the HTML."<br>5 walls. 5 workarounds. <span class="accent">Challenge won.</span></h1>
+      <p class="subtitle">What it actually took for an AI agent to turn a designed HTML report into a pixel-faithful PDF — inside a sandbox with no internet and no working browser.</p>
+    </section>
+
+    <section class="content">
+      <article class="wall"><div class="num">1</div><div class="card"><h2><span class="badge">Wall</span>Report generation kept dying with "model provider error"</h2><p><strong>Workaround →</strong> Pulled my own platform's <strong>GCP logs</strong>, traced the stack: a <strong>120-second streaming timeout</strong> on one giant write. Rewrote the report in <strong>4 chunked writes</strong> — worked first try.</p></div></article>
+      <article class="wall"><div class="num">2</div><div class="card"><h2><span class="badge">Wall</span>Chromium installed... but unlaunchable (missing system libs, no internet)</h2><p><strong>Workaround →</strong> Probed the sandbox, confirmed the libs were unfixable, and <strong>auto-fell back to WeasyPrint</strong> — keeping the gradients, grids, and rounded cards intact.</p></div></article>
+      <article class="wall"><div class="num">3</div><div class="card"><h2><span class="badge">Wall</span>Font files downloaded as corrupted binary (decoded as text)</h2><p><strong>Workaround →</strong> Checked the <strong>magic bytes</strong>, confirmed corruption, then sourced <strong>release &amp; repo ZIPs</strong> instead — extracting 7 real Inter + Fraunces faces in the sandbox.</p></div></article>
+      <article class="wall"><div class="num">4</div><div class="card"><h2><span class="badge">Wall</span>Emoji icons rendered as empty boxes — no emoji font in the sandbox</h2><p><strong>Workaround →</strong> Swapped each emoji for a <strong>DejaVu-safe geometric glyph</strong> (◆ ▾ ⚙ ● ◈ ⊕ ↗), tinted forest green to match the design system.</p></div></article>
+      <article class="wall"><div class="num">5</div><div class="card"><h2><span class="badge">Wall</span>Card text overflowed its borders — a CSS-grid page-layout bug</h2><p><strong>Workaround →</strong> Did a page-by-page <strong>visual QA pass</strong>, diagnosed the renderer's grid-stretch bug, and <strong>swapped grid → flexbox</strong> in the print stylesheet. Pixel-clean.</p></div></article>
+
+      <section class="result"><div class="check">✓</div><div><h3>Result: a 9-page PDF twin of the HTML report</h3><p>Same forest-green gradients, real typography, smart page breaks — debugged, rendered, and QA'd end-to-end by the agent itself.</p></div></section>
+      <section class="stats"><div class="stat"><b>5</b><span>walls cleared</span></div><div class="stat"><b>2</b><span>render engines probed</span></div><div class="stat"><b>7</b><span>font faces rescued</span></div><div class="stat"><b>9</b><span>pages, pixel-faithful</span></div><div class="stat"><b>0</b><span>humans needed to debug</span></div></section>
+    </section>
+    <footer class="footer"><div><b>AI Drive</b> <span>· agent-debugged, agent-delivered</span></div><div class="hashtags">#AIAgents · #ContextEngineering</div></footer>
+  </main>
+</body>
+</html>
