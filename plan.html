@@ -101,6 +101,11 @@
 
     .body-list li { padding-left: 4px; margin-bottom: 6px; }
 
+    .body-list .sub-list {
+      margin: 4px 0 4px 18px;
+      padding-left: 18px;
+    }
+
     .video-section-label {
       font-family: 'IBM Plex Mono', monospace;
       font-size: 10px;
@@ -108,10 +113,27 @@
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--faint);
-      margin: 36px 0 10px;
+      margin: 28px 0 10px;
+      max-width: 720px;
+    }
+
+    .video-section-label.entry-divider {
+      margin-top: 36px;
       padding-bottom: 8px;
       border-bottom: 1px solid var(--border);
-      max-width: 720px;
+    }
+
+    .entry-block {
+      margin-bottom: 56px;
+    }
+
+    .entry-date {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.10em;
+      color: var(--green);
+      margin-bottom: 20px;
     }
 
     .footer {
@@ -154,31 +176,53 @@
     <h1>Mason's .plan</h1>
 
     <p class="lead">
-      Last updated: <strong>2026-06-18</strong>
+      Last updated: <strong>2026-06-22</strong>
     </p>
 
-    <p class="video-section-label">Project</p>
+    <!-- 2026-06-22 -->
+    <div class="entry-block">
+      <p class="video-section-label entry-divider">Notes &mdash; 2026-06-22</p>
+      <ul class="body-list">
+        <li>Slopume running 100% on MacOS (no PC API tether)</li>
+        <li>Hours lost on resume re-writer; pivoting to surface JD req diffs and working with GPT directly in chat</li>
+        <li>SlopNozzle now manages both ALP and Slopume (Node envs)</li>
+      </ul>
 
-    <p class="lead">
-      <strong>ALL-LLLM POD</strong><br>
-      Stable, minimum lovable product
-    </p>
+      <p class="video-section-label">Still Todo</p>
+      <ul class="body-list">
+        <li>Fork CTranslate2 for custom decoder (attention, logits)</li>
+        <li>Look at transformer + decoder during E136 ghost region transcription</li>
+      </ul>
 
-    <p class="video-section-label">Notes</p>
-    <ul class="body-list">
-      <li>Website complete</li>
-      <li>1 month on Qwen3-30B MoE</li>
-      <li>System prompts nerfed for upcoming persona work</li>
-      <li>Transcripts → semantic embeddigns / memories / discourse events</li>
-      <li>Online RAG: mixed results, persona work comes first</li>
-      <li>Tweet scraper celebrating 5-days uptime</li>
-    </ul>
+      <p class="video-section-label">Todo</p>
+      <ul class="body-list">
+        <li>Why is persona convergence</li>
+        <li>Stand up business_idiot chat for local code gen</li>
+      </ul>
+    </div>
 
-    <p class="video-section-label">Todo</p>
-    <ul class="body-list">
-      <li>Why is persona convergence</li>
-      <li>Stand up business_idiot chat for local code gen</li>
-    </ul>
+    <!-- 2026-06-18 -->
+    <div class="entry-block">
+      <p class="video-section-label entry-divider">Notes &mdash; 2026-06-18</p>
+      <p class="lead">
+        <strong>ALL-LLLM POD</strong><br>
+        Stable, minimum lovable product
+      </p>
+      <ul class="body-list">
+        <li>Website complete</li>
+        <li>1 month on Qwen3-30B MoE</li>
+        <li>System prompts nerfed for upcoming persona work</li>
+        <li>Transcripts → semantic embeddings / memories / discourse events</li>
+        <li>Online RAG: mixed results, persona work comes first</li>
+        <li>Tweet scraper celebrating 5-days uptime</li>
+      </ul>
+
+      <p class="video-section-label">Todo</p>
+      <ul class="body-list">
+        <li>Why is persona convergence</li>
+        <li>Stand up business_idiot chat for local code gen</li>
+      </ul>
+    </div>
 
     <div class="footer">Mason Thompson · Berkeley, California</div>
   </main>
