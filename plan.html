@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -166,6 +167,7 @@
       main { padding: 64px 20px 80px; width: 100%; max-width: 100%; }
     }
   </style>
+
 </head>
 
 <body>
@@ -175,58 +177,83 @@
     <p class="page-eyebrow">project status</p>
     <h1>Mason's .plan</h1>
 
-    <p class="lead">
-      Last updated: <strong>2026-06-22</strong>
-    </p>
+```
+<p class="lead">
+  Last updated: <strong>2026-06-23</strong>
+</p>
 
-    <!-- 2026-06-22 -->
-    <div class="entry-block">
-      <p class="video-section-label entry-divider">Notes &mdash; 2026-06-22</p>
-      <ul class="body-list">
-        <li>Slopume running 100% on MacOS (no PC API tether)</li>
-        <li>Hours lost on resume re-writer; pivoting to surface JD req diffs and working with GPT directly in chat</li>
-        <li>SlopNozzle now manages both ALP and Slopume (Node envs)</li>
-      </ul>
+<!-- 2026-06-23 -->
+<div class="entry-block">
+  <p class="video-section-label entry-divider">Notes &mdash; 2026-06-23</p>
+  <ul class="body-list">
+    <li>Waylaid by a neighborhood cat last night. Thought it might be the same cat I photographed in 2023, so I searched iOS Photos for “cat 2023.” It returned 8/13 images of dogs. <a href="cats_2023.PNG">See picture.</a></li>
+    <li>Initial batch of job applications is out. Despite all the intentional work on Slopume to make finding and applying more streamlined and less awful, I still feel the urge to say “fuck it” and shotgun apply to openings on LinkedIn and other job boards. Something in the lizard brain finds grounding in being able to say, “I manually searched and applied to n jobs today.” In a process where outcomes are largely outside my control, the inputs are at least measurable. It's a numbers game in more ways than one.</li>
+    <li>Thinking about doing comment mining on NVIDIA posts on LinkedIn. Swear to God 90% of the people commenting are robots.</li>
+  </ul>
 
-      <p class="video-section-label">Still Todo</p>
-      <ul class="body-list">
-        <li>Fork CTranslate2 for custom decoder (attention, logits)</li>
-        <li>Look at transformer + decoder during E136 ghost region transcription</li>
-      </ul>
+  <p class="video-section-label">To do</p>
+  <ul class="body-list">
+    <li><strong>(still)</strong> Chatbot personas converging on the same topics after turn 2–3 under minimal system prompting.</li>
+    <li><strong>(queue)</strong> Inspect transformer + decoder behavior during the E136 ghost-region transcription failure. Expand investigation into encoder behavior as well.</li>
+  </ul>
 
-      <p class="video-section-label">Todo</p>
-      <ul class="body-list">
-        <li>Why is persona convergence</li>
-        <li>Stand up business_idiot chat for local code gen</li>
-      </ul>
-    </div>
+  <p class="video-section-label">Done</p>
+  <ul class="body-list">
+    <li>Forked CTranslate2 for custom decoder instrumentation: attention, logits, token candidates.</li>
+  </ul>
+</div>
 
-    <!-- 2026-06-18 -->
-    <div class="entry-block">
-      <p class="video-section-label entry-divider">Notes &mdash; 2026-06-18</p>
-      <p class="lead">
-        <strong>ALL-LLLM POD</strong><br>
-        Stable, minimum lovable product
-      </p>
-      <ul class="body-list">
-        <li>Website complete</li>
-        <li>1 month on Qwen3-30B MoE</li>
-        <li>System prompts nerfed for upcoming persona work</li>
-        <li>Transcripts → semantic embeddings / memories / discourse events</li>
-        <li>Online RAG: mixed results, persona work comes first</li>
-        <li>Tweet scraper celebrating 5-days uptime</li>
-      </ul>
+<!-- 2026-06-22 -->
+<div class="entry-block">
+  <p class="video-section-label entry-divider">Notes &mdash; 2026-06-22</p>
+  <ul class="body-list">
+    <li>Slopume running 100% on MacOS (no PC API tether)</li>
+    <li>Hours lost on resume re-writer; pivoting to surface JD req diffs and working with GPT directly in chat</li>
+    <li>SlopNozzle now manages both ALP and Slopume (Node envs)</li>
+  </ul>
 
-      <p class="video-section-label">Todo</p>
-      <ul class="body-list">
-        <li>Why is persona convergence</li>
-        <li>Stand up business_idiot chat for local code gen</li>
-      </ul>
-    </div>
+  <p class="video-section-label">Still Todo</p>
+  <ul class="body-list">
+    <li>Fork CTranslate2 for custom decoder (attention, logits)</li>
+    <li>Look at transformer + decoder during E136 ghost region transcription</li>
+  </ul>
 
-    <div class="footer">Mason Thompson · Berkeley, California</div>
+  <p class="video-section-label">Todo</p>
+  <ul class="body-list">
+    <li>Why is persona convergence</li>
+    <li>Stand up business_idiot chat for local code gen</li>
+  </ul>
+</div>
+
+<!-- 2026-06-18 -->
+<div class="entry-block">
+  <p class="video-section-label entry-divider">Notes &mdash; 2026-06-18</p>
+  <p class="lead">
+    <strong>ALL-LLLM POD</strong><br>
+    Stable, minimum lovable product
+  </p>
+  <ul class="body-list">
+    <li>Website complete</li>
+    <li>1 month on Qwen3-30B MoE</li>
+    <li>System prompts nerfed for upcoming persona work</li>
+    <li>Transcripts → semantic embeddings / memories / discourse events</li>
+    <li>Online RAG: mixed results, persona work comes first</li>
+    <li>Tweet scraper celebrating 5-days uptime</li>
+  </ul>
+
+  <p class="video-section-label">Todo</p>
+  <ul class="body-list">
+    <li>Why is persona convergence</li>
+    <li>Stand up business_idiot chat for local code gen</li>
+  </ul>
+</div>
+
+<div class="footer">Mason Thompson · Berkeley, California</div>
+```
+
   </main>
 
   <script src="https://pdf-sorcerer.github.io/alp/nav-loader.js" data-page="plan" data-title="Mason's .plan"></script>
+
 </body>
 </html>
