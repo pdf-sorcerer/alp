@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Application Forensics | ALL-LLLM POD</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --green: #0A84FF;
+      --green-dim: rgba(10, 132, 255, 0.12);
+      --bg: #ffffff;
+      --surface: #ffffff;
+      --border: #e4e4e4;
+      --code-bg: #ffffff;
+      --text: #1a1a1a;
+      --muted: #6b6b6b;
+      --faint: #8c8c8c;
+      --nav-width: 220px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    #shared-nav {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      width: var(--nav-width);
+      flex-shrink: 0;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      padding: 32px 0;
+      overflow-y: auto;
+    }
+
+    main {
+      flex: 1;
+      padding: 56px 64px 120px;
+      max-width: 920px;
+      min-width: 0;
+    }
+
+    .page-eyebrow {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 14px;
+    }
+
+    h2 {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin: 42px 0 14px;
+    }
+
+    .lead {
+      font-size: 14px;
+      line-height: 1.75;
+      color: #3a3a3a;
+      max-width: 760px;
+      margin-bottom: 24px;
+    }
+
+    .lead strong { font-weight: 600; color: var(--text); }
+
+    .body-list {
+      max-width: 760px;
+      margin: 0 0 30px 18px;
+      padding-left: 18px;
+      color: #3a3a3a;
+      font-size: 14px;
+      line-height: 1.75;
+    }
+
+    .body-list li { padding-left: 4px; margin-bottom: 6px; }
+
+    .video-section-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--faint);
+      margin: 28px 0 10px;
+      max-width: 760px;
+    }
+
+    .video-section-label.entry-divider {
+      margin-top: 36px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .entry-block { margin-bottom: 56px; }
+
+    .case-list {
+      max-width: 860px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    details.case {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    details.case[open] {
+      box-shadow: 0 10px 28px rgba(0,0,0,0.04);
+    }
+
+    summary.case-summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 18px 20px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 16px;
+      align-items: center;
+    }
+
+    summary.case-summary::-webkit-details-marker { display: none; }
+
+    .summary-main {
+      min-width: 0;
+    }
+
+    .company-line {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 10px;
+      align-items: baseline;
+      margin-bottom: 6px;
+    }
+
+    .company-name {
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    .role-name {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .disposition-chip {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--green);
+      background: var(--green-dim);
+      border: 1px solid rgba(10, 132, 255, 0.22);
+      border-radius: 999px;
+      padding: 4px 8px;
+    }
+
+    .summary-meta {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: var(--faint);
+    }
+
+    .chevron {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 18px;
+      color: var(--green);
+      transition: transform 0.18s ease;
+    }
+
+    details[open] .chevron { transform: rotate(90deg); }
+
+    .case-body {
+      padding: 0 20px 24px;
+      border-top: 1px solid var(--border);
+    }
+
+    .forensics-box {
+      margin-top: 18px;
+      background: var(--code-bg);
+      color: var(--text);
+      border-radius: 10px;
+      overflow-x: auto;
+      border: 1px solid var(--border);
+    }
+
+    .forensics-box pre {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      line-height: 1.55;
+      padding: 20px;
+      white-space: pre-wrap;
+    }
+
+    .check { color: var(--green); font-weight: 600; }
+    .x { color: var(--text); font-weight: 600; }
+    .stars { color: var(--text); }
+    .empty-stars { color: var(--faint); }
+
+
+
+    .evidence-panel {
+      margin-top: 16px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--surface);
+      overflow: hidden;
+    }
+
+    .tab-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0;
+      border-bottom: 1px solid var(--border);
+      background: #fbfbfb;
+    }
+
+    .tab-button {
+      appearance: none;
+      border: 0;
+      border-right: 1px solid var(--border);
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 11px 14px;
+    }
+
+    .tab-button[aria-selected="true"] {
+      color: var(--green);
+      background: var(--surface);
+      box-shadow: inset 0 -2px 0 var(--green);
+    }
+
+    .tab-content { display: none; padding: 18px 20px 20px; }
+    .tab-content.active { display: block; }
+
+    .email-card {
+      font-size: 13px;
+      line-height: 1.7;
+      color: #333;
+    }
+
+    .email-meta {
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      gap: 4px 12px;
+      margin-bottom: 16px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .email-meta strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .email-body p { margin-bottom: 12px; }
+
+    .footer {
+      margin-top: 72px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--faint);
+    }
+
+    @media (max-width: 768px) {
+      #shared-nav {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        height: 100vh !important;
+        width: 260px !important;
+        z-index: 10001 !important;
+        transform: translateX(-100%) !important;
+        transition: transform 0.25s ease !important;
+        overflow-y: auto !important;
+        box-shadow: 2px 0 12px rgba(0,0,0,0.12) !important;
+        flex-shrink: 0 !important;
+      }
+
+      #shared-nav.open { transform: translateX(0) !important; }
+      main { padding: 64px 20px 80px; width: 100%; max-width: 100%; }
+      summary.case-summary { grid-template-columns: 1fr; }
+      .chevron { display: none; }
+      .forensics-box pre { font-size: 11px; padding: 16px; }
+    }
+  </style>
+</head>
+
+<body>
+  <nav id="shared-nav"></nav>
+
+  <main>
+    <p class="page-eyebrow">hidden route</p>
+    <h1>Application Forensics</h1>
+
+    <p class="lead">
+      Last updated: <strong>2026-06-25</strong>
+    </p>
+
+    <p class="lead">
+      Private application forensics index. Each case compares the employer's stated job requirements against the submitted materials, records the observed pipeline disposition, and separates supported conclusions from unsupported causal claims.
+    </p>
+
+    <div class="entry-block">
+      <p class="video-section-label entry-divider">Application Case Files</p>
+
+      <section class="case-list" aria-label="Application forensics case files">
+        <details class="case" open>
+          <summary class="case-summary">
+            <div class="summary-main">
+              <div class="company-line">
+                <span class="company-name">Scale AI</span>
+                <span class="role-name">Product Manager, GenAI</span>
+                <span class="disposition-chip">Rejected before recruiter interaction</span>
+              </div>
+              <div class="summary-meta">Applied 2026-06-24 · Job ID 4675842005 · 12 strong · 6 medium · 5 low/no</div>
+            </div>
+            <div class="chevron">›</div>
+          </summary>
+
+          <div class="case-body">
+            <div class="forensics-box">
+<pre>═══════════════════════════════════════════════════════════════════════════════
+APPLICATION FORENSICS REPORT
+═══════════════════════════════════════════════════════════════════════════════
+
+Disposition
+-----------
+Rejected before recruiter interaction.
+
+Company         Scale AI
+Role            Product Manager, GenAI
+Applied         2026-06-24
+Job ID          4675842005
+
+Application
+-----------
+LinkedIn Reposted          <span class="check">✓</span>
+100+ Applicants            <span class="check">✓</span>
+Resume                     mt_resume_june2026.pdf
+Cover Letter               submitted
+Portfolio                  ALL-LLLM Portfolio
+DM Recruiter               <span class="check">✓</span>
+Recruiter Viewed Profile   <span class="check">✓</span>
+
+Pipeline Progress
+-----------------
+Applied                    <span class="check">✓</span>
+Recruiter Screen           <span class="x">✗</span>
+
+
+═══════════════════════════════════════════════════════════════════════════════
+JOB REQUIREMENT MATCH ANALYSIS
+═══════════════════════════════════════════════════════════════════════════════
+
+Top Matches (12)
+────────────────
+<span class="stars">★★★★★</span> AI Training Data
+<span class="stars">★★★★★</span> AI Evaluation
+<span class="stars">★★★★★</span> Human-in-the-Loop Systems
+<span class="stars">★★★★★</span> Quality Measurement
+<span class="stars">★★★★★</span> AI-Assisted Tooling
+<span class="stars">★★★★★</span> Instrumentation &amp; Monitoring
+<span class="stars">★★★★★</span> Technical Product Management
+<span class="stars">★★★★★</span> Cross-functional Leadership
+<span class="stars">★★★★★</span> Data Quality Infrastructure
+<span class="stars">★★★★★</span> AI Platform Development
+<span class="stars">★★★★★</span> 0→1 Product Development
+<span class="stars">★★★★★</span> Operator Tooling
+
+Medium Matches (6)
+──────────────────
+<span class="stars">★★★★</span><span class="empty-stars">☆</span> Product Strategy
+<span class="stars">★★★★</span><span class="empty-stars">☆</span> Analytics &amp; Metrics
+<span class="stars">★★★</span><span class="empty-stars">☆☆</span> Business Case / ROI
+<span class="stars">★★★</span><span class="empty-stars">☆☆</span> Data Pipeline Architecture
+<span class="stars">★★</span><span class="empty-stars">☆☆☆</span> Marketplace Economics
+<span class="stars">★★</span><span class="empty-stars">☆☆☆</span> Platform Operations
+
+Low Matches (5)
+───────────────
+<span class="stars">★</span><span class="empty-stars">☆☆☆☆</span> Contributor Marketplace
+<span class="empty-stars">☆☆☆☆☆</span> Global Payments
+<span class="empty-stars">☆☆☆☆☆</span> Compensation Systems
+<span class="empty-stars">☆☆☆☆☆</span> Incentive Design
+<span class="empty-stars">☆☆☆☆☆</span> Pay Rate Methodology
+
+
+═══════════════════════════════════════════════════════════════════════════════
+OBJECTIVE REPORT
+═══════════════════════════════════════════════════════════════════════════════
+
+Summary
+-------
+Strong Matches             12
+Medium Matches              6
+Low / No Matches            5
+
+The submitted application demonstrates strong objective evidence for
+the majority of the technical GenAI product requirements described in
+the posting, with highest alignment in AI evaluation, training data,
+human-in-the-loop workflows, quality systems, instrumentation, and
+technical product management.
+
+The submitted materials contain limited or no objective evidence for
+contributor marketplace operations, global payments, compensation
+systems, incentive design, and pay rate methodology.
+
+The application concluded before any recruiter phone screen.
+Based solely on the available evidence, the specific reason for the
+rejection cannot be established.</pre>
+            </div>
+
+            <div class="evidence-panel" data-tabs>
+              <div class="tab-row" role="tablist" aria-label="Scale AI evidence tabs">
+                <button class="tab-button" type="button" role="tab" aria-selected="true" aria-controls="scale-email-current">Rejection Email</button>
+                <button class="tab-button" type="button" role="tab" aria-selected="false" aria-controls="scale-email-prior">Prior Rejection Email</button>
+              </div>
+
+              <section class="tab-content active" id="scale-email-current" role="tabpanel">
+                <div class="email-card">
+                  <div class="email-meta">
+                    <strong>Subject</strong><span>Thank you for your interest with Scale AI</span>
+                    <strong>From</strong><span>no-reply@scale.com</span>
+                    <strong>Received</strong><span>2026-06-25, 1:34 PM</span>
+                    <strong>To</strong><span>me</span>
+                    <strong>Role</strong><span>Product Manager, Gen AI</span>
+                  </div>
+                  <div class="email-body">
+                    <p>Hi mason,</p>
+                    <p>Thank you for applying to our Product Manager, Gen AI role and showing interest in joining our team here at Scale. Unfortunately, after reviewing your work and experience, we've decided not to move forward with your application.</p>
+                    <p>While this position is not a match at this time, we’d still love to stay in touch for future opportunities at Scale. We are continually growing our team, so If you find a position in the future that might be a good fit, please apply again. You can keep up with happenings at Scale by reading our blog and staying connected on LinkedIn.</p>
+                    <p>Once again we appreciate your interest in Scale, and wish you success in your job search.</p>
+                    <p>Thank you,<br>The Scale AI Recruiting Team</p>
+                  </div>
+                </div>
+              </section>
+
+              <section class="tab-content" id="scale-email-prior" role="tabpanel">
+                <div class="email-card">
+                  <div class="email-meta">
+                    <strong>Subject</strong><span>Thank you for your interest with Scale AI</span>
+                    <strong>From</strong><span>no-reply@scale.com</span>
+                    <strong>Received</strong><span>2024-04-04, 9:51 AM</span>
+                    <strong>To</strong><span>me</span>
+                    <strong>Role</strong><span>Technical Program Manager, Training</span>
+                  </div>
+                  <div class="email-body">
+                    <p>Hi mason,</p>
+                    <p>Thank you for applying to our Technical Program Manager, Training role and showing interest in joining our team here at Scale. Unfortunately, after reviewing your work and experience, we've decided not to move forward with your application.</p>
+                    <p>While this position is not a match at this time, we’d still love to stay in touch for future opportunities at Scale. We are continually growing our team, so If you find a position in the future that might be a good fit, please apply again. You can keep up with happenings at Scale by reading our blog and staying connected on LinkedIn.</p>
+                    <p>Once again we appreciate your interest in Scale, and wish you success in your job search.</p>
+                    <p>Thank you,<br>The Scale AI Recruiting Team</p>
+                  </div>
+                </div>
+              </section>
+            </div>
+
+          </div>
+        </details>
+      </section>
+    </div>
+
+    <div class="footer">Mason Thompson · Berkeley, California</div>
+  </main>
+
+  <script src="https://pdf-sorcerer.github.io/alp/nav-loader.js" data-page="shame" data-title="Application Forensics"></script>
+
+  <script>
+    document.querySelectorAll('[data-tabs]').forEach((tabs) => {
+      const buttons = Array.from(tabs.querySelectorAll('.tab-button'));
+      const panels = Array.from(tabs.querySelectorAll('.tab-content'));
+
+      buttons.forEach((button) => {
+        button.addEventListener('click', () => {
+          const targetId = button.getAttribute('aria-controls');
+          buttons.forEach((btn) => btn.setAttribute('aria-selected', btn === button ? 'true' : 'false'));
+          panels.forEach((panel) => panel.classList.toggle('active', panel.id === targetId));
+        });
+      });
+    });
+  </script>
+</body>
+</html>
