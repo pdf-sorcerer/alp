@@ -34,11 +34,11 @@ h1{font-size:28px;margin-bottom:14px}
 <div class="entry-block">
 <p class="video-section-label">2026-06-29</p>
 <ul class="body-list">
-  <li>Supabase now canonical system of record; SQLite retired.</li>
-<li>Slopume generates company-job app specific tokens, clicking link now triggers an attribution event</li>
-<li>It was always in the header. Hyperlinks to profile, linkedin, etc mutated with tracking tokens.</li>
-<li>UX flow: someone loads PDF → click link → Slopume → Vercel Functions → Supabase.</li>
-<li>Ready.net app first resume record logged (manully) with on-click into Supabase.</li>
+<li>Supabase once again the canonical system of record.</li>
+<li>Unique job-app token UIDs appended to resume URLs: email, LinkedIn, portfolio.</li>
+<li>UIDs route through Vercel Serverless Functions.</li>
+<li>On-click attribution event logged in Supabase.</li>
+<li>Seamless UX: on-click resource loads with no visible redirect.</li>
 </ul>
 </div>
 
