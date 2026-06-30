@@ -34,12 +34,11 @@ h1{font-size:28px;margin-bottom:14px}
 <div class="entry-block">
 <p class="video-section-label">2026-06-29</p>
 <ul class="body-list">
-<li>ResumeIQ now generates tracked application-specific resumes + cover letters via Slopume.dev links.</li>
-<li>Google Docs hyperlinks auto-rewritten with per-application tracking tokens for attribution.</li>
-<li>Resume click telemetry flows end-to-end: Google Docs → Slopume → Vercel Functions → Supabase.</li>
-<li>Supabase became canonical application datastore; SQLite subsumed into local cache layer (holy subsumption file).</li>
-<li>Job application data divergence identified between Supabase and local SQLite, requiring explicit reconciliation.</li>
-<li>Ready.net application verified end-to-end with successful click attribution and event ingestion into Supabase.</li>
+  <li>Supabase now canonical system of record; SQLite retired.</li>
+<li>Slopume generates company-job app specific tokens, clicking link now triggers an attribution event</li>
+<li>It was always in the header. Hyperlinks to profile, linkedin, etc mutated with tracking tokens.</li>
+<li>UX flow: someone loads PDF → click link → Slopume → Vercel Functions → Supabase.</li>
+<li>Ready.net app first resume record logged (manully) with on-click into Supabase.</li>
 </ul>
 </div>
 
