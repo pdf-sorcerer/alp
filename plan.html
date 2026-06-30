@@ -25,10 +25,24 @@ h1{font-size:28px;margin-bottom:14px}
 </head>
 <body>
 <nav id="shared-nav"></nav>
+
 <main>
 <p class="page-eyebrow">project status</p>
 <h1>Mason's .plan</h1>
 <p class="lead">Last updated: <strong>2026-06-27</strong></p>
+
+<div class="entry-block">
+<p class="video-section-label">2026-06-29</p>
+<ul class="body-list">
+<li>ResumeIQ now generates tracked application-specific resumes + cover letters via Slopume.dev links.</li>
+<li>Google Docs hyperlinks auto-rewritten with per-application tracking tokens for attribution.</li>
+<li>Resume click telemetry flows end-to-end: Google Docs → Slopume → Vercel Functions → Supabase.</li>
+<li>Supabase became canonical application datastore; SQLite subsumed into local cache layer (holy subsumption file).</li>
+<li>Job application data divergence identified between Supabase and local SQLite, requiring explicit reconciliation.</li>
+<li>Ready.net application verified end-to-end with successful click attribution and event ingestion into Supabase.</li>
+</ul>
+</div>
+
 <div class="entry-block">
 <p class="video-section-label">2026-06-27</p>
 <ul class="body-list">
@@ -38,6 +52,7 @@ h1{font-size:28px;margin-bottom:14px}
 <li>The only remaining ResumeIQ bug is wiring application link tokens into generated portfolio URLs.</li>
 </ul>
 </div>
+
 <div class="entry-block">
 <p class="video-section-label">2026-06-26</p>
 <ul class="body-list">
@@ -48,6 +63,7 @@ h1{font-size:28px;margin-bottom:14px}
 <li>Rejections trigger forensic prompts for Jippity: JD, resume, metadata, rejection email.</li>
 </ul>
 </div>
+
 <div class="entry-block">
 <p class="video-section-label">2026-06-23</p>
 <ul class="body-list">
@@ -57,6 +73,7 @@ h1{font-size:28px;margin-bottom:14px}
 <li>Idea: mine NVIDIA LinkedIn comments.</li>
 </ul>
 </div>
+
 <div class="entry-block">
 <p class="video-section-label">2026-06-22</p>
 <ul class="body-list">
@@ -66,6 +83,7 @@ h1{font-size:28px;margin-bottom:14px}
 <li>Queue: decoder work, ghost audio, persona convergence, business_idiot.</li>
 </ul>
 </div>
+
 <div class="entry-block">
 <p class="video-section-label">2026-06-18</p>
 <ul class="body-list">
@@ -76,8 +94,10 @@ h1{font-size:28px;margin-bottom:14px}
 <li>Online RAG postponed. Persona work first.</li>
 </ul>
 </div>
+
 <div class="footer">Mason Thompson · Berkeley, California</div>
 </main>
+
 <script src="https://pdf-sorcerer.github.io/alp/nav-loader.js" data-page="plan" data-title="Mason's .plan"></script>
 </body>
 </html>
