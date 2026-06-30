@@ -4,25 +4,112 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mason's .plan | ALL-LLLM POD</title>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
 <style>
-:root{--green:#0A84FF;--bg:#f9f9f9;--surface:#fff;--border:#e4e4e4;--text:#1a1a1a;--faint:#8c8c8c;--nav-width:220px}
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Inter,sans-serif;background:var(--bg);color:var(--text);display:flex}
-#shared-nav{position:sticky;top:0;height:100vh;width:var(--nav-width);background:var(--surface);border-right:1px solid var(--border)}
-main{flex:1;padding:56px 64px 120px;max-width:860px}
-.page-eyebrow,.video-section-label,.footer{font-family:'IBM Plex Mono',monospace}
-.page-eyebrow{font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--green);margin-bottom:12px}
-h1{font-size:28px;margin-bottom:14px}
-.lead{font-size:14px;line-height:1.7;margin-bottom:24px}
-.body-list{max-width:720px;margin:0 0 36px 18px;padding-left:18px;line-height:1.75}
-.body-list li{margin-bottom:8px}
-.video-section-label{font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin:36px 0 10px;padding-bottom:8px;border-bottom:1px solid var(--border)}
-.footer{margin-top:64px;padding-top:24px;border-top:1px solid var(--border);font-size:10px;text-transform:uppercase;color:var(--faint)}
+:root{
+  --green:#0A84FF;
+  --bg:#f9f9f9;
+  --surface:#fff;
+  --border:#e4e4e4;
+  --text:#1a1a1a;
+  --faint:#8c8c8c;
+  --nav-width:220px;
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Inter,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  display:flex;
+}
+
+/* NAV */
+#shared-nav{
+  position:sticky;
+  top:0;
+  height:100vh;
+  width:var(--nav-width);
+  background:var(--surface);
+  border-right:1px solid var(--border);
+}
+
+/* FIX: FULL WIDTH USAGE */
+main{
+  flex:1;
+  padding:56px 64px 120px;
+  width:calc(100vw - var(--nav-width));
+  max-width:none;
+}
+
+.page-eyebrow,
+.video-section-label,
+.footer{
+  font-family:'IBM Plex Mono',monospace;
+}
+
+.page-eyebrow{
+  font-size:10px;
+  font-weight:600;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--green);
+  margin-bottom:12px;
+}
+
+h1{
+  font-size:28px;
+  margin-bottom:14px;
+}
+
+.lead{
+  font-size:14px;
+  line-height:1.7;
+  margin-bottom:24px;
+}
+
+.body-list{
+  width:100%;
+  margin:0 0 36px 18px;
+  padding-left:18px;
+  line-height:1.75;
+}
+
+.body-list li{
+  margin-bottom:8px;
+}
+
+.video-section-label{
+  font-size:10px;
+  font-weight:600;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--faint);
+  margin:36px 0 10px;
+  padding-bottom:8px;
+  border-bottom:1px solid var(--border);
+}
+
+.footer{
+  margin-top:64px;
+  padding-top:24px;
+  border-top:1px solid var(--border);
+  font-size:10px;
+  text-transform:uppercase;
+  color:var(--faint);
+}
 </style>
 </head>
+
 <body>
 <nav id="shared-nav"></nav>
 
@@ -39,8 +126,9 @@ h1{font-size:28px;margin-bottom:14px}
 <li>URLs in header. /resume page treats document as flat object. Goodbye 90min.</li>
 <li>Frontend: on-click, resource loads in browser immediately for user. No delay or visible redirect.</li>
 <li>Backend: UID routes through Vercel Serverless Functions, attribution event logged in Supabase.</li>
+
 <li>
-  <div style="border:1px solid #e4e4e4; border-radius:6px; padding:10px; font-family:IBM Plex Mono, monospace; font-size:11px; line-height:1.6; margin-top:6px;">
+  <div style="border:1px solid #e4e4e4; border-radius:6px; padding:10px; font-family:IBM Plex Mono, monospace; font-size:11px; line-height:1.6; margin-top:6px; width:100%;">
 
     <div style="margin-bottom:6px; color:#8c8c8c;">
       2026-06-30 00:53:33 UTC · portfolio_clicked
@@ -62,6 +150,7 @@ h1{font-size:28px;margin-bottom:14px}
 
   </div>
 </li>
+
 </ul>
 </div>
 
@@ -118,8 +207,10 @@ h1{font-size:28px;margin-bottom:14px}
 </div>
 
 <div class="footer">Mason Thompson · Berkeley, California</div>
+
 </main>
 
 <script src="https://pdf-sorcerer.github.io/alp/nav-loader.js" data-page="plan" data-title="Mason's .plan"></script>
+
 </body>
 </html>
