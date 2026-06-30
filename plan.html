@@ -124,6 +124,50 @@ h1{
   text-transform:uppercase;
   color:var(--faint);
 }
+
+/* SCREENSHOT MODAL */
+.shot-link{
+  color:var(--green);
+  text-decoration:underline;
+  text-decoration-color:rgba(10,132,255,.35);
+  text-underline-offset:2px;
+  cursor:pointer;
+  font-family:'IBM Plex Mono', monospace;
+  font-size:11px;
+}
+.shot-link:hover{
+  text-decoration-color:var(--green);
+}
+
+#shot-modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.72);
+  z-index:999;
+  align-items:center;
+  justify-content:center;
+  padding:40px;
+}
+#shot-modal.open{ display:flex; }
+#shot-modal img{
+  max-width:min(900px, 90vw);
+  max-height:88vh;
+  border-radius:10px;
+  box-shadow:0 20px 60px rgba(0,0,0,.5);
+}
+#shot-modal .shot-close{
+  position:absolute;
+  top:24px;
+  right:32px;
+  color:#fff;
+  font-family:'IBM Plex Mono', monospace;
+  font-size:12px;
+  letter-spacing:.08em;
+  cursor:pointer;
+  opacity:.7;
+}
+#shot-modal .shot-close:hover{ opacity:1; }
 </style>
 </head>
 
@@ -133,17 +177,22 @@ h1{
 <main>
 <p class="page-eyebrow">project status</p>
 <h1>Mason's .plan</h1>
-<p class="lead">Last updated: <strong>2026-06-29</strong></p>
+<p class="lead">Last updated: <strong>2026-06-30</strong></p>
+
+<div class="entry-block">
+<p class="video-section-label">2026-06-30</p>
+<ul class="body-list">
+<li>ALL-LLLM: Updated Slopnozzle to point to new default model path under /users and spruced the UI a little. <span class="shot-link" onclick="document.getElementById('shot-modal').classList.add('open')">[screenshot]</span></li>
+<li>Getting 43-44 t/s on standard Qwen3-30B. Abliterated variant felt like ~30 give or take. Benchmark? Next quarter.</li>
+</ul>
+</div>
 
 <div class="entry-block">
 <p class="video-section-label">2026-06-29</p>
 <ul class="body-list">
 <li>Interview went great. Excited and feeling good. Round 2 tomorrow (Tuesday).</li>
 <li>Unique job-app token UIDs appended to resume URLs: email, LinkedIn, portfolio.</li>
-<li>URLs in header. /resume page treats document as flat object. Goodbye 90min.</li>
-<li>Added download to /resume. Fixed export shape. File is standards-compliant across browsers, platforms, and ATS parsers.</li>
-<li>Frontend: on-click, resource loads in browser immediately for user. No delay or visible redirect.</li>
-<li>Backend: UID routes through Vercel Serverless Functions, attribution event logged in Supabase.</li>
+<li>Frontend: on-click, resource loads in browser immediately for user. No delay or visible redirect. Backend: UID routes through Vercel Serverless Functions, attribution event logged in Supabase.</li>
 
 <li>
 <pre><code>[
@@ -161,8 +210,7 @@ h1{
   }
 ]</code></pre>
 </li>
-  <li>ALL-LLLM: Cursed path change. oMLX admin and curl downloading LLMs from HF as blobs.</li>
-
+<li>ALL-LLLM: Cursed oMLX path change and downloading blobs. Fixed. Updated Slopnozzle to point to new path. Getting 43-44 t/s on non-abliterated Qwen3-30B. Felt like ~30 give or take with the abliterated variant.</li>
 
 </ul>
 </div>
@@ -223,7 +271,18 @@ h1{
 
 </main>
 
+<!-- SCREENSHOT MODAL -->
+<div id="shot-modal" onclick="if(event.target===this) this.classList.remove('open')">
+  <span class="shot-close" onclick="document.getElementById('shot-modal').classList.remove('open')">ESC ✕</span>
+  <img src="slopnozzle.png" alt="Slopnozzle menu bar UI">
+</div>
+
 <script src="https://pdf-sorcerer.github.io/alp/nav-loader.js" data-page="plan" data-title="Mason's .plan"></script>
+<script>
+document.addEventListener('keydown', e => {
+  if(e.key === 'Escape') document.getElementById('shot-modal').classList.remove('open');
+});
+</script>
 
 </body>
 </html>
