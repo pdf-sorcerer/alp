@@ -36,9 +36,21 @@ h1{font-size:28px;margin-bottom:14px}
 <ul class="body-list">
 <li>Supabase once again the canonical system of record.</li>
 <li>Unique job-app token UIDs appended to resume URLs: email, LinkedIn, portfolio.</li>
-<li>UIDs route through Vercel Serverless Functions.</li>
-<li>On-click attribution event logged in Supabase.</li>
-<li>Seamless UX: on-click resource loads with no visible redirect.</li>
+<li>Frontend: on-click, resource loads immediately for user. No delay or visible redirect.</li>
+<li>Backend: on-click, UIDs route through Vercel Serverless Functions, attribution event logged in Supabase.</li>
+<li>
+  <div style="margin-top:8px; padding:10px; border:1px solid #e4e4e4; border-radius:6px; font-family:IBM Plex Mono, monospace; font-size:11px; line-height:1.6;">
+    UID FLOW<br><br>
+    token UID<br>
+        ↓<br>
+    Vercel Serverless Function<br>
+        ↓<br>
+    Supabase (event log)<br>
+        ↓<br>
+    302 Redirect / Resource Load<br><br>
+    <span style="color:#8c8c8c;">non-blocking / invisible to user</span>
+  </div>
+</li>
 </ul>
 </div>
 
