@@ -20,11 +20,7 @@
   --nav-width:220px;
 }
 
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
+*{ box-sizing:border-box; margin:0; padding:0; }
 
 body{
   font-family:Inter,sans-serif;
@@ -33,7 +29,6 @@ body{
   display:flex;
 }
 
-/* NAV */
 #shared-nav{
   position:sticky;
   top:0;
@@ -43,7 +38,6 @@ body{
   border-right:1px solid var(--border);
 }
 
-/* FIX: FULL WIDTH USAGE */
 main{
   flex:1;
   padding:56px 64px 120px;
@@ -53,9 +47,7 @@ main{
 
 .page-eyebrow,
 .video-section-label,
-.footer{
-  font-family:'IBM Plex Mono',monospace;
-}
+.footer{ font-family:'IBM Plex Mono',monospace; }
 
 .page-eyebrow{
   font-size:10px;
@@ -66,10 +58,7 @@ main{
   margin-bottom:12px;
 }
 
-h1{
-  font-size:28px;
-  margin-bottom:14px;
-}
+h1{ font-size:28px; margin-bottom:14px; }
 
 .lead{
   font-size:14px;
@@ -84,9 +73,7 @@ h1{
   line-height:1.75;
 }
 
-.body-list li{
-  margin-bottom:8px;
-}
+.body-list li{ margin-bottom:8px; }
 
 .body-list pre{
   background:#fff;
@@ -125,7 +112,6 @@ h1{
   color:var(--faint);
 }
 
-/* SCREENSHOT MODAL */
 .shot-link{
   color:var(--green);
   text-decoration:underline;
@@ -135,11 +121,10 @@ h1{
   font-family:'IBM Plex Mono', monospace;
   font-size:11px;
 }
-.shot-link:hover{
-  text-decoration-color:var(--green);
-}
+.shot-link:hover{ text-decoration-color:var(--green); }
 
-#shot-modal{
+#shot-modal,
+#push-modal{
   display:none;
   position:fixed;
   inset:0;
@@ -149,14 +134,18 @@ h1{
   justify-content:center;
   padding:40px;
 }
-#shot-modal.open{ display:flex; }
-#shot-modal img{
+#shot-modal.open,
+#push-modal.open{ display:flex; }
+
+#shot-modal img,
+#push-modal img{
   max-width:min(900px, 90vw);
   max-height:88vh;
   border-radius:10px;
   box-shadow:0 20px 60px rgba(0,0,0,.5);
 }
-#shot-modal .shot-close{
+
+.shot-close{
   position:absolute;
   top:24px;
   right:32px;
@@ -167,7 +156,7 @@ h1{
   cursor:pointer;
   opacity:.7;
 }
-#shot-modal .shot-close:hover{ opacity:1; }
+.shot-close:hover{ opacity:1; }
 </style>
 </head>
 
@@ -177,7 +166,14 @@ h1{
 <main>
 <p class="page-eyebrow">project status</p>
 <h1>Mason's .plan</h1>
-<p class="lead">Last updated: <strong>2026-06-30</strong></p>
+<p class="lead">Last updated: <strong>2026-07-01</strong></p>
+
+<div class="entry-block">
+<p class="video-section-label">2026-07-01</p>
+<ul class="body-list">
+  <li><strong>DONE</strong>: Resume activity via push notification: 58 min. Vercel push to ALL-LLLM POD.<span class="shot-link" onclick="document.getElementById('push-modal').classList.add('open')">[screenshot]</span></li>
+</ul>
+</div>
 
 <div class="entry-block">
 <p class="video-section-label">2026-06-30</p>
@@ -186,15 +182,15 @@ h1{
   <li>The Meat Chief returns. <a href="https://www.youtube.com/watch?v=u-vH31VD7GE">Zuckerberg interview on his ranch cows and AI glasses</a>.</li>
   <li>Changed local LLM model and path. Getting 43–44 t/s on standard Qwen3-30B.<span class="shot-link" onclick="document.getElementById('shot-modal').classList.add('open')">[screenshot]</span></li>
   <li>Twitter daemon upgraded to scrape NVIDIA (posts/replies). Two weeks uptime collecting training data for Besties.</li>
-  <li><strong>TODO</strong>: Warm laptop bad. 15 min idle (clamshell) → push notification to phone to kill oMLX, Vite, Node. "I got a text!" Make it so.</li>
-  <li><strong>TODO</strong>: Resume activity? Tom lizard push notification. Code in older iOS project. 60-minute adventure?</li>
+  <li><strong>TODO</strong>: Warm laptop bad. 15 min idle (clamshell) → push notification to phone to kill oMLX, Vite, Node. That pixar lizard mp3. Make it so.</li>
+  <li><strong>TODO</strong>: <s>Resume activity? Love Island notification sound. Code in older iOS project. 60-minute adventure?</s></li>
 </ul>
 </div>
 
 <div class="entry-block">
 <p class="video-section-label">2026-06-29</p>
 <ul class="body-list">
-<li>Considering rolling back to MacOS Sequoia.
+<li>Considering rolling back to MacOS Sequoia.</li>
 <li>Interview went great. Excited and feeling good. Round 2 tomorrow (Tuesday).</li>
 <li>Final 20%: Done. Job-app token UIDs appended resume to email, LinkedIn, portfolio URLs.</li>
 <li>Frontend: on-click, resource loads in browser immediately for user. No delay or visible redirect. Backend: UID routes through Vercel Serverless Functions, attribution event logged in Supabase.</li>
@@ -274,16 +270,25 @@ h1{
 
 </main>
 
-<!-- SCREENSHOT MODAL -->
+<!-- QWEN SCREENSHOT MODAL -->
 <div id="shot-modal" onclick="if(event.target===this) this.classList.remove('open')">
   <span class="shot-close" onclick="document.getElementById('shot-modal').classList.remove('open')">ESC ✕</span>
   <img src="slopnozzle.png" alt="Slopnozzle menu bar UI">
 </div>
 
+<!-- PUSH SCREENSHOT MODAL -->
+<div id="push-modal" onclick="if(event.target===this) this.classList.remove('open')">
+  <span class="shot-close" onclick="document.getElementById('push-modal').classList.remove('open')">ESC ✕</span>
+  <img src="push.png" alt="ALL-LLLM POD push notification screenshot">
+</div>
+
 <script src="https://pdf-sorcerer.github.io/alp/nav-loader.js" data-page="plan" data-title="Mason's .plan"></script>
 <script>
 document.addEventListener('keydown', e => {
-  if(e.key === 'Escape') document.getElementById('shot-modal').classList.remove('open');
+  if(e.key === 'Escape') {
+    document.getElementById('shot-modal').classList.remove('open');
+    document.getElementById('push-modal').classList.remove('open');
+  }
 });
 </script>
 
