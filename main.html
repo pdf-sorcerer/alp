@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mason Thompson | Portfolio</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --green: #0A84FF;
+      --green-dim: rgba(10, 132, 255, 0.12);
+      --bg: #f9f9f9;
+      --surface: #ffffff;
+      --border: #e4e4e4;
+      --code-bg: #0d1117;
+      --text: #1a1a1a;
+      --muted: #6b6b6b;
+      --faint: #8c8c8c;
+      --nav-width: 220px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    #shared-nav {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      width: var(--nav-width);
+      flex-shrink: 0;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      padding: 32px 0;
+      overflow-y: auto;
+    }
+
+    main {
+      flex: 1;
+      padding: 64px 64px 120px;
+      max-width: 980px;
+      min-width: 0;
+    }
+
+    .page-eyebrow {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-size: 34px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 16px;
+      max-width: 760px;
+    }
+
+    .lead {
+      font-size: 14px;
+      line-height: 1.75;
+      color: #3a3a3a;
+      max-width: 760px;
+      margin-bottom: 48px;
+    }
+
+    .lead strong { font-weight: 600; color: var(--text); }
+
+    .hero-terminal {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      line-height: 1.8;
+      color: #c9d1d9;
+      background: var(--code-bg);
+      border-radius: 4px;
+      padding: 24px 28px;
+      margin: 0 0 36px;
+      max-width: 760px;
+      overflow-x: auto;
+      white-space: pre-wrap;
+    }
+
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin: 0 0 52px;
+    }
+
+    .portfolio-card {
+      display: flex;
+      flex-direction: column;
+      min-height: 280px;
+      padding: 22px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: inherit;
+      text-decoration: none;
+      transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
+    }
+
+    .portfolio-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--green);
+      box-shadow: 0 10px 28px rgba(0,0,0,0.05);
+    }
+
+    .card-kicker {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 16px;
+    }
+
+    .portfolio-card h2 {
+      font-size: 20px;
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+
+    .portfolio-card p {
+      font-size: 13px;
+      line-height: 1.65;
+      color: var(--muted);
+      margin-bottom: 18px;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: auto;
+      padding-top: 18px;
+    }
+
+    .tag {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      color: var(--green);
+      background: var(--green-dim);
+      border-radius: 3px;
+      padding: 4px 6px;
+      white-space: nowrap;
+    }
+
+    .card-link {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--faint);
+      margin-top: 18px;
+    }
+
+    .portfolio-card:hover .card-link { color: var(--green); }
+
+    .callout {
+      max-width: 760px;
+      padding: 18px 20px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+    }
+
+    .callout-title {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 10px;
+    }
+
+    .callout-body {
+      font-size: 13px;
+      line-height: 1.75;
+      color: var(--muted);
+    }
+
+    .footer {
+      margin-top: 72px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--faint);
+    }
+
+    @media (max-width: 900px) {
+      .portfolio-grid { grid-template-columns: 1fr; }
+      .portfolio-card { min-height: 0; }
+    }
+
+    @media (max-width: 768px) {
+      #shared-nav {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        height: 100vh !important;
+        width: 260px !important;
+        z-index: 10001 !important;
+        transform: translateX(-100%) !important;
+        transition: transform 0.25s ease !important;
+        overflow-y: auto !important;
+        box-shadow: 2px 0 12px rgba(0,0,0,0.12) !important;
+        flex-shrink: 0 !important;
+      }
+
+      #shared-nav.open { transform: translateX(0) !important; }
+      main { padding: 64px 20px 80px; width: 100%; max-width: 100%; }
+      h1 { font-size: 28px; }
+      .hero-terminal { font-size: 10px; padding: 18px; }
+    }
+  </style>
+</head>
+
+<body>
+  <nav id="shared-nav"></nav>
+
+  <main>
+    <p class="page-eyebrow">Portfolio Home</p>
+    <h1>AI systems, product tooling, and weird little apps that prove the work.</h1>
+
+    <p class="lead">
+      A working portfolio for projects spanning local LLMs, speech systems, transcript pipelines, job-search tooling, and app experiments. Pick the surface area you want to inspect first.
+    </p>
+
+    <div class="hero-terminal">$ open mason_portfolio
+├── all-lllm-pod    # persona chatbot, speech/data/inference pipeline
+├── slopume         # resume + job-description alignment tooling
+└── other-apps      # smaller utilities, experiments, and side quests</div>
+
+    <section class="portfolio-grid" aria-label="Portfolio entry points">
+      <a class="portfolio-card" href="welcome.html">
+        <div class="card-kicker">01 · Flagship System</div>
+        <h2>ALL-LLLM POD</h2>
+        <p>
+          A technically serious generative AI system built around an intentionally unserious premise: satirical conversational personas powered by transcripts, local inference, voice, memory, and evaluation loops.
+        </p>
+        <div class="tag-row">
+          <span class="tag">Qwen</span>
+          <span class="tag">WhisperX</span>
+          <span class="tag">NeMo</span>
+          <span class="tag">F5-TTS</span>
+        </div>
+        <div class="card-link">Enter ALL-LLLM POD ↗</div>
+      </a>
+
+      <a class="portfolio-card" href="slopume.html">
+        <div class="card-kicker">02 · Workflow Tooling</div>
+        <h2>Slopume</h2>
+        <p>
+          A local job-search and resume iteration system for parsing roles, comparing fit, rewriting bullets, exporting PDFs, and turning messy application work into a repeatable product loop.
+        </p>
+        <div class="tag-row">
+          <span class="tag">Resumes</span>
+          <span class="tag">ATS</span>
+          <span class="tag">Local LLM</span>
+          <span class="tag">PDF Export</span>
+        </div>
+        <div class="card-link">Enter Slopume ↗</div>
+      </a>
+
+      <a class="portfolio-card" href="apps.html">
+        <div class="card-kicker">03 · Experiments</div>
+        <h2>Other Apps</h2>
+        <p>
+          Smaller apps, menu-bar tools, automation experiments, transcript forensics, helper utilities, and side quests that show the broader operating style behind the main projects.
+        </p>
+        <div class="tag-row">
+          <span class="tag">SwiftUI</span>
+          <span class="tag">FastAPI</span>
+          <span class="tag">Automation</span>
+          <span class="tag">Forensics</span>
+        </div>
+        <div class="card-link">Enter Other Apps ↗</div>
+      </a>
+    </section>
+
+    <div class="callout">
+      <div class="callout-title">Read This As A System Map</div>
+      <div class="callout-body">
+        The point is not just the apps. It is the loop: find a real workflow, build the tool, instrument the failure modes, then turn the messy parts into evidence of product and engineering judgment.
+      </div>
+    </div>
+
+    <div class="footer">Mason Thompson · Berkeley, California</div>
+  </main>
+
+  <script src="https://pdf-sorcerer.github.io/alp/nav-loader.js" data-page="portfolio"></script>
+</body>
+</html>
