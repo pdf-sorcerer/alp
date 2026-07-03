@@ -1,477 +1,709 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Skeptical Reframing | Mason Thompson</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Skeptical Reframing | Mason Thompson</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
 
-  <style>
-    :root {
-      --green: #0A84FF;
-      --green-dim: rgba(10, 132, 255, 0.12);
-      --bg: #f9f9f9;
-      --surface: #ffffff;
-      --border: #e4e4e4;
-      --code-bg: #0d1117;
-      --text: #1a1a1a;
-      --muted: #6b6b6b;
-      --faint: #8c8c8c;
-      --nav-width: 220px;
-    }
+    <style>
+        :root {
+            --green: #0A84FF;
+            --green-dim: rgba(10, 132, 255, 0.12);
+            --bg: #f9f9f9;
+            --surface: #ffffff;
+            --border: #e4e4e4;
+            --code-bg: #0d1117;
+            --text: #1a1a1a;
+            --muted: #6b6b6b;
+            --faint: #8c8c8c;
+            --nav-width: 220px;
+        }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      display: flex;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            display: flex;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
 
-    #shared-nav {
-      position: sticky;
-      top: 0;
-      height: 100vh;
-      width: var(--nav-width);
-      flex-shrink: 0;
-      background: var(--surface);
-      border-right: 1px solid var(--border);
-      display: flex;
-      flex-direction: column;
-      padding: 32px 0;
-      overflow-y: auto;
-    }
+        #shared-nav {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            width: var(--nav-width);
+            flex-shrink: 0;
+            background: var(--surface);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            padding: 32px 0;
+            overflow-y: auto;
+        }
 
-    main {
-      flex: 1;
-      padding: 56px 64px 120px;
-      max-width: 900px;
-      min-width: 0;
-    }
+        main {
+            flex: 1;
+            padding: 56px 64px 120px;
+            max-width: 1080px;
+            min-width: 0;
+        }
 
-    .page-eyebrow,
-    .section-label,
-    .card-label,
-    .callout-title {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
+        .page-eyebrow,
+        .section-label,
+        .card-label,
+        .callout-title,
+        .small-label,
+        th {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
 
-    .page-eyebrow {
-      color: var(--green);
-      margin-bottom: 12px;
-    }
+        .page-eyebrow {
+            color: var(--green);
+            margin-bottom: 12px;
+        }
 
-    h1 {
-      font-size: 30px;
-      font-weight: 700;
-      letter-spacing: -0.025em;
-      line-height: 1.2;
-      margin-bottom: 16px;
-    }
+        h1 {
+            font-size: 30px;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+            line-height: 1.2;
+            margin-bottom: 16px;
+        }
 
-    h2 {
-      font-size: 20px;
-      letter-spacing: -0.02em;
-      margin-bottom: 14px;
-    }
+        h2 {
+            font-size: 20px;
+            letter-spacing: -0.02em;
+            margin-bottom: 14px;
+        }
 
-    .lead {
-      font-size: 14px;
-      line-height: 1.75;
-      color: #3a3a3a;
-      max-width: 720px;
-      margin-bottom: 24px;
-    }
+        h3 {
+            font-size: 16px;
+            letter-spacing: -0.015em;
+            margin-bottom: 8px;
+        }
 
-    .lead strong { color: var(--text); font-weight: 600; }
+        .lead {
+            font-size: 14px;
+            line-height: 1.75;
+            color: #3a3a3a;
+            max-width: 760px;
+            margin-bottom: 24px;
+        }
 
-    .callout {
-      max-width: 720px;
-      margin: 34px 0 42px;
-      padding: 18px 20px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-left: 3px solid var(--green);
-      border-radius: 4px;
-    }
+        .lead strong {
+            color: var(--text);
+            font-weight: 600;
+        }
 
-    .callout-title {
-      color: var(--green);
-      margin-bottom: 10px;
-    }
+        .callout {
+            max-width: 760px;
+            margin: 34px 0 42px;
+            padding: 18px 20px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--green);
+            border-radius: 4px;
+        }
 
-    .callout-body {
-      font-size: 13px;
-      line-height: 1.75;
-      color: var(--muted);
-    }
+        .callout-title {
+            color: var(--green);
+            margin-bottom: 10px;
+        }
 
-    .stats-row {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin: 0 0 54px;
-      max-width: 720px;
-    }
+        .callout-body {
+            font-size: 13px;
+            line-height: 1.75;
+            color: var(--muted);
+        }
 
-    .stat-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 18px;
-    }
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin: 0 0 54px;
+            max-width: 760px;
+        }
 
-    .stat-num {
-      display: block;
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 24px;
-      font-weight: 600;
-      color: var(--green);
-      margin-bottom: 6px;
-    }
+        .stat-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 18px;
+        }
 
-    .stat-label {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--faint);
-    }
+        .stat-num {
+            display: block;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--green);
+            margin-bottom: 6px;
+        }
 
-    .section-label {
-      color: var(--faint);
-      margin: 48px 0 14px;
-      padding-bottom: 8px;
-      border-bottom: 1px solid var(--border);
-      max-width: 720px;
-    }
+        .stat-label {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--faint);
+        }
 
-    .case-title {
-      max-width: 720px;
-      margin-bottom: 20px;
-    }
+        .section-label {
+            color: var(--faint);
+            margin: 48px 0 14px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border);
+            max-width: 960px;
+        }
 
-    .case-title h2 { margin-bottom: 8px; }
+        .case-title {
+            max-width: 760px;
+            margin-bottom: 20px;
+        }
 
-    .case-title p {
-      font-size: 14px;
-      line-height: 1.7;
-      color: var(--muted);
-    }
+        .case-title p {
+            font-size: 14px;
+            line-height: 1.7;
+            color: var(--muted);
+        }
 
-    .findings-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 12px;
-      max-width: 720px;
-      margin: 24px 0 46px;
-    }
+        .finding-card {
+            max-width: 760px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 18px 20px;
+            margin: 14px 0;
+        }
 
-    .finding-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 18px 20px;
-    }
+        .card-label,
+        .small-label {
+            color: var(--green);
+            margin-bottom: 8px;
+        }
 
-    .card-label {
-      color: var(--green);
-      margin-bottom: 8px;
-    }
+        .finding-card p {
+            font-size: 13px;
+            line-height: 1.7;
+            color: var(--muted);
+        }
 
-    .finding-card p {
-      font-size: 13px;
-      line-height: 1.7;
-      color: var(--muted);
-    }
+        .tldr {
+            max-width: 760px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 22px 24px;
+            margin-bottom: 54px;
+        }
 
-    .mono-heading {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--green);
-      margin: 50px 0 12px;
-    }
+        .tldr p {
+            font-size: 14px;
+            line-height: 1.75;
+            color: var(--muted);
+            margin-bottom: 14px;
+        }
 
-    .tldr {
-      max-width: 720px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 22px 24px;
-      margin-bottom: 54px;
-    }
+        .tldr p:last-child {
+            margin-bottom: 0;
+        }
 
-    .tldr p {
-      font-size: 14px;
-      line-height: 1.75;
-      color: var(--muted);
-      margin-bottom: 14px;
-    }
+        .tldr strong {
+            color: var(--text);
+        }
 
-    .tldr p:last-child { margin-bottom: 0; }
+        .evidence-table-wrap {
+            max-width: 960px;
+            overflow-x: auto;
+            margin: 24px 0 44px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            background: var(--surface);
+        }
 
-    .tldr strong { color: var(--text); }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 920px;
+        }
 
-    .discourse-block {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 12px;
-      line-height: 1.75;
-      background: var(--code-bg);
-      color: #c9d1d9;
-      padding: 28px 32px;
-      border-radius: 4px;
-      overflow-x: auto;
-      white-space: pre;
-      margin: 24px 0 52px;
-      max-width: 720px;
-    }
+        th {
+            color: var(--faint);
+            text-align: left;
+            padding: 12px 14px;
+            background: #fbfbfb;
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+        }
 
-    .future-work {
-      max-width: 720px;
-      padding: 20px 22px;
-      border: 1px solid var(--border);
-      border-left: 3px solid var(--green);
-      background: var(--surface);
-      border-radius: 4px;
-    }
+        td {
+            font-size: 12px;
+            line-height: 1.65;
+            color: var(--muted);
+            padding: 16px 14px;
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+        }
 
-    .future-work p {
-      font-size: 13px;
-      line-height: 1.75;
-      color: var(--muted);
-      margin-bottom: 14px;
-    }
+        tr:last-child td {
+            border-bottom: 0;
+        }
 
-    .future-work p:last-child { margin-bottom: 0; }
+        .theme {
+            width: 150px;
+            color: var(--text);
+            font-weight: 600;
+        }
 
-    .footer {
-      margin-top: 72px;
-      padding-top: 24px;
-      border-top: 1px solid var(--border);
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--faint);
-    }
+        .score {
+            display: block;
+            font-family: 'IBM Plex Mono', monospace;
+            color: var(--green);
+            font-size: 11px;
+            margin-top: 6px;
+            font-weight: 600;
+        }
 
-    @media (max-width: 768px) {
-      #shared-nav {
-        position: fixed !important;
-        top: 0 !important;
-        left: 0 !important;
-        height: 100vh !important;
-        width: 260px !important;
-        z-index: 10001 !important;
-        transform: translateX(-100%) !important;
-        transition: transform 0.25s ease !important;
-      }
+        .quote {
+            color: #333;
+            font-size: 13px;
+        }
 
-      #shared-nav.open { transform: translateX(0) !important; }
+        .quote strong {
+            color: var(--text);
+            font-weight: 600;
+        }
 
-      main {
-        padding: 64px 20px 80px;
-        width: 100%;
-        max-width: 100%;
-      }
+        .directed {
+            width: 205px;
+        }
 
-      .stats-row { grid-template-columns: 1fr; }
-      .discourse-block { font-size: 10px; padding: 18px; }
-    }
-  </style>
+        .question {
+            width: 255px;
+        }
+
+        .method-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+            max-width: 960px;
+            margin: 24px 0 46px;
+        }
+
+        .method-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 18px 20px;
+        }
+
+        .method-card p {
+            font-size: 13px;
+            line-height: 1.7;
+            color: var(--muted);
+        }
+
+        .discourse-block {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 12px;
+            line-height: 1.75;
+            background: var(--code-bg);
+            color: #c9d1d9;
+            padding: 28px 32px;
+            border-radius: 4px;
+            overflow-x: auto;
+            white-space: pre;
+            margin: 24px 0 52px;
+            max-width: 760px;
+        }
+
+        .footer {
+            margin-top: 72px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--faint);
+        }
+
+        @media (max-width: 768px) {
+            #shared-nav {
+                position: fixed !important;
+                top: 0 !important;
+                left: 0 !important;
+                height: 100vh !important;
+                width: 260px !important;
+                z-index: 10001 !important;
+                transform: translateX(-100%) !important;
+                transition: transform 0.25s ease !important;
+            }
+
+            #shared-nav.open {
+                transform: translateX(0) !important;
+            }
+
+            main {
+                padding: 64px 20px 80px;
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .stats-row,
+            .method-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .discourse-block {
+                font-size: 10px;
+                padding: 18px;
+            }
+        }
+    </style>
 </head>
 
 <body>
-  <nav id="shared-nav"></nav>
+    <nav id="shared-nav"></nav>
 
-  <main>
-    <p class="page-eyebrow">Longitudinal Discourse Analysis</p>
-    <h1>Skeptical Reframing</h1>
+    <main>
+        <p class="page-eyebrow">Longitudinal Discourse Analysis</p>
+        <h1>Skeptical Reframing</h1>
 
-    <p class="lead">
-      How does a technology narrative change once skepticism becomes part of the narrative itself?
-    </p>
-
-    <p class="lead">
-      This page explores a hypothesis that emerged while building a local corpus of
-      <strong>563+ Lenny podcast episodes</strong>.
-    </p>
-
-    <p class="lead">
-      Initially the goal was simple: detect AI hype. Instead, a more interesting pattern emerged.
-      Criticism does not necessarily oppose a narrative. Sometimes it becomes part of the narrative’s evolution.
-    </p>
-
-    <p class="lead">
-      Rather than classifying statements as “hype” or “not hype,” this project attempts to model how ideas
-      are introduced, challenged, reframed, and eventually stabilized over time.
-    </p>
-
-    <div class="callout">
-      <div class="callout-title">Working Hypothesis</div>
-      <div class="callout-body">
-        AI discourse appears increasingly recursive. Initial enthusiasm produces skepticism. Skepticism
-        becomes content. The criticism itself is then absorbed into the same engagement ecosystem that
-        produced the original claims.
-      </div>
-    </div>
-
-    <div class="stats-row">
-      <div class="stat-card">
-        <span class="stat-num">563</span>
-        <span class="stat-label">Podcast Episodes</span>
-      </div>
-
-      <div class="stat-card">
-        <span class="stat-num">~3 Years</span>
-        <span class="stat-label">Corpus Window</span>
-      </div>
-
-      <div class="stat-card">
-        <span class="stat-num">Ongoing</span>
-        <span class="stat-label">Narrative Tracking</span>
-      </div>
-    </div>
-
-    <p class="section-label">Case Study</p>
-
-    <div class="case-title">
-      <h2>AI Engagement Fatigue</h2>
-      <p>
-        A recurring criticism from product managers was not that AI is unimportant. It was that discussions
-        about product management increasingly revolved around AI regardless of whether AI actually improved
-        the product being discussed.
-      </p>
-    </div>
-
-    <div class="findings-grid">
-      <div class="finding-card">
-        <div class="card-label">Fear-Based Framing</div>
-        <p>
-          Elena Verna’s “You’ll lose your job in 2027” headline was frequently criticized as unnecessarily
-          fear-inducing and engagement optimized.
+        <p class="lead">
+            How does a product-management narrative change once skepticism becomes part of the narrative itself?
         </p>
-      </div>
 
-      <div class="finding-card">
-        <div class="card-label">Amplification</div>
-        <p>
-          Lenny was criticized by some readers for amplifying the same framing rather than challenging it.
+        <p class="lead">
+            Skeptical Reframing is a portfolio project about measuring narrative drift in long-running technology
+            discourse. The first corpus is Lenny's podcast and newsletter ecosystem, with Elena Verna's AI-career
+            framing used as a visible amplification and reframing event.
         </p>
-      </div>
 
-      <div class="finding-card">
-        <div class="card-label">Product Fundamentals</div>
-        <p>
-          Experienced PMs repeatedly argued that customer discovery, prioritization, and shipping products
-          were becoming secondary to AI prediction content.
+        <p class="lead">
+            The question is not whether Reddit is right. Reddit provides the hypothesis. The corpus tests it.
         </p>
-      </div>
 
-      <div class="finding-card">
-        <div class="card-label">AI Isn’t the Problem</div>
-        <p>
-          Most commenters explicitly stated AI matters. Their objection was treating every conversation as
-          AI-first regardless of context.
+        <div class="callout">
+            <div class="callout-title">Working Hypothesis</div>
+            <div class="callout-body">
+                Community discussions suggest a measurable before/after shift in how influential product media is
+                perceived. Earlier, Lenny's product media was associated with practical product craft, growth, customer
+                thinking, and optimistic operator lessons. In the AI era, some practitioners perceive a drift toward
+                urgency, job-loss anxiety, engagement incentives, and AI-first framing.
+                <br><br>
+                This project does not assume that perception is correct. It turns the perception into corpus questions:
+                did AI become more central, did career-anxiety framing increase, did product fundamentals get displaced,
+                and did later critiques of AI hype become part of the same narrative cycle?
+            </div>
+        </div>
+
+        <div class="stats-row">
+            <div class="stat-card">
+                <span class="stat-num">337</span>
+                <span class="stat-label">Episodes Parsed</span>
+            </div>
+
+            <div class="stat-card">
+                <span class="stat-num">Arc-Level</span>
+                <span class="stat-label">Analysis Unit</span>
+            </div>
+
+            <div class="stat-card">
+                <span class="stat-num">Qwen</span>
+                <span class="stat-label">Narrative Topology</span>
+            </div>
+        </div>
+
+        <p class="section-label">Reader Version</p>
+
+        <div class="tldr">
+            <p>
+                <strong>Time is truly a flat circle.</strong>
+            </p>
+
+            <p>
+                Over the past several months, the AI conversation has begun to recalibrate.
+                Earlier discussions emphasized disruption, job transformation, and the urgency
+                of becoming AI-native. More recently, many of the same ecosystem
+                participants—from industry executives to product influencers—have shifted
+                toward criticizing exaggerated claims, AI "confidence theater,"
+                performative expertise, and the tendency to blame layoffs on AI without
+                evidence.
+            </p>
+
+            <p>
+                This shift isn't limited to one newsletter or one podcast. Jensen Huang has
+                criticized CEOs who blame layoffs on AI, calling the explanation "lazy" and
+                arguing that AI should enable companies to build more rather than simply
+                employ fewer people. Demis Hassabis has argued that AI-driven layoffs reflect
+                a lack of imagination and that productivity gains should increase ambition
+                rather than reduce engineering teams. Meanwhile, Elena Verna provides an
+                especially interesting case study: in May, she urged readers to assume their
+                current role was nearing expiration and to become AI-native immediately. By
+                July, she was urging the industry to stop "AI Confidence Theater,"
+                criticizing exaggerated claims, fear-based marketing, and performative AI
+                expertise.
+            </p>
+
+            <p>
+                The interesting portfolio question is not who was right. It is whether a
+                longitudinal corpus can measure how influential technology narratives evolve,
+                and whether those shifts can be detected directly from the discourse itself
+                rather than inferred from isolated headlines or social media posts.
+            </p>
+        </div>
+
+        <p class="section-label">Recent Reframing Loop</p>
+
+        <div class="findings-grid">
+            <div class="finding-card">
+                <div class="card-label">May 2026: Urgency Frame</div>
+                <p>Elena's article originally carried the headline "You'll lose your job in 2027," later changed after
+                    readers said the framing felt painful during layoffs. The core message remained: roles are changing
+                    quickly, and workers should build optionality and become AI-native.</p>
+            </div>
+
+            <div class="finding-card">
+                <div class="card-label">July 2026: Confidence Theater Frame</div>
+                <p>The later article criticized exaggerated AI claims, performance theater, fake baselines, marketing
+                    certainty, and pressure from executives and investors. It argued that AI is real, but overstatement
+                    creates anxiety and harms trust.</p>
+            </div>
+
+            <div class="finding-card">
+                <div class="card-label">Community Read: Contradiction or Evolution?</div>
+                <p>The newest Reddit response interprets those two moments as a reversal: the same product-media circuit
+                    that amplified AI urgency is now criticizing AI hype. Skeptical Reframing treats that as a testable
+                    narrative question, not a verdict.</p>
+            </div>
+        </div>
+
+        <p class="section-label">External Signals</p>
+
+        <div class="case-title">
+            <h2>High-confidence community observations</h2>
+            <p>
+                These are not treated as ground truth. They are high-signal hypotheses selected because they are
+                upvoted, specific, and point to different kinds of perceived narrative change. Each one maps to a corpus
+                question.
+            </p>
+        </div>
+
+        <div class="evidence-table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Theme</th>
+                        <th>Reddit observation</th>
+                        <th>Directed toward</th>
+                        <th>Corpus question</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="theme">Optimism → fear <span class="score">129 upvotes</span></td>
+                        <td class="quote"><strong>u/gonzo_in_argyle:</strong> "I quite liked product influencers when
+                            they were mostly aspirational and optimistic... The shift to fear mongering just happened so
+                            quickly and it’s so distasteful."</td>
+                        <td class="directed">Product influencers generally; Lenny included by implication because the
+                            thread is about his amplification channel.</td>
+                        <td class="question">Does the emotional register of Lenny's corpus shift from product optimism
+                            toward urgency, fear, or adaptation pressure?</td>
+                    </tr>
+
+                    <tr>
+                        <td class="theme">Fear framing <span class="score">125 upvotes</span></td>
+                        <td class="quote"><strong>u/___AllMight___:</strong> "Haha, so true. Everyone is just
+                            fearmongering at this point."</td>
+                        <td class="directed">The broader AI influencer discourse surrounding the post, including but not
+                            limited to Elena and Lenny.</td>
+                        <td class="question">Does language associated with urgency, replacement, layoffs, and
+                            existential career risk increase over time?</td>
+                    </tr>
+
+                    <tr>
+                        <td class="theme">Practitioner disconnect <span class="score">123 upvotes</span></td>
+                        <td class="quote"><strong>u/flying_pigs30:</strong> "Anyone who is doing actual PM work in this
+                            AI shitstorm knows that this is bullshit."</td>
+                        <td class="directed">AI-influencer claims as perceived by working PMs, rather than one named
+                            creator alone.</td>
+                        <td class="question">Do episodes remain grounded in customer discovery, prioritization,
+                            experimentation, and shipping, or do they drift toward abstract AI inevitability?</td>
+                    </tr>
+
+                    <tr>
+                        <td class="theme">Insensitive timing <span class="score">97 upvotes</span></td>
+                        <td class="quote"><strong>u/ICThat:</strong> "Yes I think it's a low blow to use a title like
+                            that in the current climate."</td>
+                        <td class="directed">Primarily Elena's headline, with Lenny relevant as the downstream
+                            amplifier.</td>
+                        <td class="question">When job-market stress rises, does the corpus adopt language that frames
+                            instability as personal adaptation failure?</td>
+                    </tr>
+
+                    <tr>
+                        <td class="theme">Clickbait mechanics <span class="score">37 upvotes</span></td>
+                        <td class="quote"><strong>u/techerous26:</strong> "Definitely an absurdly click baity headline."
+                        </td>
+                        <td class="directed">Elena's original article framing specifically.</td>
+                        <td class="question">Can the system identify moments where AI-career discourse shifts from
+                            explanation to attention-capture?</td>
+                    </tr>
+
+                    <tr>
+                        <td class="theme">Painkiller playbook <span class="score">33 upvotes</span></td>
+                        <td class="quote"><strong>u/jrcske67:</strong> "You’re in danger therefore vote for me/listen to
+                            me/pay me is the oldest playbook there is. Aka the painkiller"</td>
+                        <td class="directed">The monetized fear pattern around AI advice, tools, and creator
+                            distribution.</td>
+                        <td class="question">Do urgency arcs co-occur with tool promotion, sponsorship, course-like
+                            advice, or calls to adopt specific workflows?</td>
+                    </tr>
+
+                    <tr>
+                        <td class="theme">Influencer ecosystem <span class="score">25 upvotes</span></td>
+                        <td class="quote"><strong>u/rollingSleepyPanda:</strong> "Spend more time talking to experts in
+                            your industry than listening to some glorified PR mouthpieces."</td>
+                        <td class="directed">Lenny et al. and the broader PM influencer ecosystem.</td>
+                        <td class="question">Does the corpus privilege practitioner-specific context, or does it
+                            increasingly circulate generalized AI narratives?</td>
+                    </tr>
+
+                    <tr>
+                        <td class="theme">Hero worship <span class="score">23 upvotes</span></td>
+                        <td class="quote"><strong>u/mentalFee420:</strong> "What’s up with Lenny’s communities popping
+                            up cities? PMs could not organize their own communities that they have to piggyback on some
+                            content creator for that?"</td>
+                        <td class="directed">Lenny's community/distribution layer more than any single AI claim.</td>
+                        <td class="question">How does creator authority shape which narratives become default
+                            product-management frames?</td>
+                    </tr>
+
+                    <tr>
+                        <td class="theme">Used to be a fan <span class="score">19 upvotes</span></td>
+                        <td class="quote"><strong>u/Still-Ad7391:</strong> "Agree! I stopped listening or caring. I used
+                            to be a fan of Lenny."</td>
+                        <td class="directed">Lenny specifically.</td>
+                        <td class="question">Can changes in episode structure, topic ordering, guest mix, or AI
+                            centrality explain why former fans perceive a before/after break?</td>
+                    </tr>
+
+                    <tr>
+                        <td class="theme">Narrative, not observation <span class="score">14 upvotes</span></td>
+                        <td class="quote"><strong>u/AggravatingYard7008:</strong> "It increasingly feels like a small
+                            group is shaping the AI discourse in a way that centers fear... I feel like it is not an
+                            observation but more like a narrative."</td>
+                        <td class="directed">A small perceived circle of AI/product thought leaders; Lenny included by
+                            context, not necessarily as sole originator.</td>
+                        <td class="question">Does AI move from a discussed topic into an organizing narrative that
+                            frames careers, layoffs, strategy, and PM identity?</td>
+                    </tr>
+
+                    <tr>
+                        <td class="theme">Amplification event <span class="score">190 upvotes</span></td>
+                        <td class="quote"><strong>u/betrayedcocounut:</strong> "I got this email from Elena today, which
+                            kinda annoyed me but I let it go. Then I also got it from Lenny hours later and got more
+                            annoyed."</td>
+                        <td class="directed">Specifically Elena as originator and Lenny as amplifier/distributor.</td>
+                        <td class="question">Can the corpus distinguish narrative origin from narrative amplification,
+                            especially when Lenny's platform repeats or legitimizes external claims?</td>
+                    </tr>
+
+                    <tr>
+                        <td class="theme">Product lessons displaced <span class="score">3 upvotes</span></td>
+                        <td class="quote"><strong>u/Bodyphone:</strong> "A lot of the strong product management lessons
+                            are being overshadowed by AI stuff so strong product fundamentals are a lot harder to learn
+                            right now"</td>
+                        <td class="directed">Product media generally, including Lenny by thread context.</td>
+                        <td class="question">Do PM-fundamentals arcs decline relative to AI-dominant arcs by month, and
+                            does AI appear earlier in episodes over time?</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <p class="section-label">What The Corpus Tests</p>
+
+        <div class="method-grid">
+            <div class="method-card">
+                <div class="small-label">Before / After</div>
+                <p>Compare earlier product-craft episodes against later AI-era episodes to see whether the perceived
+                    shift is visible in topic mix, arc ordering, emotional framing, and guest context.</p>
+            </div>
+
+            <div class="method-card">
+                <div class="small-label">AI Centrality</div>
+                <p>Measure whether AI is absent, incidental, supporting, or central to each recovered story arc instead
+                    of simply counting AI keywords.</p>
+            </div>
+
+            <div class="method-card">
+                <div class="small-label">Narrative Function</div>
+                <p>Classify what Lenny is doing inside each arc: amplifying, questioning, grounding, reframing, or
+                    moving the conversation back to fundamentals.</p>
+            </div>
+
+            <div class="method-card">
+                <div class="small-label">Reframing Loop</div>
+                <p>Track when skepticism enters the discourse, whether it functions as critique, and whether that
+                    critique later becomes part of the same engagement cycle.</p>
+            </div>
+        </div>
+
+        <p class="section-label">Methodology Pivot</p>
+
+        <p class="lead">
+            The first implementation tried to classify transcript chunks directly. That failed in predictable ways:
+            sponsor copy looked like AI discourse, isolated keywords created false positives, and paragraph-level labels
+            missed the structure of the episode.
         </p>
-      </div>
 
-      <div class="finding-card">
-        <div class="card-label">Engagement Incentives</div>
-        <p>
-          Multiple commenters argued the platform increasingly rewards outrage, anxiety, and certainty over
-          nuanced product discussion.
+        <p class="lead">
+            The current approach segments each episode into story arcs first. A local Qwen model acts as a narrative
+            reconstruction engine: not deciding whether something is "hype," but recovering the topology of the
+            conversation.
         </p>
-      </div>
-    </div>
 
-    <div class="mono-heading">30 Second TL;DR</div>
-
-    <div class="tldr">
-      <p>
-        <strong>The discussion was not really about AI.</strong>
-      </p>
-      <p>
-        It was about incentive structures.
-      </p>
-      <p>
-        Many product managers believe LinkedIn’s ecosystem increasingly rewards engagement-driven AI content
-        over practical product thinking.
-      </p>
-      <p>
-        Their recommendation was surprisingly consistent:
-        <strong>spend more time talking to customers than influencers.</strong>
-      </p>
-    </div>
-
-    <p class="section-label">Why This Matters</p>
-
-    <p class="lead">
-      Rather than asking <strong>“Is this AI hype?”</strong>, the system eventually evolved toward asking
-      <strong>“How do narratives evolve?”</strong>
-    </p>
-
-    <pre class="discourse-block">AI changes everything
-          │
-          ▼
-Backlash
-          │
-          ▼
-Critique becomes content
-          │
-          ▼
-AI still changes everything</pre>
-
-    <p class="lead">
-      The important unit is no longer a single claim. It is the sequence around the claim:
-      introduction, enthusiasm, skepticism, reframing, stabilization, and repetition.
-    </p>
-
-    <pre class="discourse-block">claim
+        <pre class="discourse-block">transcript
   ↓
-enthusiasm
+deterministic metadata + speaker cleanup
   ↓
-skepticism
+heuristic signal pass
   ↓
-reframing
+Qwen narrative arc reconstruction
   ↓
-new consensus
+arc-level AI / PM / urgency analysis
   ↓
-repeat</pre>
+longitudinal drift map</pre>
 
-    <p class="section-label">Future Work</p>
+        <p class="lead">
+            This keeps the portfolio claim modest: Reddit identifies a perceived change. The system tests whether that
+            change appears in the corpus over time.
+        </p>
 
-    <div class="future-work">
-      <p>
-        The current implementation indexes speakers, topics, and transcript segments.
-      </p>
+        <div class="footer">Mason Thompson · Berkeley, California</div>
+    </main>
 
-      <p>
-        The next iteration treats discourse as a temporal graph, allowing arguments, counterarguments,
-        and reframing events to be linked across episodes.
-      </p>
-
-      <p>
-        Instead of asking what someone believes, the system begins asking how those beliefs evolve over time.
-      </p>
-    </div>
-
-    <div class="footer">Mason Thompson · Berkeley, California</div>
-  </main>
-
-  <script src="https://pdf-sorcerer.github.io/alp/nav-loader.js" data-page="skeptical-reframing"></script>
+    <script src="https://pdf-sorcerer.github.io/alp/nav-loader.js" data-page="skeptical-reframing"></script>
 </body>
+
 </html>
