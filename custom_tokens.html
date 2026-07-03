@@ -1,55 +1,228 @@
-RESUME
-application-specific links
-email · linkedin · portfolio
-→
-SIGNAL
-Vercel redirect
-Supabase event
-iOS push notification
-JOB SEARCH OBSERVABILITY · ATTRIBUTION TOKENS · IOS NOTIFICATIONS
-SLOPUME
-Restoring Signal to the Job Search
-I’m job hunting at the moment, and one small thing that always charged me up in the past was LinkedIn’s little red notification: “Someone viewed your profile.”
-These days, LinkedIn seems to be serving a predominantly post-human audience, and the only notifications I get are people in my network playing games. Thanks for that, LinkedIn.
-THE QUESTION
-Are my applications even being looked at in a tough market where recruiters are buried with volume?
-Answer: who knows? Let’s try to find out.
-3
-TRACKED LINKS
-24+
-ALERT VARIANTS
-58m
-AUDIO DETOUR
-Tuesday night I added custom URL tokens to Slopume, my job search tool. Now every resume I generate includes application-specific links to my email, LinkedIn, and portfolio.
-When someone clicks one, that event travels through a lightweight redirect service built with Vercel and Supabase before arriving on my phone as a push notification, complete with one of two dozen variations of the Love Island “I’ve got a text!” sound, set to round-robin playback. Gotta keep things fresh.
-How It Works
-1 · GENERATE
-Each resume gets application-specific URLs for email, LinkedIn, and portfolio links.
-2 · REDIRECT
-Clicks pass through a lightweight Vercel service before forwarding to the real destination.
-3 · RECORD
-Supabase logs the company, click target, timestamp, and associated application signal.
-4 · NOTIFY
-The iOS app sends a push notification with the company name and what they clicked.
-+----------------------+------------------+----------------------------+
-| STAGE                | TOOL             | FUNCTION                   |
-+----------------------+------------------+----------------------------+
-| Resume Generation    | Slopume          | Creates application-specific|
-|                      |                  | resume links               |
-+----------------------+------------------+----------------------------+
-| Link Routing         | Vercel           | Captures click event before|
-|                      |                  | forwarding destination     |
-+----------------------+------------------+----------------------------+
-| Event Store          | Supabase         | Logs company, target,      |
-|                      |                  | timestamp, application ID  |
-+----------------------+------------------+----------------------------+
-| Mobile Feedback      | iOS Push         | Sends notification with    |
-|                      |                  | company + clicked target   |
-+----------------------+------------------+----------------------------+
-| Notification Audio   | Love Island SFX  | Round-robin “I’ve got a    |
-|                      |                  | text!” alert variants      |
-+----------------------+------------------+----------------------------+
-Now, I know what my technical audience is thinking: I agree. My suspicion is that many ATS platforms strip URL parameters when resumes are uploaded, so this won’t catch every interaction. But it will catch some, and that gives me signal.
-As a happy side effect, it also partially de-ambiguizes LinkedIn’s “private profile” viewers. I don’t really care who viewed my profile—I care which company they work for, and this makes that a little more real.
-Collecting the Love Island audio clips, including getting them through Apple certification, took longer than building the feature: 58 minutes.
-MASON THOMPSON · BERKELEY, CALIFORNIA
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Slopume Signal | Mason Thompson</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --green:#0A84FF;
+  --green-dim:rgba(10,132,255,.12);
+  --bg:#f9f9f9;
+  --surface:#fff;
+  --border:#e4e4e4;
+  --code-bg:#0d1117;
+  --text:#1a1a1a;
+  --muted:#6b6b6b;
+  --faint:#8c8c8c;
+  --nav-width:220px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:Inter,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  display:flex;
+  min-height:100vh;
+}
+#shared-nav{
+  position:sticky;
+  top:0;
+  height:100vh;
+  width:var(--nav-width);
+  flex-shrink:0;
+  background:var(--surface);
+  border-right:1px solid var(--border);
+}
+main{
+  flex:1;
+  padding:56px 64px 120px;
+  max-width:860px;
+}
+.page-eyebrow{
+  font-family:"IBM Plex Mono",monospace;
+  font-size:10px;
+  font-weight:600;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--green);
+  margin-bottom:12px;
+}
+h1{
+  font-size:28px;
+  font-weight:700;
+  letter-spacing:-.02em;
+  line-height:1.2;
+  margin-bottom:14px;
+}
+.lead{
+  font-size:14px;
+  line-height:1.75;
+  color:#3a3a3a;
+  max-width:720px;
+  margin-bottom:28px;
+}
+.callout{
+  max-width:720px;
+  margin:28px 0 40px;
+  padding:18px 20px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:4px;
+}
+.callout-title{
+  font-family:"IBM Plex Mono",monospace;
+  font-size:10px;
+  font-weight:600;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--green);
+  margin-bottom:10px;
+}
+.callout-body{
+  font-size:13px;
+  line-height:1.75;
+  color:var(--muted);
+}
+.stats-row{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+  margin:0 0 52px;
+  max-width:720px;
+}
+.stat-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:4px;
+  padding:18px;
+}
+.stat-num{
+  display:block;
+  font-family:"IBM Plex Mono",monospace;
+  font-size:24px;
+  font-weight:600;
+  color:var(--green);
+  margin-bottom:6px;
+}
+.stat-label{
+  font-family:"IBM Plex Mono",monospace;
+  font-size:10px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--faint);
+}
+.pipeline-table{
+  font-family:"IBM Plex Mono",monospace;
+  font-size:11px;
+  line-height:1.6;
+  background:var(--code-bg);
+  color:#c9d1d9;
+  padding:28px 32px;
+  border-radius:4px;
+  overflow-x:auto;
+  white-space:pre;
+  margin-bottom:52px;
+  max-width:100%;
+}
+.footer{
+  margin-top:72px;
+  padding-top:24px;
+  border-top:1px solid var(--border);
+  font-family:"IBM Plex Mono",monospace;
+  font-size:10px;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  color:var(--faint);
+}
+@media(max-width:768px){
+  #shared-nav{display:none}
+  main{padding:64px 20px 80px;max-width:100%}
+  .stats-row{grid-template-columns:1fr}
+  .pipeline-table{font-size:9px;padding:16px}
+}
+</style>
+</head>
+
+<body>
+<nav id="shared-nav"></nav>
+
+<main>
+  <p class="page-eyebrow">Job Search Observability · Attribution Tokens · iOS Notifications</p>
+  <h1>Slopume: Restoring Signal to the Job Search</h1>
+
+  <p class="lead">
+    I’m job hunting at the moment, and one small thing that always charged me up in the past was LinkedIn’s little red notification: <strong>“Someone viewed your profile.”</strong>
+  </p>
+
+  <p class="lead">
+    These days, LinkedIn seems to be serving a predominantly post-human audience, and the only notifications I get are people in my network playing games. Thanks for that, LinkedIn.
+  </p>
+
+  <div class="callout">
+    <div class="callout-title">The Question</div>
+    <div class="callout-body">
+      Are my applications even being looked at in a tough market where recruiters are buried with volume?
+      <br><br>
+      <strong>Answer:</strong> who knows? Let’s try to find out.
+    </div>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-card">
+      <span class="stat-num">3</span>
+      <span class="stat-label">Tracked Links</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-num">24+</span>
+      <span class="stat-label">Alert Variants</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-num">58m</span>
+      <span class="stat-label">Audio Detour</span>
+    </div>
+  </div>
+
+  <p class="lead">
+    Tuesday night I added custom URL tokens to <strong>Slopume</strong>, my job search tool. Now every resume I generate includes application-specific links to my email, LinkedIn, and portfolio.
+  </p>
+
+  <p class="lead">
+    When someone clicks one, that event travels through a lightweight redirect service built with <strong>Vercel</strong> and <strong>Supabase</strong> before arriving on my phone as a push notification, complete with one of two dozen variations of the Love Island <strong>“I’ve got a text!”</strong> sound, set to round-robin playback. Gotta keep things fresh.
+  </p>
+
+  <p class="lead">
+    Now, I know what my technical audience is thinking: I agree. My suspicion is that many ATS platforms strip URL parameters when resumes are uploaded, so this won’t catch every interaction. But it will catch some, and that gives me signal.
+  </p>
+
+  <p class="lead">
+    As a happy side effect, it also partially de-ambiguizes LinkedIn’s “private profile” viewers. I don’t really care who viewed my profile—I care which company they work for, and this makes that a little more real.
+  </p>
+
+  <pre class="pipeline-table">+-------------------+-----------+--------------------------------------+
+| STAGE             | TOOL      | FUNCTION                             |
++-------------------+-----------+--------------------------------------+
+| Resume Generation | Slopume   | Creates application-specific links   |
+| Link Routing      | Vercel    | Captures click before redirect       |
+| Event Logging     | Supabase  | Records company, target, timestamp   |
+| Notification      | iOS App   | Sends "I've got a text!" alert      |
++-------------------+-----------+--------------------------------------+</pre>
+
+  <div class="callout">
+    <div class="callout-title">The Real Feature</div>
+    <div class="callout-body">
+      Collecting the Love Island audio clips, including getting them through Apple certification, took longer than building the feature: <strong>58 minutes.</strong>
+    </div>
+  </div>
+
+  <div class="footer">Mason Thompson · Berkeley, California</div>
+</main>
+
+<script src="https://pdf-sorcerer.github.io/alp/nav-loader.js" data-page="slopume"></script>
+</body>
+</html>
