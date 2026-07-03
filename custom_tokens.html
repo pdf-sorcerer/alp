@@ -225,7 +225,106 @@ h1{
   border-radius:4px;
   overflow-x:auto;
 }
+.tabs{
+  max-width:720px;
+  margin:8px 0 42px;
+}
 
+.tabs input{
+  display:none;
+}
+
+.tab-buttons{
+  display:flex;
+  border:1px solid var(--border);
+  border-bottom:none;
+  border-radius:4px 4px 0 0;
+  overflow:hidden;
+}
+
+.tab-buttons label{
+  flex:1;
+  padding:12px;
+  text-align:center;
+  cursor:pointer;
+  background:var(--surface);
+  border-right:1px solid var(--border);
+  font-family:"IBM Plex Mono",monospace;
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  color:var(--muted);
+}
+
+.tab-buttons label:last-child{
+  border-right:none;
+}
+
+#tab-architecture:checked ~ .tab-buttons label[for="tab-architecture"],
+#tab-event:checked ~ .tab-buttons label[for="tab-event"]{
+  background:var(--green-dim);
+  color:var(--green);
+}
+
+.tab-panel{
+  display:none;
+}
+
+#tab-architecture:checked ~ .architecture-panel,
+#tab-event:checked ~ .event-panel{
+  display:block;
+}
+
+.pipeline-table{
+  border-radius:0 0 4px 4px;
+  margin-bottom:0;
+}
+
+.event-card{
+  border:1px solid var(--border);
+  border-top:none;
+  border-radius:0 0 4px 4px;
+  background:var(--surface);
+  overflow:hidden;
+}
+
+.event-grid{
+  grid-template-columns:1fr;
+}
+
+.event-key{
+  border-bottom:none;
+  padding-bottom:3px;
+}
+
+.event-value{
+  padding-top:3px;
+}
+
+.event-key{
+  color:var(--green);
+  background:var(--green-dim);
+  font-weight:600;
+}
+
+.event-value{
+  color:var(--text);
+  overflow-wrap:anywhere;
+}
+
+.event-json{
+  margin:0;
+  padding:16px;
+  border-radius:0;
+  font-family:"IBM Plex Mono",monospace;
+  font-size:10px;
+  line-height:1.6;
+  background:var(--code-bg);
+  color:#c9d1d9;
+  overflow-x:auto;
+  white-space:pre;
+}
 .pipeline-table{
   font-family:"IBM Plex Mono",monospace;
   font-size:11px;
@@ -345,56 +444,17 @@ Hypothetically, if my resume makes it to a recruiter or anyone else unaltered, a
     alt="iOS push notification showing a recruiter click event.">
 </div>
 
-<section class="event-log">
-  <div class="event-log-title">Event Log [Supabase]</div>
+<section class="tabs">
 
-  <div class="event-table-wrap">
-    <table class="event-table">
-      <thead>
-        <tr>
-          <th>created_at</th>
-          <th>application_id</th>
-          <th>source</th>
-          <th>event_type</th>
-          <th>company_detected</th>
-          <th>role_detected</th>
-          <th>metadata</th>
-        </tr>
-      </thead>
+  <input type="radio" name="resume-tabs" id="tab-architecture" checked>
+  <input type="radio" name="resume-tabs" id="tab-event">
 
-      <tbody>
-        <tr>
-          <td>2026-07-01 08:02:02 UTC</td>
-          <td>local-12</td>
-          <td>resume</td>
-          <td>portfolio_clicked</td>
-          <td>Ready.net</td>
-          <td>Technical Product Manager</td>
-          <td>
-<pre class="event-json">{
-  "ip": "*redacted*",
-  "token": "Ql28rMgb723o8eeiqgndeQ",
-  "referer": "",
-  "artifact": "resume",
-  "link_type": "portfolio",
-  "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)...",
-  "destination": "https://pdf-sorcerer.github.io/alp/welcome.html"
-}</pre>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="tab-buttons">
+    <label for="tab-architecture">Architecture</label>
+    <label for="tab-event">Event Log</label>
   </div>
-</section>
 
-<p class="lead">
-Now, my technical audience is probably thinking: what if talent platforms strip customized URLs? I agree. I'm not sure whether that happens. Worth Googling and thinking about ways of hardening the design. Even so, the system won't catch every interaction, but it will catch some, and that's enough to create signal.
-</p>
-
-<p class="lead">
-Oh also, this partially disambiguates LinkedIn's anonymous profile viewers. Ultimately, I shouldn't really care <em>who</em> viewed my profile. I care which company they work for.
-</p>
-
+  <div class="tab-panel architecture-panel">
 <pre class="pipeline-table">
 +-------------------+-----------+--------------------------------------+
 | STAGE             | TOOL      | FUNCTION                             |
@@ -425,6 +485,43 @@ Recruiter clicks custom link
                          ▼
               Mason 📱 ("I've got a text!")
 </pre>
+  </div>
+
+  <div class="tab-panel event-panel">
+    <div class="event-card">
+      <div class="event-grid">
+        <div class="event-key">created_at</div>
+        <div class="event-value">2026-07-01 08:02:02 UTC</div>
+
+        <div class="event-key">application_id</div>
+        <div class="event-value">local-12</div>
+
+        <div class="event-key">source</div>
+        <div class="event-value">resume</div>
+
+        <div class="event-key">event_type</div>
+        <div class="event-value">portfolio_clicked</div>
+
+        <div class="event-key">company_detected</div>
+        <div class="event-value">Ready.net</div>
+
+        <div class="event-key">role_detected</div>
+        <div class="event-value">Technical Product Manager</div>
+      </div>
+
+<pre class="event-json">{
+  "ip": "*redacted*",
+  "token": "Ql28rMgb723o8eeiqgndeQ",
+  "referer": "",
+  "artifact": "resume",
+  "link_type": "portfolio",
+  "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)...",
+  "destination": "https://pdf-sorcerer.github.io/alp/welcome.html"
+}</pre>
+    </div>
+  </div>
+
+</section>
 
 <div class="callout">
   <div class="callout-title">Build Report</div>
