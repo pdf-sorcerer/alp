@@ -33,24 +33,13 @@ body{
   font-family:Inter,sans-serif;
   background:var(--bg);
   color:var(--text);
-  display:flex;
-  min-height:100vh;
-}
-
-#shared-nav{
-  position:sticky;
-  top:0;
-  height:100vh;
-  width:var(--nav-width);
-  flex-shrink:0;
-  background:var(--surface);
-  border-right:1px solid var(--border);
+  margin:0;
 }
 
 main{
-  flex:1;
-  padding:56px 64px 120px;
-  max-width:860px;
+  width:min(920px, calc(100vw - 48px));
+  margin:0 auto;
+  padding:56px 0 120px;
 }
 
 .page-eyebrow{
@@ -263,13 +252,11 @@ h1{
 }
 
 @media(max-width:768px){
-  #shared-nav{
-    display:none;
-  }
+
 
   main{
-    padding:64px 20px 80px;
-    max-width:100%;
+    width:calc(100vw - 32px);
+    padding:40px 0 80px;
   }
 
   .pipeline-table{
@@ -286,7 +273,6 @@ h1{
 
 <body>
 
-<nav id="shared-nav"></nav>
 
 <main>
 
@@ -454,8 +440,6 @@ Mason Thompson · Berkeley, California
 
 </main>
 
-<script src="https://pdf-sorcerer.github.io/alp/nav-loader.js"
-        data-page="slopume"></script>
 
 </body>
 </html>
