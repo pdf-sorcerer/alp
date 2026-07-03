@@ -83,7 +83,8 @@ h1{
   border:1px solid var(--border);
 }
 
-.hero-photo figcaption{
+.hero-photo figcaption,
+.push-photo figcaption{
   margin-top:10px;
   text-align:center;
   font-size:12px;
@@ -125,6 +126,54 @@ h1{
   color:var(--muted);
 }
 
+.push-photo{
+  max-width:420px;
+  margin:8px 0 36px;
+}
+
+.push-photo a{
+  display:block;
+}
+
+.push-photo img{
+  width:100%;
+  display:block;
+  border-radius:8px;
+  border:1px solid var(--border);
+  cursor:pointer;
+  background:var(--surface);
+}
+
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:999;
+  background:rgba(0,0,0,.72);
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+}
+
+.modal:target{
+  display:flex;
+}
+
+.modal img{
+  max-width:min(92vw,520px);
+  max-height:90vh;
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,.18);
+  position:relative;
+  z-index:2;
+}
+
+.modal-close{
+  position:absolute;
+  inset:0;
+  cursor:default;
+}
+
 .pipeline-table{
   font-family:"IBM Plex Mono",monospace;
   font-size:11px;
@@ -164,6 +213,10 @@ h1{
     font-size:9px;
     padding:16px;
   }
+
+  .push-photo{
+    max-width:100%;
+  }
 }
 </style>
 </head>
@@ -191,43 +244,60 @@ Job Search Observability · Attribution Tokens · iOS Notifications
 </figure>
 
 <p class="lead">
-I'm job hunting at the moment and things are in 'hurry up and wait' mode. A small detail that perked me up in times past was LinkedIn's notification:
-<strong>"Someone viewed your profile."</strong>. Nice.
+I'm job hunting at the moment and things are in "hurry up and wait" mode. A small detail that used to perk me up was LinkedIn's notification:
+<strong>"Someone viewed your profile."</strong> Nice.
 </p>
 
 <p class="lead">
-These days, most of my LinkedIn notifications are people in my network playing various LinkedIn Games instead. It's disorienting. It makes me wonder whether the silence is just the LinkedIn algorithm, the job market... or whether my resume is even making it in front of a recruiter.</p>
+These days, most of my LinkedIn notifications are people in my network playing various LinkedIn Games instead. It has been disorienting, and it makes me wonder whether the silence is just the LinkedIn algorithm, the job market... or whether my resume is even making it in front of a recruiter.
+</p>
 
 <p class="lead">
-So, 
+So:
 </p>
 
 <div class="callout">
-  <div class="callout-title">The Question</div>
+  <div class="callout-title">The Thought</div>
 
   <div class="callout-body">
     <strong>Question:</strong>
     Are my applications being looked at by recruiters?
+    <br><br>
 
     <strong>Answer:</strong>
-    Not sure. Lets take a step to find out. 
+    Let's find out!
   </div>
 </div>
 
 <p class="lead">
-Earlier this week, I added custom attribution tokens to <strong>Slopume</strong>, my job search management tool. Every resume I generate in-app contains a customized URL to my portfolio and LinkedIn profile. 
+I added custom attribution tokens to <strong>Slopume</strong>, a job search management tool I made a couple months ago. Every resume I generate in-app contains a custom URL to my portfolio and LinkedIn profile.
 </p>
 
 <p class="lead">
-If my resume makes it to a recruiter (or anyone else), and they click on my LinkedIn or Portfolio links, those resources load normally for the viewer. Behind the scenes, a lightweight redirect service built with <strong>Vercel</strong> and <strong>Supabase</strong> records the click before the event arrives on my phone as a push notification, complete with a growing number of memey <strong>Love Island</strong>L 🔊 <em>"I got a text!"</em> recordings, played round-robin to keep things fresh.
+Hypothetically, if my resume makes it to a recruiter or anyone else unaltered, and they click my LinkedIn or portfolio links, those resources load normally for the viewer. Behind the scenes, a lightweight redirect service built with <strong>Vercel</strong> and <strong>Supabase</strong> records the click before the event arrives on my phone as a push notification with a library of <strong>Love Island</strong> 🔊 <em>"I got a text/message!"</em> recordings played round-robin.
+</p>
+
+<figure class="push-photo">
+  <a href="#push-modal">
+    <img
+      src="push.png"
+      alt="iOS push notification showing a recruiter click event.">
+  </a>
+</figure>
+
+<div id="push-modal" class="modal">
+  <a href="#" class="modal-close" aria-label="Close image preview"></a>
+  <img
+    src="push.png"
+    alt="iOS push notification showing a recruiter click event.">
+</div>
+
+<p class="lead">
+I know what my technical audience is thinking: what if ATS platforms strip customized URLs? I agree. I'm not sure, at the time of writing, whether that happens. Worth looking into and thinking about possible ways of hardening the design. Even so, this won't catch every interaction, but it will catch some, and that's enough to create signal.
 </p>
 
 <p class="lead">
-I know what my technical audience is thinking: what if ATS platforms strip customized URLs? I agree. I'm not sure, at the time of writing, whether that happens. Worth looking into and thinking about possible ways of hardening the design. Even so, this won't catch every interaction BUT it will catch some, and that's enough to create signal.
-</p>
-
-<p class="lead">
-Oh also, as an unintended happy consequence: this process partially disambiguates LinkedIn's anonymous profile viewers. Ultiamtely, I shouldn't really care <em>who</em> viewed my profile. I care which company they work for. 
+Oh also, as an unintended happy consequence: this process partially disambiguates LinkedIn's anonymous profile viewers. Ultimately, I shouldn't really care <em>who</em> viewed my profile. I care which company they work for.
 </p>
 
 <pre class="pipeline-table">
@@ -262,13 +332,10 @@ Recruiter clicks custom link
 </pre>
 
 <div class="callout">
-  <div class="callout-title">The Real Feature</div>
+  <div class="callout-title">Build Report</div>
 
   <div class="callout-body">
-    Collecting the Love Island audio clips is more time-intensive than building custom atokens: 58 minutes, which includes Apple certification for push notifications to my phone.
-    <br><br>
-    
-    <strong>58 minutes.</strong>
+    58 minutes, including Apple's online certification for push notifications.
   </div>
 </div>
 
