@@ -1,0 +1,55 @@
+RESUME
+application-specific links
+email · linkedin · portfolio
+→
+SIGNAL
+Vercel redirect
+Supabase event
+iOS push notification
+JOB SEARCH OBSERVABILITY · ATTRIBUTION TOKENS · IOS NOTIFICATIONS
+SLOPUME
+Restoring Signal to the Job Search
+I’m job hunting at the moment, and one small thing that always charged me up in the past was LinkedIn’s little red notification: “Someone viewed your profile.”
+These days, LinkedIn seems to be serving a predominantly post-human audience, and the only notifications I get are people in my network playing games. Thanks for that, LinkedIn.
+THE QUESTION
+Are my applications even being looked at in a tough market where recruiters are buried with volume?
+Answer: who knows? Let’s try to find out.
+3
+TRACKED LINKS
+24+
+ALERT VARIANTS
+58m
+AUDIO DETOUR
+Tuesday night I added custom URL tokens to Slopume, my job search tool. Now every resume I generate includes application-specific links to my email, LinkedIn, and portfolio.
+When someone clicks one, that event travels through a lightweight redirect service built with Vercel and Supabase before arriving on my phone as a push notification, complete with one of two dozen variations of the Love Island “I’ve got a text!” sound, set to round-robin playback. Gotta keep things fresh.
+How It Works
+1 · GENERATE
+Each resume gets application-specific URLs for email, LinkedIn, and portfolio links.
+2 · REDIRECT
+Clicks pass through a lightweight Vercel service before forwarding to the real destination.
+3 · RECORD
+Supabase logs the company, click target, timestamp, and associated application signal.
+4 · NOTIFY
+The iOS app sends a push notification with the company name and what they clicked.
++----------------------+------------------+----------------------------+
+| STAGE                | TOOL             | FUNCTION                   |
++----------------------+------------------+----------------------------+
+| Resume Generation    | Slopume          | Creates application-specific|
+|                      |                  | resume links               |
++----------------------+------------------+----------------------------+
+| Link Routing         | Vercel           | Captures click event before|
+|                      |                  | forwarding destination     |
++----------------------+------------------+----------------------------+
+| Event Store          | Supabase         | Logs company, target,      |
+|                      |                  | timestamp, application ID  |
++----------------------+------------------+----------------------------+
+| Mobile Feedback      | iOS Push         | Sends notification with    |
+|                      |                  | company + clicked target   |
++----------------------+------------------+----------------------------+
+| Notification Audio   | Love Island SFX  | Round-robin “I’ve got a    |
+|                      |                  | text!” alert variants      |
++----------------------+------------------+----------------------------+
+Now, I know what my technical audience is thinking: I agree. My suspicion is that many ATS platforms strip URL parameters when resumes are uploaded, so this won’t catch every interaction. But it will catch some, and that gives me signal.
+As a happy side effect, it also partially de-ambiguizes LinkedIn’s “private profile” viewers. I don’t really care who viewed my profile—I care which company they work for, and this makes that a little more real.
+Collecting the Love Island audio clips, including getting them through Apple certification, took longer than building the feature: 58 minutes.
+MASON THOMPSON · BERKELEY, CALIFORNIA
