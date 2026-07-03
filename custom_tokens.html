@@ -20,7 +20,6 @@
   --text:#1a1a1a;
   --muted:#6b6b6b;
   --faint:#8c8c8c;
-  --nav-width:220px;
 }
 
 *{
@@ -162,69 +161,7 @@ h1{
   inset:0;
   cursor:default;
 }
-.event-log{
-  max-width:720px;
-  margin:6px 0 38px;
-}
 
-.event-log-title{
-  font-family:"IBM Plex Mono",monospace;
-  font-size:10px;
-  font-weight:600;
-  letter-spacing:.12em;
-  text-transform:uppercase;
-  color:var(--green);
-  margin-bottom:10px;
-}
-
-.event-table-wrap{
-  overflow-x:auto;
-  border:1px solid var(--border);
-  border-radius:4px;
-  background:var(--surface);
-}
-
-.event-table{
-  width:100%;
-  border-collapse:collapse;
-  font-family:"IBM Plex Mono",monospace;
-  font-size:10px;
-  line-height:1.55;
-}
-
-.event-table th{
-  text-align:left;
-  padding:10px 12px;
-  color:var(--green);
-  background:var(--green-dim);
-  border-bottom:1px solid var(--border);
-  white-space:nowrap;
-}
-
-.event-table td{
-  padding:12px;
-  color:#3a3a3a;
-  border-bottom:1px solid var(--border);
-  vertical-align:top;
-  white-space:nowrap;
-}
-
-.event-table td:last-child{
-  white-space:normal;
-  min-width:340px;
-}
-
-.event-json{
-  margin:0;
-  font-family:"IBM Plex Mono",monospace;
-  font-size:10px;
-  line-height:1.6;
-  color:#c9d1d9;
-  background:var(--code-bg);
-  padding:12px;
-  border-radius:4px;
-  overflow-x:auto;
-}
 .tabs{
   max-width:720px;
   margin:8px 0 42px;
@@ -277,8 +214,17 @@ h1{
 }
 
 .pipeline-table{
+  font-family:"IBM Plex Mono",monospace;
+  font-size:11px;
+  line-height:1.6;
+  background:var(--code-bg);
+  color:#c9d1d9;
+  padding:28px 32px;
   border-radius:0 0 4px 4px;
+  overflow-x:auto;
+  white-space:pre;
   margin-bottom:0;
+  max-width:100%;
 }
 
 .event-card{
@@ -290,16 +236,17 @@ h1{
 }
 
 .event-grid{
-  grid-template-columns:1fr;
+  display:grid;
+  grid-template-columns:180px 1fr;
 }
 
-.event-key{
-  border-bottom:none;
-  padding-bottom:3px;
-}
-
+.event-key,
 .event-value{
-  padding-top:3px;
+  padding:10px 14px;
+  border-bottom:1px solid var(--border);
+  font-family:"IBM Plex Mono",monospace;
+  font-size:11px;
+  line-height:1.6;
 }
 
 .event-key{
@@ -316,7 +263,6 @@ h1{
 .event-json{
   margin:0;
   padding:16px;
-  border-radius:0;
   font-family:"IBM Plex Mono",monospace;
   font-size:10px;
   line-height:1.6;
@@ -324,19 +270,6 @@ h1{
   color:#c9d1d9;
   overflow-x:auto;
   white-space:pre;
-}
-.pipeline-table{
-  font-family:"IBM Plex Mono",monospace;
-  font-size:11px;
-  line-height:1.6;
-  background:var(--code-bg);
-  color:#c9d1d9;
-  padding:28px 32px;
-  border-radius:4px;
-  overflow-x:auto;
-  white-space:pre;
-  margin-bottom:52px;
-  max-width:100%;
 }
 
 .footer{
@@ -351,8 +284,6 @@ h1{
 }
 
 @media(max-width:768px){
-
-
   main{
     width:calc(100vw - 32px);
     padding:40px 0 80px;
@@ -366,17 +297,29 @@ h1{
   .push-photo{
     max-width:100%;
   }
+
+  .event-grid{
+    grid-template-columns:1fr;
+  }
+
+  .event-key{
+    border-bottom:none;
+    padding-bottom:2px;
+  }
+
+  .event-value{
+    padding-top:2px;
+  }
 }
 </style>
 </head>
 
 <body>
 
-
 <main>
 
 <p class="page-eyebrow">
-Job Search Observability · Attribution Tokens · iOS Notifications
+Observability · Attribution Tokens · Push Notifications
 </p>
 
 <h1>Resume Intelligence - from Slopeum&eacute;.dev</h1>
@@ -392,17 +335,14 @@ Job Search Observability · Attribution Tokens · iOS Notifications
 </figure>
 
 <p class="lead">
-
 I'm job hunting at the moment, and things are in "hurry up and wait" mode. In the past, a neat distraction that kept the ball rolling was the occasional notification informing me that,
 
-<strong>"Soandso has viewed your profile."</strong>
-
+<strong>"So-and-so has viewed your profile."</strong>
 </p>
 
 <p class="lead">
 These days, most of my LinkedIn notifications inform me that people in my network are playing various LinkedIn Games. It has been disorienting. And it makes me wonder whether the silence is just the LinkedIn algorithm, the job market... or whether my resume is even making it in front of a recruiter.
 </p>
-
 
 <div class="callout">
   <div class="callout-title">The Thought</div>
@@ -422,7 +362,7 @@ I added custom attribution tokens to <strong>Slopeum&eacute;.dev</strong>, a job
 </p>
 
 <p class="lead">
-Hypothetically, if my resume makes it to a recruiter or anyone else unaltered, and they click my LinkedIn or portfolio links, those resources load normally for the viewer. Behind the scenes, a lightweight redirect service built with <strong>Vercel</strong> and <strong>Supabase</strong> records the click before the event arrives on my phone as a push notification with a library of <strong>Love Island</strong> 🔊 <em>"I got a text/message!"</em> recordings played round-robin.
+If my resume makes it to a recruiter or anyone else unaltered, and they click my LinkedIn or portfolio links, those resources load normally for the viewer. Behind the scenes, a lightweight redirect service built with <strong>Vercel</strong> and <strong>Supabase</strong> records the click before the event arrives on my phone as a push notification with a library of <strong>Love Island</strong> 🔊 <em>"I got a text/message!"</em> recordings played round-robin.
 </p>
 
 <figure class="push-photo">
@@ -536,7 +476,6 @@ Mason Thompson · Berkeley, California
 </div>
 
 </main>
-
 
 </body>
 </html>
