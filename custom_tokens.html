@@ -192,19 +192,14 @@ Job Search Observability · Attribution Tokens · iOS Notifications
 
 <p class="lead">
 I'm job hunting at the moment and things are in 'hurry up and wait' mode. A small detail that perked me up in times past was LinkedIn's notification:
-<strong>"Someone viewed your profile."</strong>. Exciting!
+<strong>"Someone viewed your profile."</strong>. Nice.
 </p>
 
 <p class="lead">
-These days, most of my LinkedIn notifications are people in my network playing various LinkedIn Games, which I refuse to play. To me, they're antithetical to LinkedIn's mission and feel like a lazy, happy-path solution to the company's stated problem that "it is hard for people to stay in touch with each other."
-
-No doubt I'm not part of the target audience.
-</p>
+These days, most of my LinkedIn notifications are people in my network playing various LinkedIn Games instead. It's disorienting. It makes me wonder whether the silence is just the LinkedIn algorithm, the job market... or whether my resume is even making it in front of a recruiter.</p>
 
 <p class="lead">
-Is this lack of profile activity a reflection of the market? Is a recruiter reading my resume?
-<br><br>
-At the end of the day: <strong>is my resume even making it in front of a human?</strong>
+So, 
 </p>
 
 <div class="callout">
@@ -212,28 +207,27 @@ At the end of the day: <strong>is my resume even making it in front of a human?<
 
   <div class="callout-body">
     <strong>Question:</strong>
-    Are my applications even being looked at in a tough market where recruiters are buried with volume?
-    <br><br>
+    Are my applications being looked at by recruiters?
 
     <strong>Answer:</strong>
-    Not sure. Let's try to find out.
+    Not sure. Lets take a step to find out. 
   </div>
 </div>
 
 <p class="lead">
-To answer that question, I added custom attribution tokens to Slopume. <strong>Slopume</strong>, my job search management tool. Every resume I generate in-app contains a customized link to my portfolio and LinkedIn profile. 
+Earlier this week, I added custom attribution tokens to <strong>Slopume</strong>, my job search management tool. Every resume I generate in-app contains a customized URL to my portfolio and LinkedIn profile. 
 </p>
 
 <p class="lead">
-If my resume makes it to a human and they click on my LinkedIn or Portfolio links, those resources load normally for the viewer. Behind the scenes, a lightweight redirect service built with <strong>Vercel</strong> and <strong>Supabase</strong> records the click before the event arrives on my phone as a push notification, complete with one of two dozen variations of the Love Island <strong>"I've got a text!"</strong> sound, played round-robin because gotta keep things fresh.
+If my resume makes it to a recruiter (or anyone else), and they click on my LinkedIn or Portfolio links, those resources load normally for the viewer. Behind the scenes, a lightweight redirect service built with <strong>Vercel</strong> and <strong>Supabase</strong> records the click before the event arrives on my phone as a push notification, complete with a growing number of memey <strong>Love Island</strong>L 🔊 <em>"I got a text!"</em> recordings, played round-robin to keep things fresh.
 </p>
 
 <p class="lead">
-I know what my technical audience is thinking: what if ATS platforms strip customized URLs? I agree. I'm not sure, at the time of writing, whether that happens. Worth looking into and thinking about possible ways of hardening the process. Even so, this won't catch every interaction—but it'll catch some, and that's enough to create signal.
+I know what my technical audience is thinking: what if ATS platforms strip customized URLs? I agree. I'm not sure, at the time of writing, whether that happens. Worth looking into and thinking about possible ways of hardening the design. Even so, this won't catch every interaction BUT it will catch some, and that's enough to create signal.
 </p>
 
 <p class="lead">
-As an unintended happy side effect, it also partially disambiguates LinkedIn's anonymous profile viewers. I don't really care <em>who</em> viewed my profile. I care which company they work for. 
+Oh also, as an unintended happy consequence: this process partially disambiguates LinkedIn's anonymous profile viewers. Ultiamtely, I shouldn't really care <em>who</em> viewed my profile. I care which company they work for. 
 </p>
 
 <pre class="pipeline-table">
