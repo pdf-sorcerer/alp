@@ -173,6 +173,69 @@ h1{
   inset:0;
   cursor:default;
 }
+.event-log{
+  max-width:720px;
+  margin:6px 0 38px;
+}
+
+.event-log-title{
+  font-family:"IBM Plex Mono",monospace;
+  font-size:10px;
+  font-weight:600;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--green);
+  margin-bottom:10px;
+}
+
+.event-table-wrap{
+  overflow-x:auto;
+  border:1px solid var(--border);
+  border-radius:4px;
+  background:var(--surface);
+}
+
+.event-table{
+  width:100%;
+  border-collapse:collapse;
+  font-family:"IBM Plex Mono",monospace;
+  font-size:10px;
+  line-height:1.55;
+}
+
+.event-table th{
+  text-align:left;
+  padding:10px 12px;
+  color:var(--green);
+  background:var(--green-dim);
+  border-bottom:1px solid var(--border);
+  white-space:nowrap;
+}
+
+.event-table td{
+  padding:12px;
+  color:#3a3a3a;
+  border-bottom:1px solid var(--border);
+  vertical-align:top;
+  white-space:nowrap;
+}
+
+.event-table td:last-child{
+  white-space:normal;
+  min-width:340px;
+}
+
+.event-json{
+  margin:0;
+  font-family:"IBM Plex Mono",monospace;
+  font-size:10px;
+  line-height:1.6;
+  color:#c9d1d9;
+  background:var(--code-bg);
+  padding:12px;
+  border-radius:4px;
+  overflow-x:auto;
+}
 
 .pipeline-table{
   font-family:"IBM Plex Mono",monospace;
@@ -296,8 +359,50 @@ Hypothetically, if my resume makes it to a recruiter or anyone else unaltered, a
     alt="iOS push notification showing a recruiter click event.">
 </div>
 
+<section class="event-log">
+  <div class="event-log-title">Event Log [Supabase]</div>
+
+  <div class="event-table-wrap">
+    <table class="event-table">
+      <thead>
+        <tr>
+          <th>created_at</th>
+          <th>application_id</th>
+          <th>source</th>
+          <th>event_type</th>
+          <th>company_detected</th>
+          <th>role_detected</th>
+          <th>metadata</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td>2026-07-01 08:02:02 UTC</td>
+          <td>local-12</td>
+          <td>resume</td>
+          <td>portfolio_clicked</td>
+          <td>Ready.net</td>
+          <td>Technical Product Manager</td>
+          <td>
+<pre class="event-json">{
+  "ip": "*redacted*",
+  "token": "Ql28rMgb723o8eeiqgndeQ",
+  "referer": "",
+  "artifact": "resume",
+  "link_type": "portfolio",
+  "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)...",
+  "destination": "https://pdf-sorcerer.github.io/alp/welcome.html"
+}</pre>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
 <p class="lead">
-Now, my technical audience is probably thinking: what if talent platforms strip customized URLs? I agree. I'm not sure whether that happens. Worth Googling and thinking about ways of hardening the design. Even so, this attribution tokens won't catch every interaction, but it will catch some, and that's enough to create signal.
+Now, my technical audience is probably thinking: what if talent platforms strip customized URLs? I agree. I'm not sure whether that happens. Worth Googling and thinking about ways of hardening the design. Even so, the system won't catch every interaction, but it will catch some, and that's enough to create signal.
 </p>
 
 <p class="lead">
