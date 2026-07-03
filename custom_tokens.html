@@ -207,11 +207,33 @@ h1{
   <pre class="pipeline-table">+-------------------+-----------+--------------------------------------+
 | STAGE             | TOOL      | FUNCTION                             |
 +-------------------+-----------+--------------------------------------+
-| Resume Generation | Slopume   | Creates application-specific links   |
-| Link Routing      | Vercel    | Captures click before redirect       |
-| Event Logging     | Supabase  | Records company, target, timestamp   |
-| Notification      | iOS App   | Sends "I've got a text!" alert      |
-+-------------------+-----------+--------------------------------------+</pre>
+| 1. Resume Generation  | Slopume  | Creates application-specific links |
+| 2. Link Routing       | Vercel   | Captures click before redirect     |
+| 3. Event Logging      | Supabase | Records company, target, timestamp |
+| 4. Push Notification  | iOS App  | Banner + "Love Island" audio       |
++-------------------+-----------+--------------------------------------+
+  
+  
+PRODUCT FLOW
+
+Resume submitted
+   │
+   ▼
+Recruiter clicks custom
+   │
+   ├───── Recruiter goes to ───────► Portfolio / LinkedIn / Email
+   │
+   └─── event ───► Vercel
+                      │
+                      ▼
+                  Supabase
+                      │
+                      ▼
+            iOS Push Notification
+                      │
+                      ▼
+              Mason 📱 ("I've got a text!")
+  </pre>
 
   <div class="callout">
     <div class="callout-title">The Real Feature</div>
