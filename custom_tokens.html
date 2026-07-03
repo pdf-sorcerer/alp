@@ -186,7 +186,7 @@ Job Search Observability · Attribution Tokens · iOS Notifications
     alt="Resume with application-specific tracking links and a push notification arriving after a recruiter clicks the portfolio.">
 
   <figcaption>
-    Every resume I submit contains a unique link. If a human clicks, I get a text.
+    Every resume I submit contains a unique link. If a human clicks, I get a push notification.
   </figcaption>
 </figure>
 
@@ -196,11 +196,11 @@ I'm job hunting at the moment and things are in 'hurry up and wait' mode. One sm
 </p>
 
 <p class="lead">
-Thees ays, it's people in my network playing various LinkedIn games (like, wtf?).
+These days, it's people in my network playing various LinkedIn games (like, wtf?).
 </p>
 
 <p class="lead">
-Is this my lack of profile activity a reflection of the market? Are recruiters struggling with application volume? The alignment of Mars and the Moon over the pyramids? Probably all of the above.
+Is this lack of profile activity a reflection of the market? Are recruiters struggling with application volume? The alignment of Mars and the Moon over the pyramids? Probably all of the above.
 <br><br>
 At the end of the day: <strong>is my resume even making it in front of a human?</strong>
 </p>
@@ -223,15 +223,15 @@ Tuesday night I added custom tokens to <strong>Slopume</strong>, my job search m
 </p>
 
 <p class="lead">
-If my resume makes it to a human, when they click on my LinkedIn or Portfolio links - those resources load for the viewer, and lightweight redirect service built with <strong>Vercel</strong> and <strong>Supabase</strong> before arriving on my phone as a push notification, complete with one of two dozen variations of the Love Island <strong>"I've got a text!"</strong> sound, played round-robin because gotta keep things fresh.
+If my resume makes it to a human and they click on my LinkedIn or Portfolio links, those resources load normally for the viewer. Behind the scenes, a lightweight redirect service built with <strong>Vercel</strong> and <strong>Supabase</strong> records the click before the event arrives on my phone as a push notification, complete with one of two dozen variations of the Love Island <strong>"I've got a text!"</strong> sound, played round-robin because gotta keep things fresh.
 </p>
 
 <p class="lead">
-I know what my technical audience is thinking: what if ATS platforms strip customized URLs?  I agree, not sure at time of writing if that happens. Worth looking into and thinking about possible ways of hardening the process. Even so, this won't catch every interaction—but it'll catch some, and that's enough to create signal.
+I know what my technical audience is thinking: what if ATS platforms strip customized URLs? I agree. I'm not sure, at the time of writing, whether that happens. Worth looking into and thinking about possible ways of hardening the process. Even so, this won't catch every interaction—but it'll catch some, and that's enough to create signal.
 </p>
 
 <p class="lead">
-As an unintended happy side effect, it also partially de-ambiguizes LinkedIn's anonymous profile viewers. I don't really care <em>who</em> viewed my profile. I care which company they work for. 
+As an unintended happy side effect, it also partially disambiguates LinkedIn's anonymous profile viewers. I don't really care <em>who</em> viewed my profile. I care which company they work for. 
 </p>
 
 <pre class="pipeline-table">
@@ -269,7 +269,8 @@ Recruiter clicks custom link
   <div class="callout-title">The Real Feature</div>
 
   <div class="callout-body">
-    Collecting the Love Island audio clips is more time-intensive than building custom tokens; 58 minutes - which includes Apple certification for push notifications to my phone. 
+    Collecting the Love Island audio clips is more time-intensive than building custom tokens: 58 minutes, which includes Apple certification for push notifications to my phone.
+    <br><br>
     
     <strong>58 minutes.</strong>
   </div>
