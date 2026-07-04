@@ -106,25 +106,6 @@ h1{
   border-bottom-style:solid;
 }
 
-.video-embed{
-  max-width:720px;
-  margin:0 0 36px;
-}
-
-.video-embed iframe{
-  width:100%;
-  aspect-ratio:16/9;
-  border:1px solid var(--border);
-  border-radius:8px;
-}
-
-.video-caption{
-  margin-top:10px;
-  font-size:12px;
-  text-align:center;
-  color:var(--muted);
-}
-
 .callout{
   max-width:720px;
   margin:28px 0 40px;
@@ -385,13 +366,12 @@ Observability · Attribution Tokens · Push Notifications
 <figure class="hero-photo">
   <img
     src="custom_tokens.png"
-    alt="Resume with application-specific tracking links and a push notification arriving after a recruiter clicks the portfolio.">
+    alt="Resume with application-specific attribution links and a push notification arriving after a recruiter clicks the portfolio.">
 
   <figcaption>
     Every resume I submit contains a unique link. If a human clicks, I get a push notification.
   </figcaption>
 </figure>
-
 
 <p class="page-date">
 2026-07-03
@@ -399,37 +379,34 @@ Observability · Attribution Tokens · Push Notifications
 
 <p class="lead">
 I'm job hunting and things are in "hurry up and wait" mode heading into the weekend. In years past, what helped keep the momentum of the search going was the occasional LinkedIn notification:
-
 <strong>"Soandso has viewed your profile."</strong>
+These days, it's mostly notifications that people in my network are playing LinkedIn Games.
 </p>
 
 <p class="lead">
-Today, most of my LinkedIn notifications are people in my network playing various LinkedIn Games. It reminds me of
-<a href="https://memory-alpha.fandom.com/wiki/The_Game_(episode)"
-   target="_blank"
-   rel="noopener noreferrer">
-<em>Star Trek: The Next Generation</em>'s S5E6, "The Game"
-</a>,
-where Ashley Judd and Wil Wheaton save the day. Anyway... between that, the rise in anonymous profile viewers, 
-  and whatever's happening in the LinkedIn firmament, I can't help wondering whether my resume is even making it in front of a recruiter.
+For many technology roles, the only expected feedback is an automated email
+confirming that the employer's ATS platform received your application.
+Rejection emails feel few and far between; it wouldn't surprise me if they're
+now an add-on feature, and at today's application volume it doesnt make sense to have it. 
 </p>
 
-
 <div class="callout">
-  <div class="callout-title">The Thought</div>
+  <div class="callout-title">The Question</div>
 
   <div class="callout-body">
-    <strong>Question:</strong>
-    Are my applications being looked at by recruiters?
-    <br><br>
-
-    <strong>Answer:</strong>
-    Let's find out! 
+    Is my resume actually being engaged with?
   </div>
 </div>
 
 <p class="lead">
-I added custom attribution tokens to <strong>Slopeum&eacute;.dev</strong>, a job search management tool I built a couple of months ago. Every resume I generate in-app contains a custom URL to my portfolio and LinkedIn profile.
+To give a measure of observability back to myself, I added custom attribution
+tokens to <strong>Slopeum&eacute;.dev</strong>, a job search management tool I
+built a couple of months ago.
+</p>
+
+<p class="lead">
+Today, every resume I generate contains job-application tokens appened to my portfolio
+and LinkedIn URLs.
 </p>
 
 <p class="lead link-row">
@@ -450,7 +427,13 @@ LinkedIn
 </p>
 
 <p class="lead">
-If my resume makes it to a recruiter or anyone else unaltered, and they click my LinkedIn or portfolio links, those resources load normally for the viewer. Behind the scenes, a lightweight redirect service built with <strong>Vercel</strong> and <strong>Supabase</strong> records the click before the event arrives on my phone as a push notification with a library of <strong>Love Island</strong> 🔊 <em>"I got a text/message!"</em> recordings played round-robin.
+If my resume makes it to a recruiter or anyone else unaltered, and they click
+one of those links, the destination loads normally. Behind the scenes, a
+lightweight redirect service built with <strong>Vercel</strong> and
+<strong>Supabase</strong> records the event and sends a push notification to my
+phone identifying which application generated the click. The goal isn't to
+change the hiring process&mdash;it's simply to restore a small measure of
+observability to an otherwise opaque one.
 </p>
 
 <figure class="push-photo">
@@ -461,7 +444,7 @@ If my resume makes it to a recruiter or anyone else unaltered, and they click my
   </a>
 
   <figcaption>
-    Ready.net used for demo. They probably don't realize I even applied!
+    Ready.net used for demonstration. They probably don't realize I even applied.
   </figcaption>
 </figure>
 
@@ -490,7 +473,7 @@ If my resume makes it to a recruiter or anyone else unaltered, and they click my
 | Resume Generation | Slopume   | Creates application-specific links   |
 | Link Routing      | Vercel    | Captures click before redirect       |
 | Event Logging     | Supabase  | Records company, target, timestamp   |
-| Notification      | iOS App   | Banner + Love Island audio           |
+| Notification      | iOS App   | Banner push notification             |
 +-------------------+-----------+--------------------------------------+
 
 PRODUCT FLOW
@@ -511,7 +494,7 @@ Recruiter clicks custom link
                iOS Push Notification
                          │
                          ▼
-              Mason 📱 ("I've got a text!")
+                     Mason 📱
 </pre>
   </div>
 
@@ -538,7 +521,6 @@ Recruiter clicks custom link
       </div>
 
 <pre class="event-json">{
-  "ip": "*redacted*",
   "token": "Ql28rMgb723o8eeiqgndeQ",
   "referer": "",
   "artifact": "resume",
