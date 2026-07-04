@@ -319,6 +319,28 @@ h1{
   color:var(--faint);
 }
 
+.link-row{
+  text-align:center;
+  font-family:"IBM Plex Mono",monospace;
+  font-size:13px;
+  margin-top:-8px;
+  margin-bottom:28px;
+}
+
+.link-row a{
+  color:var(--green);
+  text-decoration:none;
+  margin:0 6px;
+}
+
+.link-row a:hover{
+  text-decoration:underline;
+}
+
+.link-separator{
+  color:var(--muted);
+}
+
 @media(max-width:768px){
   main{
     width:calc(100vw - 32px);
@@ -407,7 +429,24 @@ where Ashley Judd and Wil Wheaton save the day. Anyway... between that, the rise
 </div>
 
 <p class="lead">
-I added custom attribution tokens to <strong>Slopeum&eacute;.dev</strong>, a job search management tool I made a couple months ago. Every resume I generate in-app contains a custom URL to my portfolio and LinkedIn profile.
+I added custom attribution tokens to <strong>Slopeum&eacute;.dev</strong>, a job search management tool I built a couple of months ago. Every resume I generate in-app contains a custom URL to my portfolio and LinkedIn profile.
+</p>
+
+<p class="lead link-row">
+BT dubs:
+<a href="https://pdf-sorcerer.github.io/alp/welcome.html"
+   target="_blank"
+   rel="noopener noreferrer">
+Portfolio
+</a>
+
+<span class="link-separator">•</span>
+
+<a href="https://www.linkedin.com/in/mmt510"
+   target="_blank"
+   rel="noopener noreferrer">
+LinkedIn
+</a>
 </p>
 
 <p class="lead">
