@@ -736,7 +736,9 @@ Of the companies I've applied to, so far only two have rejected me. A brief repo
 </div>
 
 <p class="lead">
-Today, every resume I generate in <strong>Slopeum&eacute;.dev</strong>, a job aggregator and application management tool I built a couple of months ago—contains unique, application-specific attribution tokens embedded in my Portfolio and LinkedIn links.
+Today, every resume I generate in <strong>Slopeum&eacute;.dev</strong>, 
+  a job aggregator and application management tool I built a couple of months ago—contains unique, 
+  application-specific attribution tokens embedded in my Portfolio and LinkedIn links.
 </p>
 
 <p class="lead link-row">
@@ -757,13 +759,16 @@ LinkedIn
 </p>
 
 <p class="lead">
-If my resume makes it to a recruiter or anyone else unaltered, and they click
-one of those links, the destination loads normally. Behind the scenes, a
-lightweight redirect service built with <strong>Vercel</strong> and
-<strong>Supabase</strong> records the event and sends a push notification to my
-phone identifying which application generated the click. The goal isn't to
-change the hiring process&mdash;it's simply to restore a small measure of
-observability to an otherwise opaque one.
+<p class="lead">
+ATS platforms almost certaintly screen resume URLs for safety and verify that hyperlink
+text matches the underlying destination, so there's no guarantee my attribution-tokens remain intact during parsing. 
+  
+<p class="lead">
+Assuming everything survives intact, the resume displays
+<strong>LinkedIn</strong> and <strong>Portfolio</strong> as standard blue
+hyperlinks. When one of those links is clicked, Slopumé records the click event
+before immediately redirecting to the intended resource. For the person who
+clicked the link, the website loads exactly as normal.
 </p>
 
 <figure class="push-photo">
