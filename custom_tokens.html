@@ -670,58 +670,66 @@ I'm job hunting and things are in "hurry up and wait" mode heading into the week
 These days, it's mostly notifications that people in my network are playing LinkedIn Games.
 </p>
 
+
+
 <p class="lead">
-It's been 10 business days. Every company I've applied to directly has emailed
-me at least once confirming my application was received. Two companies have
-since rejected me. No shade intended to either company.
-</p>
+It's been 10 business days and I've sent out a reasonable number of applications. My LinkedIn profile views have increased, but overwhelmingly people in private mode making it 
+difficult to know if it's someone reaacting to an application, or just random noise. Every company I applied to directly has emailed
+me at least once confirming my application was received. 
+  
 
-<h2 class="forensics-heading">Application Forensics · Rejection Comparison</h2>
+<div class="visibility-card">
+  <div class="visibility-title">LinkedIn Profile View Visibility</div>
 
-<details class="forensics-accordion">
-<summary>View Application Comparison</summary>
+  <div class="visibility-bar" aria-label="Profile view visibility breakdown">
+    <div class="visibility-private" title="Private mode: 77.6%"></div>
+    <div class="visibility-partial" title="Partial signal: 21.3%"></div>
+    <div class="visibility-identifiable" title="Identifiable: 1.1%"></div>
+  </div>
 
-<div class="disposition-toggle disposition-table">
+  <div class="visibility-legend">
+    <div>
+      <div class="visibility-number">135</div>
+      <div class="visibility-label">Private mode<br>77.6%</div>
+    </div>
 
-<input type="radio" name="disposition" id="disp-ramp" checked>
-<input type="radio" name="disposition" id="disp-scale">
+    <div>
+      <div class="visibility-number">37</div>
+      <div class="visibility-label">Partial signal<br>21.3%</div>
+    </div>
 
-<div class="disposition-tabs">
-<label for="disp-ramp">Ramp</label>
-<label for="disp-scale">Scale AI</label>
+    <div>
+      <div class="visibility-number">2</div>
+      <div class="visibility-label">Identifiable<br>1.1%</div>
+    </div>
+  </div>
+
+  <div class="visibility-takeaway">
+    <strong>98.9%</strong> of profile views are anonymous to some degree.
+  </div>
 </div>
 
-<div class="disposition-panel ramp-panel"><div class="disposition-grid">
-<div class="disposition-key">Role</div><div class="disposition-value">AI Operations Specialist | Agentic Workflows</div>
-<div class="disposition-key">Timeline</div><div class="disposition-value">2026-06-26 → 2026-07-03 (5 business days)</div>
-<div class="disposition-key">Posting</div><div class="disposition-value">LinkedIn · Reposted · 100+ applicants</div>
-<div class="disposition-key">Submitted</div><div class="disposition-value">Resume · Cover Letter · Portfolio</div>
-<div class="disposition-key">Pipeline</div><div class="disposition-value">Confirmation ✓ · Recruiter viewed LinkedIn ? · Interview ✗</div>
-<div class="disposition-key">High Matches</div><div class="disposition-value"><strong>14</strong><br>★★★★★ Applied AI Systems<br>★★★★★ Workflow Automation<br>★★★★★ AI Evaluation</div>
-<div class="disposition-key">Low Matches</div><div class="disposition-value"><strong>2</strong><br>★☆☆☆☆ Spend Management<br>★☆☆☆☆ Accounting Operations</div>
-</div><div class="disposition-note"><blockquote>"Although your experience is impressive, we have received many qualified applicants for the role."</blockquote><p>The application concluded before a recruiter phone screen. Based solely on the available evidence, the specific reason for the rejection cannot be established.</p></div></div>
+<figure class="push-photo">
 
-<div class="disposition-panel scale-panel"><div class="disposition-grid">
-<div class="disposition-key">Role</div><div class="disposition-value">Product Manager, GenAI</div>
-<div class="disposition-key">Timeline</div><div class="disposition-value">2026-06-24 → 2026-06-25 (1 day)</div>
-<div class="disposition-key">Posting</div><div class="disposition-value">LinkedIn · Reposted · 100+ applicants</div>
-<div class="disposition-key">Submitted</div><div class="disposition-value">Resume · Cover Letter · Portfolio</div>
-<div class="disposition-key">Pipeline</div><div class="disposition-value">Confirmation ✓ · Recruiter viewed LinkedIn ✓ · Interview ✗</div>
-<div class="disposition-key">High Matches</div><div class="disposition-value"><strong>12</strong><br>★★★★★ AI Evaluation<br>★★★★★ Human-in-the-Loop Systems<br>★★★★★ Technical Product Management</div>
-<div class="disposition-key">Low Matches</div><div class="disposition-value"><strong>5</strong><br>★☆☆☆☆ Compensation Systems<br>★☆☆☆☆ Incentive Design<br>★☆☆☆☆ Global Payments</div>
-</div><div class="disposition-note"><p>The application concluded before recruiter interaction. Based solely on the available evidence, the specific reason for the rejection cannot be established.</p></div></div>
-
-</div>
-
-</details>
-
-<p class="lead">
-Mason:
-<strong>Is resume actually making it in front of a human? Can I test that?</strong>
+  
+Of the companies I've applied to, just two have rejected me. A brief report on that is at the bottom of the page (if you're interested).
 </p>
 
-<p class="lead">
-Yup, I can test that. 
+
+<div class="callout">
+  <div class="callout-title">Motiating Idea</div>
+
+  <div class="callout-body">
+    <strong>Question:</strong><br>
+    I'm unsure whether my resume is actually making it in front of a recruiter.
+    What can I do to measure that?
+    <br><br>
+
+    <strong>Answer:</strong><br>
+    Add application-specific attribution tokens to every resume. If someone clicks on profile and LinkedIn URLs,
+    send a push notification to my iOS app. 
+  </div>
+</div>
   
 <br><br>
 Every resume I generate in <strong>Slopum&eacute;.dev</strong>—a job
@@ -861,6 +869,46 @@ Recruiter clicks custom link
     58 minutes, including Apple's online certification for push notifications.
   </div>
 </div>
+
+  
+<h2 class="forensics-heading">Application Forensics · Rejection Comparison</h2>
+
+<details class="forensics-accordion">
+<summary>View Application Comparison</summary>
+
+<div class="disposition-toggle disposition-table">
+
+<input type="radio" name="disposition" id="disp-ramp" checked>
+<input type="radio" name="disposition" id="disp-scale">
+
+<div class="disposition-tabs">
+<label for="disp-ramp">Ramp</label>
+<label for="disp-scale">Scale AI</label>
+</div>
+
+<div class="disposition-panel ramp-panel"><div class="disposition-grid">
+<div class="disposition-key">Role</div><div class="disposition-value">AI Operations Specialist | Agentic Workflows</div>
+<div class="disposition-key">Timeline</div><div class="disposition-value">2026-06-26 → 2026-07-03 (5 business days)</div>
+<div class="disposition-key">Posting</div><div class="disposition-value">LinkedIn · Reposted · 100+ applicants</div>
+<div class="disposition-key">Submitted</div><div class="disposition-value">Resume · Cover Letter · Portfolio</div>
+<div class="disposition-key">Pipeline</div><div class="disposition-value">Confirmation ✓ · Recruiter viewed LinkedIn ? · Interview ✗</div>
+<div class="disposition-key">High Matches</div><div class="disposition-value"><strong>14</strong><br>★★★★★ Applied AI Systems<br>★★★★★ Workflow Automation<br>★★★★★ AI Evaluation</div>
+<div class="disposition-key">Low Matches</div><div class="disposition-value"><strong>2</strong><br>★☆☆☆☆ Spend Management<br>★☆☆☆☆ Accounting Operations</div>
+</div><div class="disposition-note"><blockquote>"Although your experience is impressive, we have received many qualified applicants for the role."</blockquote><p>The application concluded before a recruiter phone screen. Based solely on the available evidence, the specific reason for the rejection cannot be established.</p></div></div>
+
+<div class="disposition-panel scale-panel"><div class="disposition-grid">
+<div class="disposition-key">Role</div><div class="disposition-value">Product Manager, GenAI</div>
+<div class="disposition-key">Timeline</div><div class="disposition-value">2026-06-24 → 2026-06-25 (1 day)</div>
+<div class="disposition-key">Posting</div><div class="disposition-value">LinkedIn · Reposted · 100+ applicants</div>
+<div class="disposition-key">Submitted</div><div class="disposition-value">Resume · Cover Letter · Portfolio</div>
+<div class="disposition-key">Pipeline</div><div class="disposition-value">Confirmation ✓ · Recruiter viewed LinkedIn ✓ · Interview ✗</div>
+<div class="disposition-key">High Matches</div><div class="disposition-value"><strong>12</strong><br>★★★★★ AI Evaluation<br>★★★★★ Human-in-the-Loop Systems<br>★★★★★ Technical Product Management</div>
+<div class="disposition-key">Low Matches</div><div class="disposition-value"><strong>5</strong><br>★☆☆☆☆ Compensation Systems<br>★☆☆☆☆ Incentive Design<br>★☆☆☆☆ Global Payments</div>
+</div><div class="disposition-note"><p>The application concluded before recruiter interaction. Based solely on the available evidence, the specific reason for the rejection cannot be established.</p></div></div>
+
+</div>
+
+</details>
 
 <div class="footer">
 Mason Thompson · Berkeley, California
