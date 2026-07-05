@@ -597,6 +597,46 @@ h1{
     padding-top:2px;
   }
 }
+
+.forensics-accordion{
+  max-width:720px;
+  margin:12px 0 34px;
+  border:1px solid var(--border);
+  border-radius:4px;
+  background:var(--surface);
+}
+.forensics-accordion summary{
+  list-style:none;
+  cursor:pointer;
+  padding:16px 18px;
+  font-family:"IBM Plex Mono",monospace;
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--green);
+  user-select:none;
+}
+.forensics-accordion summary::-webkit-details-marker{display:none;}
+.forensics-accordion summary::before{
+  content:"▶";
+  display:inline-block;
+  margin-right:10px;
+  transition:transform .2s;
+}
+.forensics-accordion[open] summary::before{
+  transform:rotate(90deg);
+}
+.forensics-accordion summary:hover{
+  background:var(--green-dim);
+}
+.forensics-accordion .disposition-toggle{
+  margin:0;
+  border:none;
+  border-top:1px solid var(--border);
+  border-radius:0;
+}
+
 </style>
 </head>
 
@@ -638,6 +678,9 @@ since rejected me. No shade intended to either company.
 
 <h2 class="forensics-heading">Application Forensics · Rejection Comparison</h2>
 
+<details class="forensics-accordion">
+<summary>View Application Comparison</summary>
+
 <div class="disposition-toggle disposition-table">
 
 <input type="radio" name="disposition" id="disp-ramp" checked>
@@ -654,10 +697,8 @@ since rejected me. No shade intended to either company.
 <div class="disposition-key">Posting</div><div class="disposition-value">LinkedIn · Reposted · 100+ applicants</div>
 <div class="disposition-key">Submitted</div><div class="disposition-value">Resume · Cover Letter · Portfolio</div>
 <div class="disposition-key">Pipeline</div><div class="disposition-value">Confirmation ✓ · Recruiter viewed LinkedIn ? · Interview ✗</div>
-<div class="disposition-key">High Matches (3)</div><div class="disposition-value"><strong>14</strong><br>★★★★★ Applied AI Systems<br>★★★★★ Workflow Automation<br>★★★★★ AI Evaluation</div>
-<div class="disposition-key">Low Matches (3)</div><div class="disposition-value"><strong>2</strong><br>★☆☆☆☆ Spend Management<br>★☆☆☆☆ Accounting Operations</div>
-<div class="disposition-key">Feedback</div><div class="disposition-value">Generic rejection email</div>
-
+<div class="disposition-key">High Matches</div><div class="disposition-value"><strong>14</strong><br>★★★★★ Applied AI Systems<br>★★★★★ Workflow Automation<br>★★★★★ AI Evaluation</div>
+<div class="disposition-key">Low Matches</div><div class="disposition-value"><strong>2</strong><br>★☆☆☆☆ Spend Management<br>★☆☆☆☆ Accounting Operations</div>
 </div><div class="disposition-note"><blockquote>"Although your experience is impressive, we have received many qualified applicants for the role."</blockquote><p>The application concluded before a recruiter phone screen. Based solely on the available evidence, the specific reason for the rejection cannot be established.</p></div></div>
 
 <div class="disposition-panel scale-panel"><div class="disposition-grid">
@@ -668,10 +709,11 @@ since rejected me. No shade intended to either company.
 <div class="disposition-key">Pipeline</div><div class="disposition-value">Confirmation ✓ · Recruiter viewed LinkedIn ✓ · Interview ✗</div>
 <div class="disposition-key">High Matches</div><div class="disposition-value"><strong>12</strong><br>★★★★★ AI Evaluation<br>★★★★★ Human-in-the-Loop Systems<br>★★★★★ Technical Product Management</div>
 <div class="disposition-key">Low Matches</div><div class="disposition-value"><strong>5</strong><br>★☆☆☆☆ Compensation Systems<br>★☆☆☆☆ Incentive Design<br>★☆☆☆☆ Global Payments</div>
-<div class="disposition-key">Feedback</div><div class="disposition-value">Generic rejection email</div>
 </div><div class="disposition-note"><p>The application concluded before recruiter interaction. Based solely on the available evidence, the specific reason for the rejection cannot be established.</p></div></div>
 
 </div>
+
+</details>
 
 <p class="lead">
 Mason:
