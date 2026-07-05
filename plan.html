@@ -166,8 +166,15 @@ h1{ font-size:28px; margin-bottom:14px; }
 <main>
 <p class="page-eyebrow">project status</p>
 <h1>Mason's .plan</h1>
-<p class="lead">Last updated: <strong>2026-07-01</strong></p>
+<p class="lead">Last updated: <strong>2026-07-05</strong></p>
 
+<div class="entry-block">
+<p class="video-section-label">2026-07-04</p>
+<li>Posted the attribution-token write-up: <a href="https://pdf-sorcerer.github.io/alp/custom_tokens.html" target="_blank" rel="noopener noreferrer">custom_tokens.html</a>.</li>
+<li>MVP started as recruiter attribution inside Slopumé. While writing it up, realized the same redirect pipeline could be safely externalized for public pages after hardening against abuse.</li>
+<li>Signed HMAC tokens now gate attribution. Vercel verifies every request before logging, <code>tracking_tokens</code> became the durable token registry, and APNs notifications are asynchronous again so redirects remain instant.</li>
+</div>
+  
 <div class="entry-block">
 <p class="video-section-label">2026-07-01</p>
 <ul class="body-list">
