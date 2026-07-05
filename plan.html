@@ -170,17 +170,21 @@ h1{ font-size:28px; margin-bottom:14px; }
 
 <div class="entry-block">
 <p class="video-section-label">2026-07-04</p>
+<ul class="body-list">
 <li>Posted the attribution-token write-up: <a href="https://pdf-sorcerer.github.io/alp/custom_tokens.html" target="_blank" rel="noopener noreferrer">custom_tokens.html</a>.</li>
 <li>MVP started as recruiter attribution inside Slopumé. While writing it up, realized the same redirect pipeline could be safely externalized for public pages after hardening against abuse.</li>
 <li>Signed HMAC tokens now gate attribution. Vercel verifies every request before logging, <code>tracking_tokens</code> became the durable token registry, and APNs notifications are asynchronous again so redirects remain instant.</li>
+</ul>
 </div>
   
 <div class="entry-block">
 <p class="video-section-label">2026-07-01</p>
 <ul class="body-list">
 <li><strong>DONE</strong>: Resume click + push notifs via Vercel to ALL-LLLM POD. <span class="shot-link" onclick="document.getElementById('push-modal').classList.add('open')">[screenshot]</span></li>
-<li><strong>NEXT</strong>: Warm laptop bad: 15 min idle/clamshell code working. Hook into the existing Vercel → APNs code by EOD.</li></div>
-
+<li><strong>NEXT</strong>: Warm laptop bad: 15 min idle/clamshell code working. Hook into the existing Vercel → APNs code by EOD.</li>
+</ul>
+</div>
+  
 <div class="entry-block"> 
 <p class="video-section-label">2026-06-30</p>
 <ul class="body-list">
