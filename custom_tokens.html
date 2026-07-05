@@ -223,6 +223,7 @@ h1{
 
 .tab-panel{
   display:none;
+  min-height:650px;   /* adjust to match taller panel */
 }
 
 #tab-architecture:checked ~ .architecture-panel,
@@ -423,6 +424,8 @@ h1{
   border:1px solid var(--border);
   border-radius:4px;
   overflow:hidden;
+  display:grid;
+  grid-template-rows:auto 1fr;
 }
 
 .disposition-toggle input{
@@ -463,12 +466,19 @@ h1{
 }
 
 .disposition-panel{
-  display:none;
+  grid-row:2;
+  grid-column:1;
+  display:block;
+  visibility:hidden;
+  opacity:0;
+  pointer-events:none;
 }
 
 #disp-ramp:checked ~ .ramp-panel,
 #disp-scale:checked ~ .scale-panel{
-  display:block;
+  visibility:visible;
+  opacity:1;
+  pointer-events:auto;
 }
 
 .disposition-grid{
