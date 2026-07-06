@@ -91,6 +91,15 @@ h1{ font-size:28px; margin-bottom:14px; }
   font-family:inherit;
   white-space:pre;
 }
+.audio-link {
+  border: 0;
+  background: none;
+  padding: 0;
+  font: inherit;
+  color: #5b21b6;
+  text-decoration: underline;
+  cursor: pointer;
+}
 
 .video-section-label{
   font-size:10px;
@@ -172,7 +181,27 @@ h1{ font-size:28px; margin-bottom:14px; }
 <div class="entry-block">
 <p class="video-section-label">2026-07-06</p>
 <ul class="body-list">
-<li><strong>Yiss, MiLord??</strong> Added <a href="https://github.com/pdf-sorcerer/alp/blob/main/start4.wav">Warcraft II Peon voice cues</a> to Slopnozzle. Boot, run, and stop events now play audio, so I no longer have to stare at the menu bar waiting for inference to begin.</li><li>Started dogfooding Qwen its pipeline output at inference. Each stage critiques its implementation and artifacts. Neat way to probe how to build systems and how everything fits together.</li>
+<li>
+  <strong>Yiss, MiLord??</strong>
+  Added
+  <button class="audio-link" onclick="playPeonCue()">
+    Warcraft II Peon voice cues
+  </button>
+  to Slopnozzle. Boot, run, and stop events now play audio, so I no longer
+  have to stare at the menu bar waiting for inference to begin.
+</li>
+
+<audio id="peon-cue" preload="auto">
+  <source src="assets/audio/peon-ready.wav" type="audio/wav">
+</audio>
+
+<script>
+function playPeonCue() {
+  const audio = document.getElementById("peon-cue");
+  audio.currentTime = 0;
+  audio.play();
+}
+</script>
 <li>Created a script that builds an episode manifest by scraping Lenny's Substack, validating the corresponding YouTube episode, and ingesting chapter timestamps before feeding the episode to Qwen.</li>  
 </ul></div>
 
