@@ -168,23 +168,30 @@ h1{ font-size:28px; margin-bottom:14px; }
 <h1>Mason's .plan</h1>
 <p class="lead">Last updated: <strong>2026-07-05</strong></p>
 
-
 <div class="entry-block">
-<p class="video-section-label">2026-07-04</p>
+<p class="video-section-label">2026-07-05</p>
 <ul class="body-list">
-<li>Started <strong>Skeptical Reframing</strong> after Elena Verna's <em>"Confidence Theater"</em> posts. Looking at how AI narratives evolve over time instead of evaluating isolated claims.</li>
-<li>Scraped <em>Lenny's Podcast</em> Substack. Iterating Qwen topological pipeline. Jippity says I'm "converging on claim-level provenance or qualitative auditability."</li>
-<li>Want to start remote LLM-evictor. Draft with pen + paper before starting with Jippity.</li>
+<li>Topological pipeline mostly finalized: transcript → Acts [I–V] → semantic atoms → frames → longitudinal index → synthesis → evidence audit.</li>
+<li>Dogfooding Qwen its pipeline output at inference. Each stage critiques its implementation and artifacts. Need to build out the supporting architecture.</li>
 </ul></div>
+
 
 <div class="entry-block">
 <p class="video-section-label">2026-07-04</p>
 <ul class="body-list">
 <li>Posted the attribution-token write-up: <a href="https://pdf-sorcerer.github.io/alp/custom_tokens.html" target="_blank" rel="noopener noreferrer">custom_tokens.html</a>.</li>
 <li>MVP started as recruiter attribution inside Slopumé. While writing it up, realized the same redirect pipeline could be safely externalized for public pages after hardening against abuse.</li>
-<li>Signed HMAC tokens now gate attribution. Vercel verifies every request before logging, <code>tracking_tokens</code> became the durable token registry, and APNs notifications are asynchronous again so redirects remain instant.</li>
+<li>Signed HMAC tokens now gate attribution. Vercel verifies every request before logging, <code>tracking_tokens</code> became the durable token registry. Push notifications remain asynchronous, on-click redirects are near-instanteous for the user.</li>
 </ul>
 </div>
+
+<div class="entry-block">
+<p class="video-section-label">2026-07-03</p>
+<ul class="body-list">
+<li>Started <strong>Skeptical Reframing</strong> after Elena Verna's <em>"Confidence Theater"</em> posts. Looking at how AI narratives evolve over time instead of evaluating isolated claims.</li>
+<li>Scraped <em>Lenny's Podcast</em> Substack. Iterating Qwen topological pipeline. Jippity says I'm "converging on claim-level provenance or qualitative auditability."</li>
+<li>Want to start remote LLM-evictor. Draft with pen + paper before starting with Jippity.</li>
+</ul></div>
   
 <div class="entry-block">
 <p class="video-section-label">2026-07-01</p>
