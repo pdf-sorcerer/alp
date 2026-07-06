@@ -775,10 +775,19 @@ not logged, but still redirect the user to their destination.
   <br><br>
   
 <p class="lead">
-<strong>EDIT:</strong> After publishing, I realized I could
-demonstrate the same redirect mechanism here using the links above. But then I
-realized I should probably harden the system first to prevent mischief - working on it now.
+<strong>UPDATE:</strong> 
+  <ul>
+    <li>This is done. Signed token verification now allows anyone to load the underlying resources without recording a fabricated attribution event.</li>
+    <li>Only requests with valid, signed tokens are logged to Supabase, preserving signal.</li>
+    <li>Created permanent tracking tokens for public pages (here, resume served by LinkedIn.</li>
+  </ul>
+<br>
+<strong>EDIT:</strong> </s>
+<ul>
+  <li><s>After publishing this article, I realized I could demonstrate the same redirect mechanism on this page using the links above.</s></li>
+  <li><s>Then I realized I should probably harden the system to prevent abuse (fake tokens triggering a log event).</s></li>
 </p>
+
 
 <figure class="push-photo">
   <a href="#push-modal">
