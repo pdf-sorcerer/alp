@@ -91,6 +91,71 @@ h1{ font-size:28px; margin-bottom:14px; }
   font-family:inherit;
   white-space:pre;
 }
+
+.tabs{
+  width:100%;
+  margin:28px 0 40px;
+  border:1px solid var(--border);
+  border-radius:6px;
+  overflow:hidden;
+  background:var(--surface);
+}
+
+.tab-buttons{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  border-bottom:1px solid var(--border);
+}
+
+.tab-button{
+  border:0;
+  border-right:1px solid var(--border);
+  background:#fff;
+  padding:18px 12px;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:12px;
+  font-weight:600;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:#666;
+  cursor:pointer;
+}
+
+.tab-button:last-child{ border-right:0; }
+
+.tab-button.active{
+  background:#dbe8fb;
+  color:var(--green);
+}
+
+.tab-panel{
+  display:none;
+  background:#101418;
+  padding:34px 42px;
+}
+
+.tab-panel.active{ display:block; }
+
+
+/* ---------- TERMINAL ---------- */
+
+.pipeline-table{
+  margin:0;
+  color:#d5d9df;
+  background:transparent;
+  border:none;
+  padding:0;
+  overflow-x:auto;
+
+  font-family:'IBM Plex Mono',monospace;
+  font-size:13px;
+  line-height:1.65;
+  white-space:pre;
+}
+
+
+
+  
 .audio-link {
   border: 0;
   background: none;
@@ -178,38 +243,74 @@ h1{ font-size:28px; margin-bottom:14px; }
 <p class="lead">Last updated: <strong>2026-07-07</strong></p>
 
 
-<section class="tabs">
+<div class="entry-block">
+<p class="video-section-label">2026-07-07</p>
+<ul class="body-list">
+<li>Keyword frequency pass on the pipeline output, top 30 terms by hit count.</li>
+</ul>
 
-  <input type="radio" name="keyword-tabs" id="tab-top10" checked>
-  <input type="radio" name="keyword-tabs" id="tab-mid10">
-  <input type="radio" name="keyword-tabs" id="tab-low10">
+<section class="tabs keyword-tabs">
 
   <div class="tab-buttons">
-    <label for="tab-top10">Top 10</label>
-    <label for="tab-mid10">11–20</label>
-    <label for="tab-low10">21–30</label>
+    <button class="tab-button active" onclick="showKeywordTab('top10', this)">Top 10</button>
+    <button class="tab-button" onclick="showKeywordTab('mid10', this)">11–20</button>
+    <button class="tab-button" onclick="showKeywordTab('low10', this)">21–30</button>
   </div>
 
-  <div class="tab-panel top10-panel">
-    <pre class="pipeline-table">
-      ...
-    </pre>
+  <div class="tab-panel active" id="top10">
+<pre class="pipeline-table">+----+----------------------+----------------+------+-----+
+|  # | TERM                 | GROUP          | HITS | EPS |
++----+----------------------+----------------+------+-----+
+|  1 | ai                   | explicit_ai    | 5143 | 282 |
+|  2 | model(s)             | ai_ecosystem   | 3122 | 293 |
+|  3 | agent(s)             | ai_ecosystem   | 1264 | 118 |
+|  4 | chatgpt              | explicit_ai    |  722 | 136 |
+|  5 | claude               | explicit_ai    |  674 |  76 |
+|  6 | openai               | explicit_ai    |  465 | 106 |
+|  7 | llm(s)               | explicit_ai    |  442 |  93 |
+|  8 | anthropic            | explicit_ai    |  351 |  65 |
+|  9 | ai tool(s)           | explicit_ai    |  347 |  89 |
+| 10 | lovable              | explicit_ai    |  342 |  65 |
++----+----------------------+----------------+------+-----+</pre>
   </div>
 
-  <div class="tab-panel mid10-panel">
-    <pre class="pipeline-table">
-      ...
-    </pre>
+  <div class="tab-panel" id="mid10">
+<pre class="pipeline-table">+----+----------------------+----------------+------+-----+
+|  # | TERM                 | GROUP          | HITS | EPS |
++----+----------------------+----------------+------+-----+
+| 11 | ai product(s)        | explicit_ai    |  331 |  68 |
+| 12 | eval(s)              | ai_ecosystem   |  303 |  25 |
+| 13 | codex                | explicit_ai    |  271 |  23 |
+| 14 | cursor               | explicit_ai    |  267 |  74 |
+| 15 | perplexity           | explicit_ai    |  243 |  88 |
+| 16 | alignment            | doomerism      |  241 | 104 |
+| 17 | open source          | ai_ecosystem   |  225 |  66 |
+| 18 | devin                | explicit_ai    |  185 |  28 |
+| 19 | ai agent(s)          | explicit_ai    |  174 |  52 |
+| 20 | benchmark(s)         | ai_ecosystem   |  173 |  64 |
++----+----------------------+----------------+------+-----+</pre>
   </div>
 
-  <div class="tab-panel low10-panel">
-    <pre class="pipeline-table">
-      ...
-    </pre>
+  <div class="tab-panel" id="low10">
+<pre class="pipeline-table">+----+----------------------+----------------+------+-----+
+|  # | TERM                 | GROUP          | HITS | EPS |
++----+----------------------+----------------+------+-----+
+| 21 | machine learning     | ai_ecosystem   |  158 | 103 |
+| 22 | copilot              | explicit_ai    |  141 |  40 |
+| 23 | automation           | ai_ecosystem   |  134 |  85 |
+| 24 | using ai             | explicit_ai    |  130 |  73 |
+| 25 | autonomy             | ai_ecosystem   |  125 |  54 |
+| 26 | v0                   | explicit_ai    |  118 |  15 |
+| 27 | ai age               | explicit_ai    |  116 |  55 |
+| 28 | agi                  | doomerism      |  112 |  38 |
+| 29 | autonomous           | ai_ecosystem   |   98 |  47 |
+| 30 | reasoning            | ai_ecosystem   |   90 |  50 |
++----+----------------------+----------------+------+-----+</pre>
   </div>
 
 </section>
-  
+</div>
+
 <div class="entry-block">
 <p class="video-section-label">2026-07-06</p>
 <ul class="body-list">
@@ -382,6 +483,19 @@ document.addEventListener('keydown', e => {
     document.getElementById('push-modal').classList.remove('open');
   }
 });
+</script>
+
+<script>
+function showKeywordTab(id, btn) {
+  document.querySelectorAll('.keyword-tabs .tab-panel')
+    .forEach(panel => panel.classList.remove('active'));
+
+  document.querySelectorAll('.keyword-tabs .tab-button')
+    .forEach(button => button.classList.remove('active'));
+
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
 </script>
 
 </body>
