@@ -93,7 +93,7 @@ h1{ font-size:28px; margin-bottom:14px; }
 }
 
 .tabs{
-  width:100%;
+  width:min(980px,100%);
   margin:28px 0 40px;
   border:1px solid var(--border);
   border-radius:6px;
@@ -131,7 +131,9 @@ h1{ font-size:28px; margin-bottom:14px; }
 .tab-panel{
   display:none;
   background:#101418;
-  padding:34px 42px;
+  padding:26px 32px;
+  min-height:0;
+  text-align:center;
 }
 
 .tab-panel.active{ display:block; }
@@ -140,16 +142,19 @@ h1{ font-size:28px; margin-bottom:14px; }
 /* ---------- TERMINAL ---------- */
 
 .pipeline-table{
+  display:inline-block;
+  text-align:left;
+
   margin:0;
-  color:#d5d9df;
-  background:transparent;
-  border:none;
   padding:0;
-  overflow-x:auto;
+  border:0;
+  background:transparent;
+
+  color:#d5d9df;
 
   font-family:'IBM Plex Mono',monospace;
-  font-size:13px;
-  line-height:1.65;
+  font-size:12px;
+  line-height:1.55;
   white-space:pre;
 }
 
@@ -246,7 +251,16 @@ h1{ font-size:28px; margin-bottom:14px; }
 <div class="entry-block">
 <p class="video-section-label">2026-07-07</p>
 <ul class="body-list">
-<li>Keyword frequency pass on the pipeline output, top 30 terms by hit count.</li>
+<li>Audited 337 Lenny's Podcast transcripts to begin isolating an AI corpus for Skeptical Reframing.</li>
+
+<li>Pipeline classified episodes into
+<strong>128 CORE_AI</strong>,
+<strong>99 LIKELY_AI</strong>,
+<strong>46 AI_ADJACENT</strong>,
+<strong>37 INCIDENTAL_AI</strong>, and
+<strong>27 NOT_AI</strong>.</li>
+
+<li>Top 30 matched terms by transcript hit count.</li>
 </ul>
 
 <section class="tabs keyword-tabs">
