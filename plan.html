@@ -203,7 +203,8 @@ h1{ font-size:28px; margin-bottom:14px; }
 .shot-link:hover{ text-decoration-color:var(--green); }
 
 #shot-modal,
-#push-modal{
+#push-modal,
+#chat-modal{
   display:none;
   position:fixed;
   inset:0;
@@ -214,10 +215,12 @@ h1{ font-size:28px; margin-bottom:14px; }
   padding:40px;
 }
 #shot-modal.open,
-#push-modal.open{ display:flex; }
+#push-modal.open,
+#chat-modal.open{ display:flex; }
 
 #shot-modal img,
-#push-modal img{
+#push-modal img,
+#chat-modal img{
   max-width:min(900px, 90vw);
   max-height:88vh;
   border-radius:10px;
@@ -252,7 +255,7 @@ h1{ font-size:28px; margin-bottom:14px; }
 <p class="video-section-label">2026-07-08</p>
 <ul class="body-list">
 <li>Renamed Slopnozzle to <strong>Microslop</strong>.</li>
-<li>Added local chat inference to Microslop. Dogfooding will compel additional time + tooling investment.</li>
+<li>Added local chat inference to Microslop. Dogfooding will compel additional time + tooling investment. <span class="shot-link" onclick="document.getElementById('chat-modal').classList.add('open')">[screenshot]</span></li>
 </ul></div>
 
 
@@ -501,12 +504,19 @@ function playPeonCue() {
   <img src="push.png" alt="ALL-LLLM POD push notification screenshot">
 </div>
 
+<!-- MICROSLOP CHAT SCREENSHOT MODAL -->
+<div id="chat-modal" onclick="if(event.target===this) this.classList.remove('open')">
+  <span class="shot-close" onclick="document.getElementById('chat-modal').classList.remove('open')">ESC ✕</span>
+  <img src="slop_chat_mvp.png" alt="Microslop local chat inference screenshot">
+</div>
+
 <script src="https://pdf-sorcerer.github.io/alp/nav-loader.js" data-page="plan" data-title="Mason's .plan"></script>
 <script>
 document.addEventListener('keydown', e => {
   if(e.key === 'Escape') {
     document.getElementById('shot-modal').classList.remove('open');
     document.getElementById('push-modal').classList.remove('open');
+    document.getElementById('chat-modal').classList.remove('open');
   }
 });
 </script>
