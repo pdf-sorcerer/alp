@@ -408,7 +408,7 @@ V1 was four binary voice classifiers (i.e., JCal vs. everyone else, Sacks vs. ev
 <p class="lead">
 I started V2 because I hadn't deliberately created a hard-negative class in V1. Gathering guest audio from more than 200 episodes would have been awfully time-consuming, and it did not seem important to the project, or so I thought. That is why I avoided it.
 
-V2 used a Streamlit app I named 'Clownfish.' Still being new to this at the time, I thought I could use speaker_ids as a proxy signal for labeled names. The flow became: use facial recognition to confirm the speaker, listen to audio files associated with each speaker_id, label the speaker for that episode, backfill the identity, and extract the segments as labeled speaker audio files.
+V2 used a Streamlit app I named 'Clownfish', because Nvidia NeMo just came online. NeMo replaced Pyannote as the diarization/classification leg of the pipeline, as I found NeMo signfiicantly more reliable at identifying the true number of unique voices in audio. During this time, I thought I could use speaker_ids as a proxy signal for labeled names. So, the flow became: use facial recognition to confirm the speaker, listen to audio files associated with each speaker_id, label the speaker for that episode, backfill the identity, and extract the segments as labeled speaker audio files.
 
 The initial V2 corpus was small because it was a proof of concept. V2.5 grew it dramatically. V3 shrank it again.
 </p>
@@ -460,7 +460,7 @@ Sacks:               99.00%</div>
 </div>
 
 <p class="lead">
-Error rates continued to decrease as clip duration increased, and longer-form speech was classified with near-perfect accuracy.
+Error rates continued to decrease as clip duration increased, and longer-form speech was classified with high accuracy.
 This was consistent with white papers reporting higher error rates for audio shorter than five seconds. To account for this, I trained one final classifier, V3, on audio longer than five seconds.
 </p>
 
