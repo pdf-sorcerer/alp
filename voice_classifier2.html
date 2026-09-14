@@ -526,6 +526,19 @@ The result: in Episode 136, I discovered guest Brad Gerstner being confidently c
 Looking deeper, Gerstner's embedding was vocally closer to JCal's voice than JCal was to himself, even though JCal was not in the episode at all. Keep in mind that v2.5 and v3 voice classifier knew Brad Gerstner's voiceprint. Still, it confidently labeled him as Friedberg and, elsewhere in the episode, as JCal.
 </p>
 
+<div class="block">
+  <div class="block-header">Brad — Embedding Geometry</div>
+  <div class="block-body">Inter-host baseline:        0.8740
+JCal intra-class baseline:  0.4842
+
+Brad → Chamath:   0.9181  (above inter-host baseline)
+Brad → Sacks:     0.7774  (below inter-host baseline)
+Brad → Friedberg: 0.8007  (below inter-host baseline)
+Brad → JCal min:  0.2507  (below JCal's own intra-class baseline)
+
+Some of Brad's segments were geometrically closer to JCal than JCal's own clips were to each other. A label space built on these embeddings wasn't ground truth — it was confident slop.</div>
+</div>
+
 <p class="lead">
 Takeaway: Manually reviewing transcripts uncovered a problem that the accuracy metrics suggested wouldn't exist. I admit, experimental design is worth a second-pass given how much I've learned in this space since. Even so, failures later exposed downstream ASR artifacts that would have gone undetected if I had happy-pathed the classifier without careful review. 
 the classifier without skeptical review.
